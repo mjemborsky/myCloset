@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-//Test
 
 @main
 struct myClosetApp: App {
