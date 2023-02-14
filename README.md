@@ -1,3 +1,4 @@
 # myCloset
 
-Created by: Jonah Gloss
+Created by...
+- Jonah Gloss
