@@ -4,7 +4,7 @@ Created by...
 - Jonah Gloss
 - Michael Emborsky
 - Alexa Rodriguez
-- Taylor McMillon
+- Taylor McMillon!
 - Ryan Lounsbury
 
 
