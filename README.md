@@ -6,6 +6,5 @@ Created by...
 - Alexa Rodriguez
 - Taylor McMillon
 - Ryan Lounsbury
--Ryan Lounsbury
 
 
