@@ -14,6 +14,7 @@
 		623503DF299BEE5D002BA53C /* myClosetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623503DE299BEE5D002BA53C /* myClosetTests.swift */; };
 		623503E9299BEE5D002BA53C /* myClosetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623503E8299BEE5D002BA53C /* myClosetUITests.swift */; };
 		623503EB299BEE5D002BA53C /* myClosetUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623503EA299BEE5D002BA53C /* myClosetUITestsLaunchTests.swift */; };
+		9452645429A542A200D24D5C /* ClothingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9452645329A542A200D24D5C /* ClothingItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +45,7 @@
 		623503E4299BEE5D002BA53C /* myClosetUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = myClosetUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		623503E8299BEE5D002BA53C /* myClosetUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myClosetUITests.swift; sourceTree = "<group>"; };
 		623503EA299BEE5D002BA53C /* myClosetUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myClosetUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		9452645329A542A200D24D5C /* ClothingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothingItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 				623503CF299BEE5C002BA53C /* ContentView.swift */,
 				623503D1299BEE5D002BA53C /* Assets.xcassets */,
 				623503D3299BEE5D002BA53C /* Preview Content */,
+				9452645329A542A200D24D5C /* ClothingItem.swift */,
 			);
 			path = myCloset;
 			sourceTree = "<group>";
@@ -257,6 +260,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9452645429A542A200D24D5C /* ClothingItem.swift in Sources */,
 				623503D0299BEE5C002BA53C /* ContentView.swift in Sources */,
 				623503CE299BEE5C002BA53C /* myClosetApp.swift in Sources */,
 			);
