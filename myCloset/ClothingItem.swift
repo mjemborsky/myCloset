@@ -10,11 +10,11 @@ class ClothingItem {
 
     var ItemID: Int
     var ItemTag: String
-    var ItemPhoto: Int
+    var ItemPhoto: String
 
 
     /// constructor
-    init(newID: Int, newTag: String, newPhoto: Int) {
+    init(newID: Int, newTag: String, newPhoto: String) {
         self.ItemID = newID
         self.ItemTag = newTag
         self.ItemPhoto = newPhoto
