@@ -1,4 +1,5 @@
 .DS_Store
+.gitignore
 .Trashes
 *.swp
 *.lock
@@ -6,6 +7,7 @@
 DerivedData/
 build/
 *.pbxuser
+*.pbxproj
 *.mode1v3
 *.mode2v3
 *.perspectivev3
