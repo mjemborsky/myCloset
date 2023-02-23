@@ -24,7 +24,3 @@ let SAMPLE_OUTFIT:[outfit] = [
     outfit(title:"School", tag:"pants", outfitID:3)
 ]
 
-//Outfit ID
-//PhotoFile
-//Title
-//OutfitTag

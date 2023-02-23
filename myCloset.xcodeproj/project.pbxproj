@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3394603729A54102004884EB /* outfit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3394603629A54102004884EB /* outfit.swift */; };
+		3394603D29A6D1D1004884EB /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3394603C29A6D1D1004884EB /* ImagePicker.swift */; };
+		3394603F29A6D658004884EB /* ImagePickerUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3394603E29A6D658004884EB /* ImagePickerUI.swift */; };
 		623503CE299BEE5C002BA53C /* myClosetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623503CD299BEE5C002BA53C /* myClosetApp.swift */; };
 		623503D0299BEE5C002BA53C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623503CF299BEE5C002BA53C /* ContentView.swift */; };
 		623503D2299BEE5D002BA53C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 623503D1299BEE5D002BA53C /* Assets.xcassets */; };
@@ -36,6 +38,8 @@
 
 /* Begin PBXFileReference section */
 		3394603629A54102004884EB /* outfit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = outfit.swift; sourceTree = "<group>"; };
+		3394603C29A6D1D1004884EB /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		3394603E29A6D658004884EB /* ImagePickerUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerUI.swift; sourceTree = "<group>"; };
 		623503CA299BEE5C002BA53C /* myCloset.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myCloset.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		623503CD299BEE5C002BA53C /* myClosetApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myClosetApp.swift; sourceTree = "<group>"; };
 		623503CF299BEE5C002BA53C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -101,6 +105,8 @@
 				623503D1299BEE5D002BA53C /* Assets.xcassets */,
 				623503D3299BEE5D002BA53C /* Preview Content */,
 				3394603629A54102004884EB /* outfit.swift */,
+				3394603C29A6D1D1004884EB /* ImagePicker.swift */,
+				3394603E29A6D658004884EB /* ImagePickerUI.swift */,
 			);
 			path = myCloset;
 			sourceTree = "<group>";
@@ -260,7 +266,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3394603F29A6D658004884EB /* ImagePickerUI.swift in Sources */,
 				3394603729A54102004884EB /* outfit.swift in Sources */,
+				3394603D29A6D1D1004884EB /* ImagePicker.swift in Sources */,
 				623503D0299BEE5C002BA53C /* ContentView.swift in Sources */,
 				623503CE299BEE5C002BA53C /* myClosetApp.swift in Sources */,
 			);
