@@ -21,6 +21,6 @@ class outfit{
 let SAMPLE_OUTFIT:[outfit] = [
     outfit(title:"Date", tag:"dress", outfitID:1),
     outfit(title:"Picnic", tag:"skirt", outfitID:2),
-    outfit(title:"School", tag:"pants", outfitID:3)
-]
+    outfit(title:"School", tag:"pants", outfitID:3)]
 
+ 
