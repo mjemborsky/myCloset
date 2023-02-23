@@ -12,7 +12,7 @@ import SwiftUI
 struct myClosetApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            LoginView()
         }
     }
 }
