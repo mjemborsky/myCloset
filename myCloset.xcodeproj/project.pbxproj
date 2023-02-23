@@ -14,6 +14,7 @@
 		623503DF299BEE5D002BA53C /* myClosetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623503DE299BEE5D002BA53C /* myClosetTests.swift */; };
 		623503E9299BEE5D002BA53C /* myClosetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623503E8299BEE5D002BA53C /* myClosetUITests.swift */; };
 		623503EB299BEE5D002BA53C /* myClosetUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623503EA299BEE5D002BA53C /* myClosetUITestsLaunchTests.swift */; };
+		C37FBBB629A5436D00E23648 /* post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37FBBB529A5436D00E23648 /* post.swift */; };
 		627B337329A6E31500F546A2 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627B337229A6E31500F546A2 /* LoginView.swift */; };
 		627B337529A6E33800F546A2 /* UserLoginData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627B337429A6E33800F546A2 /* UserLoginData.swift */; };
 /* End PBXBuildFile section */
@@ -46,6 +47,7 @@
 		623503E4299BEE5D002BA53C /* myClosetUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = myClosetUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		623503E8299BEE5D002BA53C /* myClosetUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myClosetUITests.swift; sourceTree = "<group>"; };
 		623503EA299BEE5D002BA53C /* myClosetUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myClosetUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		C37FBBB529A5436D00E23648 /* post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = post.swift; sourceTree = "<group>"; };
 		627B337229A6E31500F546A2 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		627B337429A6E33800F546A2 /* UserLoginData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoginData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -99,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				623503CD299BEE5C002BA53C /* myClosetApp.swift */,
+				C37FBBB529A5436D00E23648 /* post.swift */,
 				627B337229A6E31500F546A2 /* LoginView.swift */,
 				627B337429A6E33800F546A2 /* UserLoginData.swift */,
 				623503D1299BEE5D002BA53C /* Assets.xcassets */,
@@ -263,7 +266,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-
+				C37FBBB629A5436D00E23648 /* post.swift in Sources */,
 				627B337329A6E31500F546A2 /* LoginView.swift in Sources */,
 				627B337529A6E33800F546A2 /* UserLoginData.swift in Sources */,
 				3394603729A54102004884EB /* outfit.swift in Sources */,
