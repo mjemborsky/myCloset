@@ -4,7 +4,7 @@
 
 import Foundation
 
-class Post {
+struct Post {
     //  Description: Data class for storing posts of outfits, which are stored to the post
     //               database. Types of information stored includes post number, date added,
     //               likes, etc...

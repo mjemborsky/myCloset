@@ -6,7 +6,7 @@
 //
 
 import Foundation
-class outfit{
+struct outfit{
     var title: String
     var outfitTag: String
     var  outfitID: Int
