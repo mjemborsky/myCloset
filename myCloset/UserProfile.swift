@@ -11,18 +11,27 @@ struct UserProfile {
     
     var username: String
     var bio: String
-    var following: Int
-    var followers: Int
+    var following: [UserProfile]
+    var followers: [UserProfile]
+    var following_count: Int
+    var followers_count: Int
+    var createdPosts: [Post]
+    var likedPosts: [Post]
     
-    init(username: String, bio: String, following: Int, followers: Int) {
+    init(username: String, bio: String, following: [UserProfile], followers: [UserProfile]) {
         self.username = username
         self.bio = bio
-        self.following = following
-        self.followers = followers
+        self.following = []
+        self.followers = []
+        self.following_count = following.count
+        self.followers_count = followers.count
+        self.createdPosts = []
+        self.likedPosts = []
     }
 }
+
 let SAMPLE_PROFILE:[UserProfile] = [
-    UserProfile(username: "Bob01", bio: "Love movies and cooking", following: 240, followers: 300),
-    UserProfile(username: "Alice_Woods", bio: "UNCW '23", following: 30, followers: 50),
-    UserProfile(username: "ClaireM", bio: "Wilmington, NC", following: 1000, followers: 500),
+    UserProfile(username: "Bob01", bio: "Love movies and cooking", following: [], followers: []),
+    UserProfile(username: "Alice_Woods", bio: "UNCW '23", following: [], followers: []),
+    UserProfile(username: "ClaireM", bio: "Wilmington, NC", following: [], followers: [])
 ]
