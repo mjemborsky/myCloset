@@ -7,14 +7,27 @@
 
 import SwiftUI
 
+// UI for an individual post "cell" - responsible for all formatting of buttons, etc..
 struct PostCell: View {
+    let post: Post
+    
+    // could include "placeholder" eventually using .redacted, for when it is loading
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        // VStack for all post info
+        VStack {
+            // HStack for profile image, profile username
+            HStack {
+                
+            }
+            // insert image
+            // another HStack for like and save option
+            HStack {
+                
+            }
+        }
+        
+        
+        Text(post.postDescription)
     }
 }
 
-struct PostCell_Previews: PreviewProvider {
-    static var previews: some View {
-        PostCell()
-    }
-}
