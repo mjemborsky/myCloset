@@ -3,30 +3,34 @@
 //  Created by Michael Emborsky on 2/21/23.
 
 import Foundation
+let currentdate = NSDate()
 
 struct Post {
     //  Description: Data class for storing posts of outfits, which are stored to the post
     //               database. Types of information stored includes post number, date added,
     //               likes, etc...
-    var postNumber: Int
+    // Need some generator for ID, that increments with every post in the system
+    var postID: Int
     var postTime: NSDate
+    var postCreator: UserProfile
     var postDescription: String
     var postLikes: [UserProfile]
+    var postSaves: [UserProfile]
     var postTags: [String]
-    var postImageLink: String?
-    var outfitPosted: outfit
-    var createdBy: UserProfile
+    var postImage: String?
+    var linkedOutfit: outfit
     
     
-    init(postNumber: Int, outfitPosted: outfit, createdBy: UserProfile) {
-        self.postNumber = postNumber
-        self.postTime = NSDate()
-        self.postDescription = String()
-        self.postLikes = []
-        self.postTags = []
-        self.postImageLink = String()
-        self.outfitPosted = outfitPosted
-        self.createdBy = createdBy
+    init(postID: Int, postTime: NSDate, postCreator: UserProfile, postDescription: String, postLikes: [UserProfile], postSaves: [UserProfile], postTags: [String], postImage: String?, linkedOutfit: outfit) {
+        self.postID = postID
+        self.postCreator = postCreator
+        self.postTime = postTime
+        self.postDescription = postDescription
+        self.postLikes = postLikes
+        self.postSaves = postSaves
+        self.postTags = postTags
+        self.postImage = postImage
+        self.linkedOutfit = linkedOutfit
     }
     
     func createPost() {
@@ -34,7 +38,7 @@ struct Post {
 }
 //not sure how to format NSDate here
 let SAMPLE_POST:[Post] = [
-    //Post(postNumber: 1, postTime: NSDate, postDescription: "My favorite outfit", postLikes: [], postTags: [], postImageLink: "favorite_outfit.heic"),
-    //Post(postNumber: 2, postTime: NSDate, postDescription: "Beach Day", postLikes: [], postTags: [], postImageLink: "beach_outfit.heic"),
-    //Post(postNumber: 3, postTime: NSDate, postDescription: "At the concert!", postLikes: [], postTags: [], postImageLink: "rockstar_outfit.heic")
+    Post(postID: 1, postTime: currentdate, postCreator: SAMPLE_PROFILE[1], postDescription: "My favorite outfit", postLikes: [SAMPLE_PROFILE[1], SAMPLE_PROFILE[2]], postSaves: [SAMPLE_PROFILE[1], SAMPLE_PROFILE[2]], postTags: ["cardigan", "comfort"], postImage: "favorite_outfit.heic", linkedOutfit: SAMPLE_OUTFIT[1]),
+    Post(postID: 2, postTime: currentdate, postCreator: SAMPLE_PROFILE[1], postDescription: "Beach Day", postLikes: [SAMPLE_PROFILE[2]], postSaves: [SAMPLE_PROFILE[1], SAMPLE_PROFILE[3]], postTags: ["beach", "swimming"], postImage: "beach_outfit.heic", linkedOutfit: SAMPLE_OUTFIT[1]),
+    Post(postID: 3, postTime: currentdate, postCreator: SAMPLE_PROFILE[1], postDescription: "At the Concert!", postLikes: [SAMPLE_PROFILE[1], SAMPLE_PROFILE[2], SAMPLE_PROFILE[3]], postSaves: [SAMPLE_PROFILE[2], SAMPLE_PROFILE[3]], postTags: ["boujee", "rave"], postImage: "rockstar_outfit.heic", linkedOutfit: SAMPLE_OUTFIT[1]),
 ]

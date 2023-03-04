@@ -14,7 +14,7 @@ class PostViewModel: ObservableObject {
     
     
     // Delete when database is set up and integrated
-//    init() {
-//        let post1 = SAMPLE_POST
-//    }
+    init() {
+        let post1 = SAMPLE_POST
+    }
 }
