@@ -20,7 +20,6 @@
 		9452645429A542A200D24D5C /* ClothingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9452645329A542A200D24D5C /* ClothingItem.swift */; };
 		C3671E3129B3004F006BABAD /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3671E3029B3004F006BABAD /* FeedView.swift */; };
 		C3671E3329B30060006BABAD /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3671E3229B30060006BABAD /* PostCell.swift */; };
-		C3671E3529B30118006BABAD /* PostViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3671E3429B30118006BABAD /* PostViewModel.swift */; };
 		C37FBBB629A5436D00E23648 /* post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37FBBB529A5436D00E23648 /* post.swift */; };
 /* End PBXBuildFile section */
 
@@ -58,7 +57,6 @@
 		9452645329A542A200D24D5C /* ClothingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothingItem.swift; sourceTree = "<group>"; };
 		C3671E3029B3004F006BABAD /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		C3671E3229B30060006BABAD /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
-		C3671E3429B30118006BABAD /* PostViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostViewModel.swift; sourceTree = "<group>"; };
 		C37FBBB529A5436D00E23648 /* post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = post.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -115,7 +113,6 @@
 				627B337229A6E31500F546A2 /* LoginView.swift */,
 				C3671E3029B3004F006BABAD /* FeedView.swift */,
 				C3671E3229B30060006BABAD /* PostCell.swift */,
-				C3671E3429B30118006BABAD /* PostViewModel.swift */,
 				627B337429A6E33800F546A2 /* UserLoginData.swift */,
 				623503D1299BEE5D002BA53C /* Assets.xcassets */,
 				623503D3299BEE5D002BA53C /* Preview Content */,
@@ -281,7 +278,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C3671E3529B30118006BABAD /* PostViewModel.swift in Sources */,
 				C3671E3129B3004F006BABAD /* FeedView.swift in Sources */,
 				9452645429A542A200D24D5C /* ClothingItem.swift in Sources */,
 				C37FBBB629A5436D00E23648 /* post.swift in Sources */,

@@ -8,17 +8,38 @@
 import SwiftUI
 
 // driving Post page
-// pass in data from postviewmodel
+// Sets up page UI and pulls posts from a database. Uses the postCell formatting to format each one
 struct FeedView: View {
     var body: some View {
         NavigationView  {
             ScrollView(.vertical) {
-//                Display posts here
-//                ForEach(Post.PostViewModel) (post in
-//                PostViewModel(post: post))
+                Divider()
+                    .foregroundColor(.gray)
+                // display posts here
+                // REPLACE with pulling with database when implemented
+                ForEach(SAMPLE_POST) { Post in
+                    PostCell(post: Post)
+                }
+                    
+            }
+            //Edit appearance of top links (including settings link?)
+            .navigationTitle("myCloset")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Image(systemName: "person.crop.circle.fill")
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Image(systemName: "gear")
+                }
             }
         }
-        .navigationTitle("Home")
-        
+    }
+}
+ 
+
+struct FeedView_Previews: PreviewProvider {
+    static var previews: some View {
+        FeedView()
     }
 }

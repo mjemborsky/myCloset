@@ -35,3 +35,8 @@ let SAMPLE_PROFILE:[UserProfile] = [
     UserProfile(username: "Alice_Woods", bio: "UNCW '23", following: [], followers: []),
     UserProfile(username: "ClaireM", bio: "Wilmington, NC", following: [], followers: [])
 ]
+
+// simple getter function to pass in a profile and recieve back username as a string
+func getUsername(UserProfile: UserProfile) -> String {
+    return UserProfile.username
+}
