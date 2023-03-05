@@ -16,22 +16,23 @@ struct PostCell: View {
         // VStack for all post info
         VStack {
             // HStack for profile image, profile username
-            HStack (spacing: 16) {
+            HStack (spacing: 10) {
                 // this is the user profile pic on each post
-                Image("favorite_outfit.heic")
+                Image(systemName: "person.crop.circle.fill")
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 50, height: 50)
+                    .frame(width: 25, height: 25)
                     .clipShape(Circle())
                 // this is the username of post creator
                 Text(getUsername(UserProfile:post.postCreator))
-                    .font(.title2)
+                    .font(.headline)
                     .fontWeight(.semibold)
+                Spacer()
             }
             .padding(.horizontal, 8)
             
             // insert image
-            Image("favorite_outfit.heic")
+            Image(systemName: "photo.artframe")
                 .resizable()
                 .scaledToFill()
                 .frame(width: UIScreen.main.bounds.width,
@@ -41,6 +42,8 @@ struct PostCell: View {
             HStack (spacing: 16) {
                 // should be replaced with a heart or like button
                 Image(systemName: "heart")
+                Text("\((post.postLikes).count) Likes")
+                    .font(.headline)
                 
                 Spacer()
                 
@@ -48,24 +51,22 @@ struct PostCell: View {
                 Image(systemName: "bookmark")
             }
             .font(.title2)
-            .padding(8)
+            .padding(6)
             
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 4) {
                 HStack {
-                    Text("\((post.postLikes).count) Likes")
+                    Text((getUsername(UserProfile:post.postCreator)))
                         .font(.headline)
-                    Spacer()
+                    + Text(" " + post.postDescription)
                 }
-                
-                Text((getUsername(UserProfile:post.postCreator)))
-                    .font(.headline)
-                
-                + Text(" " + post.postDescription)
-                     
+                .frame(maxWidth: .infinity, alignment: .leading)
                 Text(getDateinString(Date:post.postTime))
                     .font(.footnote)
                     .foregroundColor(.gray)
             }
+            .padding(.horizontal)
+            Spacer()
+            Spacer()
         }
     }
 }

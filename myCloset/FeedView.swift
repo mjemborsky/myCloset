@@ -19,6 +19,7 @@ struct FeedView: View {
                 // REPLACE with pulling with database when implemented
                 ForEach(SAMPLE_POST) { Post in
                     PostCell(post: Post)
+                    Spacer()
                 }
                     
             }
