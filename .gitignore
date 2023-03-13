@@ -16,7 +16,5 @@ build/
 *.xccheckout
 xcuserdata/
 *.moved-aside
-myCloset.xcodeproj/project.xcworkspace/xcuserdata/ryan.xcuserdatad/UserInterfaceState.xcuserstate
-.DS_Store
 myCloset.xcodeproj/project.pbxproj
 myCloset/.DS_Store
