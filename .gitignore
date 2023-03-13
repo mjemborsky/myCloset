@@ -18,3 +18,7 @@ xcuserdata/
 *.moved-aside
 myCloset.xcodeproj/project.pbxproj
 myCloset/.DS_Store
+.gitignore
+myCloset.xcodeproj/project.pbxproj
+myCloset.xcodeproj/project.xcworkspace/xcuserdata/ryan.xcuserdatad/UserInterfaceState.xcuserstate
+myCloset/ClothingItem.swift
