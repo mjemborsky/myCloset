@@ -6,10 +6,16 @@
 //
 
 import SwiftUI
+import Firebase
 
 
 @main
 struct myClosetApp: App {
+    
+    init() {
+        FirebaseApp.configure()
+    }
+    
     var body: some Scene {
         WindowGroup {
             LoginView()

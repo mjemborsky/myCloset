@@ -6,38 +6,68 @@
 //
 
 import SwiftUI
+import Firebase
 
 struct LoginView: View {
-    @State private var username: String = ""
+    @State private var email: String = ""
     @State private var password: String = ""
 
     var body: some View {
         VStack {
-            Text("myCloset")
-                .font(.largeTitle)
-                .foregroundColor(.blue)
-                .padding(.bottom, 50)
-            TextField("Username or email", text: $username )
+            Spacer()
+            Image("my closet")
+                .resizable()
+                .frame(width:250, height: 100)
+                .padding()
+            TextField("Email", text: $email )
                 .padding()
                 .background(Color.gray.opacity(0.05))
-                .cornerRadius(5)
+                .cornerRadius(10)
                 .padding(.bottom, 10)
             SecureField("Password", text: $password)
                 .padding()
                 .background(Color.gray.opacity(0.05))
-                .cornerRadius(5)
+                .cornerRadius(10)
                 .padding(.bottom, 30)
             Button(action: {
-                // Handle action
+                // login
             }) {
                 Text("Login")
                     .foregroundColor(.white)
                     .frame(width: 200, height: 50)
-                    .background(Color.blue)
-                    .cornerRadius(5)
+                    .background(Color.black)
+                    .cornerRadius(7)
             }
+            Spacer()
+            HStack {
+                Button(action: {
+                    signup()
+                }) {
+                    Text("Sign Up")
+                        .foregroundColor(.blue)
+                        .frame(width: 150, height: 50, alignment: .center)
+                }
+
+                Button(action: {
+                    // forgot password
+                }) {
+                    Text("Forgot Password?")
+                        .foregroundColor(.blue)
+                        .frame(width: 150, height: 50, alignment: .center)
+                }
+            }
+            .padding(.bottom, 1)
         }
         .padding()
+    }
+    
+    func signup() {
+        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+            if error != nil {
+                print(error!.localizedDescription)
+            }
+            
+        }
     }
 }
 

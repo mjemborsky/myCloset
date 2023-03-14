@@ -9,13 +9,11 @@ import Foundation
 
 
 class UserLoginData {
-    var username: String
     var password: String
     var email: String
 
     
-    init(username: String, password: String, email: String) {
-        self.username = username
+    init(password: String, email: String) {
         self.password = password
         self.email = email
 
@@ -23,6 +21,6 @@ class UserLoginData {
 }
 
 let SAMPLE_USERLOGINDATA:[UserLoginData] = [
-    UserLoginData(username: "jonahgloss", password: "myclosetfan21", email: "jonahgloss@gmail.com"),
-    UserLoginData(username: "elicopeland", password: "rockymountain11", email: "elicopeland@gmail.com"),
-    UserLoginData(username: "rielymurray", password: "tinroof365", email: "rielymurray@gmail.com")]
+    UserLoginData(password: "myclosetfan21", email: "jonahgloss@gmail.com"),
+    UserLoginData(password: "rockymountain11", email: "elicopeland@gmail.com"),
+    UserLoginData(password: "tinroof365", email: "rielymurray@gmail.com")]
