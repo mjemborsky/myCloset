@@ -15,6 +15,8 @@
 		623503DF299BEE5D002BA53C /* myClosetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623503DE299BEE5D002BA53C /* myClosetTests.swift */; };
 		623503E9299BEE5D002BA53C /* myClosetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623503E8299BEE5D002BA53C /* myClosetUITests.swift */; };
 		623503EB299BEE5D002BA53C /* myClosetUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623503EA299BEE5D002BA53C /* myClosetUITestsLaunchTests.swift */; };
+		6264376C29C213E600898FB6 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6264376B29C213E600898FB6 /* ImagePicker.swift */; };
+		6264376E29C213FB00898FB6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6264376D29C213FB00898FB6 /* ContentView.swift */; };
 		627B337329A6E31500F546A2 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627B337229A6E31500F546A2 /* LoginView.swift */; };
 		627B337529A6E33800F546A2 /* UserLoginData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627B337429A6E33800F546A2 /* UserLoginData.swift */; };
 		62E33C8E29C00B5200A0F08E /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 62E33C8D29C00B5200A0F08E /* FirebaseAuth */; };
@@ -57,6 +59,8 @@
 		623503E4299BEE5D002BA53C /* myClosetUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = myClosetUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		623503E8299BEE5D002BA53C /* myClosetUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myClosetUITests.swift; sourceTree = "<group>"; };
 		623503EA299BEE5D002BA53C /* myClosetUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myClosetUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		6264376B29C213E600898FB6 /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		6264376D29C213FB00898FB6 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		627B337229A6E31500F546A2 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		627B337429A6E33800F546A2 /* UserLoginData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoginData.swift; sourceTree = "<group>"; };
 		62E33C8B29C0067200A0F08E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -120,17 +124,15 @@
 			isa = PBXGroup;
 			children = (
 				623503CD299BEE5C002BA53C /* myClosetApp.swift */,
-				C37FBBB529A5436D00E23648 /* post.swift */,
 				942F31F229BFF4C200BDD3B0 /* ClosetView.swift */,
 				627B337229A6E31500F546A2 /* LoginView.swift */,
-				627B337429A6E33800F546A2 /* UserLoginData.swift */,
 				C37FBBB529A5436D00E23648 /* post.swift */,
 				C3671E3029B3004F006BABAD /* FeedView.swift */,
 				C3671E3229B30060006BABAD /* PostCell.swift */,
+				6264376D29C213FB00898FB6 /* ContentView.swift */,
+				6264376B29C213E600898FB6 /* ImagePicker.swift */,
 				942F31F429BFF51B00BDD3B0 /* VerifyTag.swift */,
 				627B337429A6E33800F546A2 /* UserLoginData.swift */,
-				623503D1299BEE5D002BA53C /* Assets.xcassets */,
-				623503D3299BEE5D002BA53C /* Preview Content */,
 				9452645329A542A200D24D5C /* ClothingItem.swift */,
 				3744E74829A6B83000D74B5A /* UserProfile.swift */,
 				3394603629A54102004884EB /* outfit.swift */,
@@ -314,6 +316,8 @@
 				942F31F329BFF4C200BDD3B0 /* ClosetView.swift in Sources */,
 				3394603729A54102004884EB /* outfit.swift in Sources */,
 				942F31F529BFF51B00BDD3B0 /* VerifyTag.swift in Sources */,
+				6264376C29C213E600898FB6 /* ImagePicker.swift in Sources */,
+				6264376E29C213FB00898FB6 /* ContentView.swift in Sources */,
 				623503CE299BEE5C002BA53C /* myClosetApp.swift in Sources */,
 				3744E74929A6B83000D74B5A /* UserProfile.swift in Sources */,
 			);
