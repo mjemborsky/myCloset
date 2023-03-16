@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3394603729A54102004884EB /* outfit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3394603629A54102004884EB /* outfit.swift */; };
+		3731167929C27226008F94B0 /* CollageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3731167829C27226008F94B0 /* CollageView.swift */; };
+		3731167B29C27314008F94B0 /* OutfitItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3731167A29C27314008F94B0 /* OutfitItemCell.swift */; };
 		3744E74929A6B83000D74B5A /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3744E74829A6B83000D74B5A /* UserProfile.swift */; };
 		623503CE299BEE5C002BA53C /* myClosetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623503CD299BEE5C002BA53C /* myClosetApp.swift */; };
 		623503D2299BEE5D002BA53C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 623503D1299BEE5D002BA53C /* Assets.xcassets */; };
@@ -49,6 +51,8 @@
 
 /* Begin PBXFileReference section */
 		3394603629A54102004884EB /* outfit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = outfit.swift; sourceTree = "<group>"; };
+		3731167829C27226008F94B0 /* CollageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollageView.swift; sourceTree = "<group>"; };
+		3731167A29C27314008F94B0 /* OutfitItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitItemCell.swift; sourceTree = "<group>"; };
 		3744E74829A6B83000D74B5A /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		623503CA299BEE5C002BA53C /* myCloset.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myCloset.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		623503CD299BEE5C002BA53C /* myClosetApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myClosetApp.swift; sourceTree = "<group>"; };
@@ -136,6 +140,8 @@
 				9452645329A542A200D24D5C /* ClothingItem.swift */,
 				3744E74829A6B83000D74B5A /* UserProfile.swift */,
 				3394603629A54102004884EB /* outfit.swift */,
+				3731167829C27226008F94B0 /* CollageView.swift */,
+				3731167A29C27314008F94B0 /* OutfitItemCell.swift */,
 				623503D1299BEE5D002BA53C /* Assets.xcassets */,
 				62E33C8B29C0067200A0F08E /* Info.plist */,
 				62E33C9129C00BBB00A0F08E /* GoogleService-Info.plist */,
@@ -311,12 +317,14 @@
 				9452645429A542A200D24D5C /* ClothingItem.swift in Sources */,
 				C37FBBB629A5436D00E23648 /* post.swift in Sources */,
 				627B337329A6E31500F546A2 /* LoginView.swift in Sources */,
+				3731167929C27226008F94B0 /* CollageView.swift in Sources */,
 				627B337529A6E33800F546A2 /* UserLoginData.swift in Sources */,
 				C3671E3329B30060006BABAD /* PostCell.swift in Sources */,
 				942F31F329BFF4C200BDD3B0 /* ClosetView.swift in Sources */,
 				3394603729A54102004884EB /* outfit.swift in Sources */,
 				942F31F529BFF51B00BDD3B0 /* VerifyTag.swift in Sources */,
 				6264376C29C213E600898FB6 /* ImagePicker.swift in Sources */,
+				3731167B29C27314008F94B0 /* OutfitItemCell.swift in Sources */,
 				6264376E29C213FB00898FB6 /* ContentView.swift in Sources */,
 				623503CE299BEE5C002BA53C /* myClosetApp.swift in Sources */,
 				3744E74929A6B83000D74B5A /* UserProfile.swift in Sources */,
