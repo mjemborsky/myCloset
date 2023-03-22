@@ -11,38 +11,53 @@ import Firebase
 struct LoginView: View {
     @State private var email: String = ""
     @State private var password: String = ""
+    @State private var showSignUpPage = false
 
     var body: some View {
+        
         VStack {
+            
             Spacer()
+            
             Image("my closet")
                 .resizable()
                 .frame(width:250, height: 100)
                 .padding()
+            
             TextField("Email", text: $email )
                 .padding()
                 .background(Color.gray.opacity(0.05))
                 .cornerRadius(10)
                 .padding(.bottom, 10)
+                .textInputAutocapitalization(.never)
+
             SecureField("Password", text: $password)
                 .padding()
                 .background(Color.gray.opacity(0.05))
                 .cornerRadius(10)
                 .padding(.bottom, 30)
+                .textInputAutocapitalization(.never)
+            
             Button(action: {
                 // login
             }) {
+                
                 Text("Login")
                     .foregroundColor(.white)
                     .frame(width: 200, height: 50)
                     .background(Color.black)
                     .cornerRadius(7)
+                
             }
+            
             Spacer()
+            
             HStack {
+                
                 Button(action: {
-                    signup()
+                    self.showSignUpPage = true
                 }) {
+                    
                     Text("Sign Up")
                         .foregroundColor(.blue)
                         .frame(width: 150, height: 50, alignment: .center)
@@ -51,13 +66,20 @@ struct LoginView: View {
                 Button(action: {
                     // forgot password
                 }) {
+                    
                     Text("Forgot Password?")
                         .foregroundColor(.blue)
                         .frame(width: 150, height: 50, alignment: .center)
                 }
             }
+            
             .padding(.bottom, 1)
         }
+        
+        .sheet(isPresented: $showSignUpPage) {
+            SignUpPage()
+        }
+        
         .padding()
     }
     
