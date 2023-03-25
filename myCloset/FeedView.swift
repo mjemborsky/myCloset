@@ -10,6 +10,7 @@ import SwiftUI
 // driving Post page
 // Sets up page UI and pulls posts from a database. Uses the postCell formatting to format each one
 struct FeedView: View {
+    @State var menuOpened = false
     var body: some View {
         NavigationView  {
             ScrollView(.vertical) {
@@ -21,7 +22,6 @@ struct FeedView: View {
                     PostCell(post: Post)
                     Spacer()
                 }
-                    
             }
             //Edit appearance of top links (including settings link?)
             .navigationTitle("myCloset")
@@ -35,8 +35,29 @@ struct FeedView: View {
                 }
             }
         }
+        ZStack {
+            if !menuOpened {
+                Button(action: {
+                    self.menuOpened.toggle()
+                }, label: {
+                    Text("Open Closet")
+                        .frame(width: 200, height: 50, alignment: .center)
+                        
+                })
+                .frame(maxHeight: .infinity, alignment: .bottom)
+            }
+            SideMenu(width: 250,
+                    menuOpened: menuOpened,
+                    toggleMenu: toggleMenu)
+            }
+        }
+        func toggleMenu() {
+            menuOpened.toggle()
+        }
     }
-}
+
+
+
  
 
 struct FeedView_Previews: PreviewProvider {
