@@ -86,7 +86,7 @@ struct ContentView: View {
         let fileRef = storageRef.child(path)
         
         // Upload that data
-        let uploadTask = fileRef.putData(imageData, metadata: nil) { metadata, error in
+        let uploadTask = fileRef.putData(imageData!, metadata: nil) { metadata, error in
             // Check for errors
             
             if error == nil && metadata != nil {
