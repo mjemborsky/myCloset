@@ -9,56 +9,32 @@ import SwiftUI
 
 // driving Post page
 // Sets up page UI and pulls posts from a database. Uses the postCell formatting to format each one
+
+
 struct FeedView: View {
-    @State var menuOpened = false
+    @State private var toggleMenu: Bool = false
     var body: some View {
-        NavigationView  {
-            ScrollView(.vertical) {
-                Divider()
-                    .foregroundColor(.gray)
-                // display posts here
-                // REPLACE with pulling with database when implemented
-                ForEach(SAMPLE_POST) { Post in
-                    PostCell(post: Post)
-                    Spacer()
-                }
-            }
-            //Edit appearance of top links (including settings link?)
-            .navigationTitle("myCloset")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Image(systemName: "person.crop.circle.fill")
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Image(systemName: "gear")
-                }
-            }
-        }
         ZStack {
-            if !menuOpened {
-                Button(action: {
-                    self.menuOpened.toggle()
-                }, label: {
-                    Text("Open Closet")
-                        .frame(width: 200, height: 50, alignment: .center)
-                        
-                })
-                .frame(maxHeight: .infinity, alignment: .bottom)
+            NavigationView  {
+                ScrollView(.vertical) {
+                    Divider()
+                        .foregroundColor(.gray)
+                    // display posts here
+                    // REPLACE with pulling with database when implemented
+                    ForEach(SAMPLE_POST) { Post in
+                        PostCell(post: Post)
+                        Spacer()
+                    }
+                }
+               
+                //Edit appearance of top links (including settings link?)
+                .navigationTitle("myCloset")
+                .navigationBarTitleDisplayMode(.inline)
             }
-            SideMenu(width: 250,
-                    menuOpened: menuOpened,
-                    toggleMenu: toggleMenu)
-            }
-        }
-        func toggleMenu() {
-            menuOpened.toggle()
+            MenuView(isOpen: $toggleMenu)
         }
     }
-
-
-
- 
+}
 
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
