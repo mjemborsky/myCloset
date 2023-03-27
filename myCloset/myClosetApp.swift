@@ -11,6 +11,7 @@ import Firebase
 
 @main
 struct myClosetApp: App {
+    @StateObject var clothingItemManager = ClothingItemManager()
     
     init() {
         FirebaseApp.configure()
