@@ -10,6 +10,7 @@
 		3394603729A54102004884EB /* outfit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3394603629A54102004884EB /* outfit.swift */; };
 		3731167929C27226008F94B0 /* CollageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3731167829C27226008F94B0 /* CollageView.swift */; };
 		3731167B29C27314008F94B0 /* OutfitItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3731167A29C27314008F94B0 /* OutfitItemCell.swift */; };
+		3731167D29D0A1D5008F94B0 /* saveOutfitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3731167C29D0A1D5008F94B0 /* saveOutfitView.swift */; };
 		3744E74929A6B83000D74B5A /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3744E74829A6B83000D74B5A /* UserProfile.swift */; };
 		623503CE299BEE5C002BA53C /* myClosetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623503CD299BEE5C002BA53C /* myClosetApp.swift */; };
 		623503D2299BEE5D002BA53C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 623503D1299BEE5D002BA53C /* Assets.xcassets */; };
@@ -55,6 +56,7 @@
 		3394603629A54102004884EB /* outfit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = outfit.swift; sourceTree = "<group>"; };
 		3731167829C27226008F94B0 /* CollageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollageView.swift; sourceTree = "<group>"; };
 		3731167A29C27314008F94B0 /* OutfitItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutfitItemCell.swift; sourceTree = "<group>"; };
+		3731167C29D0A1D5008F94B0 /* saveOutfitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = saveOutfitView.swift; sourceTree = "<group>"; };
 		3744E74829A6B83000D74B5A /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		623503CA299BEE5C002BA53C /* myCloset.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myCloset.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		623503CD299BEE5C002BA53C /* myClosetApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myClosetApp.swift; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				3394603629A54102004884EB /* outfit.swift */,
 				3731167829C27226008F94B0 /* CollageView.swift */,
 				3731167A29C27314008F94B0 /* OutfitItemCell.swift */,
+				3731167C29D0A1D5008F94B0 /* saveOutfitView.swift */,
 				623503D1299BEE5D002BA53C /* Assets.xcassets */,
 				62E33C8B29C0067200A0F08E /* Info.plist */,
 				9476506B29D119CC0000E12D /* GoogleService-Info.plist */,
@@ -323,6 +326,7 @@
 				9452645429A542A200D24D5C /* ClothingItem.swift in Sources */,
 				C37FBBB629A5436D00E23648 /* post.swift in Sources */,
 				627B337329A6E31500F546A2 /* LoginView.swift in Sources */,
+				3731167D29D0A1D5008F94B0 /* saveOutfitView.swift in Sources */,
 				3731167929C27226008F94B0 /* CollageView.swift in Sources */,
 				9476506A29D111430000E12D /* NewClothingItemView.swift in Sources */,
 				627B337529A6E33800F546A2 /* UserLoginData.swift in Sources */,
