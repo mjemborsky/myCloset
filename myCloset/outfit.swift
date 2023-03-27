@@ -6,24 +6,24 @@
 //
 
 import Foundation
-struct outfit{
+
+struct outfit: Identifiable{
+    let id = UUID()
     var title: String
     var outfitTag: String
-    var  outfitID: Int
     var  itemsUsed: [ClothingItem]
     
-    init(title: String, tag: String, outfitID: Int, itemsUsed: [ClothingItem]){
+    init(id: UUID, title: String, tag: String, itemsUsed: [ClothingItem]){
         self.title = title
         self.outfitTag = tag
-        self.outfitID = outfitID
         self.itemsUsed = itemsUsed
     }
 }
 //needs ClothingItem for sample posts
 let SAMPLE_OUTFIT:[outfit] = [
-    outfit(title:"Date", tag:"dress", outfitID:1, itemsUsed:[]),
-    outfit(title:"Picnic", tag:"skirt", outfitID:2, itemsUsed:[]),
-    outfit(title:"School", tag:"pants", outfitID:3, itemsUsed:[])
+    outfit(id: UUID(), title:"Date", tag:"dress", itemsUsed:[]),
+    outfit(id: UUID(), title:"Picnic", tag:"skirt", itemsUsed:[]),
+    outfit(id: UUID(), title:"School", tag:"pants", itemsUsed:[])
 ]
 
  
