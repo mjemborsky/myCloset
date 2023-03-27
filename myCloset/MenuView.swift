@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct MenuView: View {
     @Binding var isOpen: Bool
     var sideBarWidth = UIScreen.main.bounds.size.width * 0.7
@@ -45,7 +46,7 @@ struct MenuView: View {
                     MenuChevron
                     VStack(alignment: .leading, spacing: 20) {
                                         Divider()
-                                        MenuLinks()
+                                        MenuLinks
                                         Divider()
                     }
                     .padding(.top, 80)
@@ -59,6 +60,33 @@ struct MenuView: View {
             }
         }
         
+    // for putting all the menu links together
+    var MenuLinks: some View {
+        VStack(alignment: .leading, spacing: 30) {
+            ForEach(items) { MainMenuItem in
+                MenuLink
+            }
+        }
+        .padding(.vertical, 14)
+        .padding(.leading, 8)
+    }
+    
+    var MenuLink: some View {
+        VStack {
+            HStack {
+                Image(systemName: "house")
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .padding(.trailing, 18)
+                Text("Item")
+                    .foregroundColor(.white)
+                    .font(.body)
+            }
+            .onTapGesture {
+                isOpen.toggle()
+            }
+        }
+    }
     
     var MenuChevron: some View {
         ZStack {
@@ -81,43 +109,29 @@ struct MenuView: View {
         .offset(x: sideBarWidth / 2, y: 50)
         .animation(.default, value: isOpen)
     }
+    
+    
 }
-
-// for an individual menu link
-struct menuLink: View {
-    var icon: String
-    var text: String
-    var body: some View {
-        HStack {
-            Image(systemName: icon)
-                .resizable()
-                .frame(width: 20, height: 20)
-                .padding(.trailing, 18)
-            Text(text)
-                .foregroundColor(.white)
-                .font(.body)
-        }
-        .onTapGesture {
-            print("Tapped on \(text)")
-        }
-    }
-}
-
-// for putting all the menu links together
-struct MenuLinks: View {
-    let items: [MainMenuItem] = [
-        MainMenuItem(id: UUID(), icon: "house", text: "Home"),
-        MainMenuItem(id: UUID(), icon: "magnifyingglass", text: "Search"),
-        MainMenuItem(id: UUID(), icon: "door.sliding.left.hand.closed", text: "myCloset"),
-        MainMenuItem(id: UUID(), icon: "person.circle.fill", text: "myProfile"),
-    ]
-    var body: some View {
-        VStack(alignment: .leading, spacing: 30) {
-            ForEach(items) { MainMenuItem in
-                menuLink(icon: MainMenuItem.icon, text: MainMenuItem.text)
-            }
-        }
-        .padding(.vertical, 14)
-        .padding(.leading, 8)
-    }
-}
+//
+//// for an individual menu link
+//struct menuLink: View {
+//    var icon: String
+//    var text: String
+//    var view: AnyView
+//    var body: some View {
+//        VStack {
+//            HStack {
+//                Image(systemName: icon)
+//                    .resizable()
+//                    .frame(width: 20, height: 20)
+//                    .padding(.trailing, 18)
+//                Text(text)
+//                    .foregroundColor(.white)
+//                    .font(.body)
+//            }
+//            .onTapGesture {
+//                isOpen.toggle()
+//            }
+//        }
+//    }
+//}
