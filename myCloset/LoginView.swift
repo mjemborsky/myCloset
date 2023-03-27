@@ -12,6 +12,7 @@ struct LoginView: View {
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var showSignUpPage = false
+    @State private var showFeedView = false
 
     var body: some View {
         
@@ -39,7 +40,7 @@ struct LoginView: View {
                 .textInputAutocapitalization(.never)
             
             Button(action: {
-                // login
+                login()
             }) {
                 
                 Text("Login")
@@ -80,7 +81,21 @@ struct LoginView: View {
             SignUpPage()
         }
         
+        .fullScreenCover(isPresented: $showFeedView) {
+            FeedView()
+        }
+        
         .padding()
+    }
+    
+    func login() {
+        Auth.auth().signIn(withEmail: email, password: password) { result, error in
+            if error != nil {
+                print(error!.localizedDescription)
+            } else {
+                self.showFeedView = true
+            }
+        }
     }
     
     func signup() {
