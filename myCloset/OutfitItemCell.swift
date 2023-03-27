@@ -15,8 +15,7 @@ struct OutfitItemCell: View {
         VStack {
             Image(systemName:"tshirt.fill")
                 .resizable()
-            Text(clothingItem.ItemTag)
-            
+            Text(clothingItem.ItemTag)            
         }
     }
 }
