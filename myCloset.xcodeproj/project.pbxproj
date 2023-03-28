@@ -28,7 +28,6 @@
 		9452645429A542A200D24D5C /* ClothingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9452645329A542A200D24D5C /* ClothingItem.swift */; };
 		C30FB65F29CFAEE100AF1E07 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C30FB65E29CFAEE100AF1E07 /* GoogleService-Info.plist */; };
 		C3651ED329D0EEEB0059EEB4 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3651ED229D0EEEB0059EEB4 /* MenuView.swift */; };
-		C3651ED729D10ACA0059EEB4 /* MainMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3651ED629D10ACA0059EEB4 /* MainMenuItem.swift */; };
 		C3671E3129B3004F006BABAD /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3671E3029B3004F006BABAD /* FeedView.swift */; };
 		C3671E3329B30060006BABAD /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3671E3229B30060006BABAD /* PostCell.swift */; };
 		C37FBBB629A5436D00E23648 /* post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37FBBB529A5436D00E23648 /* post.swift */; };
@@ -75,7 +74,6 @@
 		9452645329A542A200D24D5C /* ClothingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothingItem.swift; sourceTree = "<group>"; };
 		C30FB65E29CFAEE100AF1E07 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C3651ED229D0EEEB0059EEB4 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
-		C3651ED629D10ACA0059EEB4 /* MainMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuItem.swift; sourceTree = "<group>"; };
 		C3671E3029B3004F006BABAD /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		C3671E3229B30060006BABAD /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		C37FBBB529A5436D00E23648 /* post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = post.swift; sourceTree = "<group>"; };
@@ -145,7 +143,6 @@
 				9452645329A542A200D24D5C /* ClothingItem.swift */,
 				3744E74829A6B83000D74B5A /* UserProfile.swift */,
 				3394603629A54102004884EB /* outfit.swift */,
-				C3651ED629D10ACA0059EEB4 /* MainMenuItem.swift */,
 				3731167829C27226008F94B0 /* CollageView.swift */,
 				3731167A29C27314008F94B0 /* OutfitItemCell.swift */,
 				623503D1299BEE5D002BA53C /* Assets.xcassets */,
@@ -319,7 +316,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C3651ED729D10ACA0059EEB4 /* MainMenuItem.swift in Sources */,
 				C3671E3129B3004F006BABAD /* FeedView.swift in Sources */,
 				9452645429A542A200D24D5C /* ClothingItem.swift in Sources */,
 				C37FBBB629A5436D00E23648 /* post.swift in Sources */,

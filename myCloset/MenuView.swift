@@ -10,12 +10,6 @@ import SwiftUI
 
 struct MenuView: View {
     @Binding var isOpen: Bool
-    let items: [MainMenuItem] = [
-        MainMenuItem(id: UUID(), icon: "house", text: "Home", view: AnyView(FeedView())),
-        MainMenuItem(id: UUID(), icon: "magnifyingglass", text: "Search", view: AnyView(FeedView())),
-        MainMenuItem(id: UUID(), icon: "door.sliding.left.hand.closed", text: "myCloset", view: AnyView(ClosetView())),
-        MainMenuItem(id: UUID(), icon: "person.circle.fill", text: "myProfile", view: AnyView(FeedView())),
-    ]
     @Binding var feedSelected: Bool
     @Binding var searchSelected: Bool
     @Binding var closetSelected: Bool
@@ -23,99 +17,114 @@ struct MenuView: View {
     @Binding var hideFeed: Bool
     var sideBarWidth = UIScreen.main.bounds.size.width * 0.7
     var bgColor: Color =
-              Color(.init(
-                      red: 52 / 255,
-                      green: 70 / 255,
-                      blue: 182 / 255,
-                      alpha: 1))
+    Color(.init(
+        red: 52 / 255,
+        green: 70 / 255,
+        blue: 182 / 255,
+        alpha: 1))
     var secondaryColor: Color =
-                  Color(.init(
-                    red: 100 / 255,
-                    green: 174 / 255,
-                    blue: 255 / 255,
-                    alpha: 1))
+    Color(.init(
+        red: 100 / 255,
+        green: 174 / 255,
+        blue: 255 / 255,
+        alpha: 1))
     var body: some View {
         ZStack {
-                GeometryReader { _ in
-                    EmptyView()
-                }
-                .background(.black.opacity(0.6))
-                .opacity(isOpen ? 1 : 0)
-                .animation(.easeInOut.delay(0.2), value: isOpen)
-                .onTapGesture {
-                    isOpen.toggle()
-                }
-                content
+            GeometryReader { _ in
+                EmptyView()
             }
-            .edgesIgnoringSafeArea(.all)
+            .background(.black.opacity(0.6))
+            .opacity(isOpen ? 1 : 0)
+            .animation(.easeInOut.delay(0.2), value: isOpen)
+            .onTapGesture {
+                isOpen.toggle()
+            }
+            content
         }
+        .edgesIgnoringSafeArea(.all)
+    }
     
     var content: some View {
-            HStack(alignment: .top) {
-                ZStack(alignment: .top) {
-                        bgColor
-                        MenuChevron
-                    
-                        VStack(alignment: .leading, spacing: 20) {
-                            Divider()
-                            
-                            MenuLinks
-                            
-                            Divider()
-                        }
-                        .padding(.top, 80)
-                        .padding(.horizontal, 40)
-
-                }
-                .frame(width: sideBarWidth)
-                .offset(x: isOpen ? 0 : -sideBarWidth)
-                .animation(.default, value: isOpen)
+        HStack(alignment: .top) {
+            ZStack(alignment: .top) {
+                bgColor
+                MenuChevron
                 
-                Spacer()
+                VStack(alignment: .leading, spacing: 20) {
+                    Divider()
+                    
+                    MenuLinks
+                    
+                    Divider()
+                }
+                .padding(.top, 80)
+                .padding(.horizontal, 40)
+                
             }
+            .frame(width: sideBarWidth)
+            .offset(x: isOpen ? 0 : -sideBarWidth)
+            .animation(.default, value: isOpen)
+            
+            Spacer()
         }
-        
+    }
+    
     // for putting all the menu links together
     var MenuLinks: some View {
         VStack(alignment: .leading, spacing: 30) {
-                HStack {
-                    Image(systemName: "house")
-                        .resizable()
-                        .frame(width: 20, height: 20)
-                        .padding(.trailing, 18)
-                    NavigationLink("Home", destination: ClosetView())
-                }
-                .onTapGesture {
-                    isOpen.toggle()
-                    feedSelected.toggle()
-                    hideFeed.toggle()
-                    
-                }
+            HStack {
+                Image(systemName: "house")
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .padding(.trailing, 18)
+                Text("Home")
             }
-            .padding(.vertical, 14)
-            .padding(.leading, 8)
+            .onTapGesture {
+                isOpen.toggle()
+                feedSelected.toggle()
+            }
+            HStack {
+                Image(systemName: "magnifyingglass")
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .padding(.trailing, 18)
+                Text("Search")
+            }
+            .onTapGesture {
+                isOpen.toggle()
+                searchSelected.toggle()
+                hideFeed.toggle()
+            }
+            HStack {
+                Image(systemName: "door.sliding.left.hand.closed")
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .padding(.trailing, 18)
+                Text("myCloset")
+            }
+            .onTapGesture {
+                isOpen.toggle()
+                closetSelected.toggle()
+                hideFeed.toggle()
+                
+            }
+            HStack {
+                Image(systemName: "person.circle.fill")
+                    .resizable()
+                    .frame(width: 20, height: 20)
+                    .padding(.trailing, 18)
+                Text("Profile")
+            }
+            .onTapGesture {
+                isOpen.toggle()
+                profileSelected.toggle()
+                hideFeed.toggle()
+                
+            }
+        }
+        .padding(.vertical, 14)
+        .padding(.leading, 8)
     }
-//
-//    var MenuLink: some View {
-//        VStack {
-//            HStack {
-//                Image(systemName: (.getIcon())
-//                    .resizable()
-//                    .frame(width: 20, height: 20)
-//                    .padding(.trailing, 18)
-//                Text(MainMenuItem().getText())
-//                    .foregroundColor(.white)
-//                    .font(.body)
-//            }
-//            .onTapGesture {
-//                isOpen.toggle()
-//                WindowGroup {
-//                    (MainMenuItem().getView())
-//                }
-//            }
-//        }
-//    }
-
     
     var MenuChevron: some View {
         ZStack {
@@ -127,10 +136,10 @@ struct MenuView: View {
                 .onTapGesture {
                     isOpen.toggle()
                 }
-
+            
             Image(systemName: "chevron.right")
                 .rotationEffect(
-                  isOpen ?
+                    isOpen ?
                     Angle(degrees: 180) : Angle(degrees: 0))
                 .offset(x: isOpen ? -4 : 8)
                 .foregroundColor(.blue)
@@ -138,29 +147,4 @@ struct MenuView: View {
         .offset(x: sideBarWidth / 2, y: 50)
         .animation(.default, value: isOpen)
     }
-    
-    
 }
-//
-//// for an individual menu link
-//struct menuLink: View {
-//    var icon: String
-//    var text: String
-//    var view: AnyView
-//    var body: some View {
-//        VStack {
-//            HStack {
-//                Image(systemName: icon)
-//                    .resizable()
-//                    .frame(width: 20, height: 20)
-//                    .padding(.trailing, 18)
-//                Text(text)
-//                    .foregroundColor(.white)
-//                    .font(.body)
-//            }
-//            .onTapGesture {
-//                isOpen.toggle()
-//            }
-//        }
-//    }
-//}

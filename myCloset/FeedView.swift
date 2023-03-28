@@ -38,18 +38,15 @@ struct FeedView: View {
             .navigationTitle("myCloset")
             .navigationBarTitleDisplayMode(.inline)
             MenuView(isOpen: $toggleMenu, feedSelected: $willMoveToFeed, searchSelected: $willMoveToSearch, closetSelected: $willMoveToCloset, profileSelected: $willMoveToProfile, hideFeed: $isHidden)
-            if willMoveToFeed {
-                ClosetView()
-            }
-            if willMoveToSearch {
-                FeedView()
-            }
-            if willMoveToCloset {
-                ClosetView()
-            }
-            if willMoveToProfile {
-                ClosetView()
-            }
+                .sheet(isPresented: $willMoveToSearch) {
+                    FeedView()
+                }
+                .sheet(isPresented: $willMoveToCloset) {
+                    ClosetView()
+                }
+                .sheet(isPresented: $willMoveToProfile) {
+                    FeedView()
+                }
         }
     }
 }
