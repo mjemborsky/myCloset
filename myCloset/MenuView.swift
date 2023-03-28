@@ -10,6 +10,17 @@ import SwiftUI
 
 struct MenuView: View {
     @Binding var isOpen: Bool
+    let items: [MainMenuItem] = [
+        MainMenuItem(id: UUID(), icon: "house", text: "Home", view: AnyView(FeedView())),
+        MainMenuItem(id: UUID(), icon: "magnifyingglass", text: "Search", view: AnyView(FeedView())),
+        MainMenuItem(id: UUID(), icon: "door.sliding.left.hand.closed", text: "myCloset", view: AnyView(ClosetView())),
+        MainMenuItem(id: UUID(), icon: "person.circle.fill", text: "myProfile", view: AnyView(FeedView())),
+    ]
+    @Binding var feedSelected: Bool
+    @Binding var searchSelected: Bool
+    @Binding var closetSelected: Bool
+    @Binding var profileSelected: Bool
+    @Binding var hideFeed: Bool
     var sideBarWidth = UIScreen.main.bounds.size.width * 0.7
     var bgColor: Color =
               Color(.init(
@@ -42,20 +53,24 @@ struct MenuView: View {
     var content: some View {
             HStack(alignment: .top) {
                 ZStack(alignment: .top) {
-                    bgColor
-                    MenuChevron
-                    VStack(alignment: .leading, spacing: 20) {
-                                        Divider()
-                                        MenuLinks
-                                        Divider()
-                    }
-                    .padding(.top, 80)
-                    .padding(.horizontal, 40)
+                        bgColor
+                        MenuChevron
+                    
+                        VStack(alignment: .leading, spacing: 20) {
+                            Divider()
+                            
+                            MenuLinks
+                            
+                            Divider()
+                        }
+                        .padding(.top, 80)
+                        .padding(.horizontal, 40)
+
                 }
                 .frame(width: sideBarWidth)
                 .offset(x: isOpen ? 0 : -sideBarWidth)
                 .animation(.default, value: isOpen)
-
+                
                 Spacer()
             }
         }
@@ -63,30 +78,44 @@ struct MenuView: View {
     // for putting all the menu links together
     var MenuLinks: some View {
         VStack(alignment: .leading, spacing: 30) {
-            ForEach(items) { MainMenuItem in
-                MenuLink
+                HStack {
+                    Image(systemName: "house")
+                        .resizable()
+                        .frame(width: 20, height: 20)
+                        .padding(.trailing, 18)
+                    NavigationLink("Home", destination: ClosetView())
+                }
+                .onTapGesture {
+                    isOpen.toggle()
+                    feedSelected.toggle()
+                    hideFeed.toggle()
+                    
+                }
             }
-        }
-        .padding(.vertical, 14)
-        .padding(.leading, 8)
+            .padding(.vertical, 14)
+            .padding(.leading, 8)
     }
-    
-    var MenuLink: some View {
-        VStack {
-            HStack {
-                Image(systemName: "house")
-                    .resizable()
-                    .frame(width: 20, height: 20)
-                    .padding(.trailing, 18)
-                Text("Item")
-                    .foregroundColor(.white)
-                    .font(.body)
-            }
-            .onTapGesture {
-                isOpen.toggle()
-            }
-        }
-    }
+//
+//    var MenuLink: some View {
+//        VStack {
+//            HStack {
+//                Image(systemName: (.getIcon())
+//                    .resizable()
+//                    .frame(width: 20, height: 20)
+//                    .padding(.trailing, 18)
+//                Text(MainMenuItem().getText())
+//                    .foregroundColor(.white)
+//                    .font(.body)
+//            }
+//            .onTapGesture {
+//                isOpen.toggle()
+//                WindowGroup {
+//                    (MainMenuItem().getView())
+//                }
+//            }
+//        }
+//    }
+
     
     var MenuChevron: some View {
         ZStack {

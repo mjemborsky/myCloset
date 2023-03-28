@@ -17,10 +17,18 @@ struct MainMenuItem: Identifiable {
     
     
 
+    
     public func getIcon() -> String {
-        return self.icon
+        return String(icon)
     }
     
+    public func getText() -> String {
+        return String(text)
+    }
+    
+    public func getView() -> AnyView {
+        return view
+    }
     
 }
 
