@@ -23,15 +23,16 @@
 		6264376E29C213FB00898FB6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6264376D29C213FB00898FB6 /* ContentView.swift */; };
 		627B337329A6E31500F546A2 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627B337229A6E31500F546A2 /* LoginView.swift */; };
 		627B337529A6E33800F546A2 /* UserLoginData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627B337429A6E33800F546A2 /* UserLoginData.swift */; };
+		628C4DCC29D33F1200D29ADF /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 628C4DCB29D33F1200D29ADF /* FirebaseStorage */; };
 		62E33C8E29C00B5200A0F08E /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 62E33C8D29C00B5200A0F08E /* FirebaseAuth */; };
 		62E33C9029C00B5200A0F08E /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 62E33C8F29C00B5200A0F08E /* FirebaseFirestore */; };
 		942F31F329BFF4C200BDD3B0 /* ClosetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942F31F229BFF4C200BDD3B0 /* ClosetView.swift */; };
 		942F31F529BFF51B00BDD3B0 /* VerifyTag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 942F31F429BFF51B00BDD3B0 /* VerifyTag.swift */; };
 		9452645429A542A200D24D5C /* ClothingItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9452645329A542A200D24D5C /* ClothingItem.swift */; };
-		C3651ED329D0EEEB0059EEB4 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3651ED229D0EEEB0059EEB4 /* MenuView.swift */; };
 		9476506829D10D6B0000E12D /* ClothingItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9476506729D10D6B0000E12D /* ClothingItemManager.swift */; };
 		9476506A29D111430000E12D /* NewClothingItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9476506929D111430000E12D /* NewClothingItemView.swift */; };
 		9476506C29D119CC0000E12D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9476506B29D119CC0000E12D /* GoogleService-Info.plist */; };
+		C3651ED329D0EEEB0059EEB4 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3651ED229D0EEEB0059EEB4 /* MenuView.swift */; };
 		C3671E3129B3004F006BABAD /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3671E3029B3004F006BABAD /* FeedView.swift */; };
 		C3671E3329B30060006BABAD /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3671E3229B30060006BABAD /* PostCell.swift */; };
 		C37FBBB629A5436D00E23648 /* post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37FBBB529A5436D00E23648 /* post.swift */; };
@@ -78,10 +79,10 @@
 		942F31F229BFF4C200BDD3B0 /* ClosetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClosetView.swift; sourceTree = "<group>"; };
 		942F31F429BFF51B00BDD3B0 /* VerifyTag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyTag.swift; sourceTree = "<group>"; };
 		9452645329A542A200D24D5C /* ClothingItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothingItem.swift; sourceTree = "<group>"; };
-		C3651ED229D0EEEB0059EEB4 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		9476506729D10D6B0000E12D /* ClothingItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothingItemManager.swift; sourceTree = "<group>"; };
 		9476506929D111430000E12D /* NewClothingItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewClothingItemView.swift; sourceTree = "<group>"; };
 		9476506B29D119CC0000E12D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C3651ED229D0EEEB0059EEB4 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		C3671E3029B3004F006BABAD /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		C3671E3229B30060006BABAD /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		C37FBBB529A5436D00E23648 /* post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = post.swift; sourceTree = "<group>"; };
@@ -94,6 +95,7 @@
 			files = (
 				62E33C8E29C00B5200A0F08E /* FirebaseAuth in Frameworks */,
 				62E33C9029C00B5200A0F08E /* FirebaseFirestore in Frameworks */,
+				628C4DCC29D33F1200D29ADF /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,6 +123,7 @@
 				623503DD299BEE5D002BA53C /* myClosetTests */,
 				623503E7299BEE5D002BA53C /* myClosetUITests */,
 				623503CB299BEE5C002BA53C /* Products */,
+				628C4DCA29D33F1200D29ADF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -190,6 +193,13 @@
 			path = myClosetUITests;
 			sourceTree = "<group>";
 		};
+		628C4DCA29D33F1200D29ADF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -209,6 +219,7 @@
 			packageProductDependencies = (
 				62E33C8D29C00B5200A0F08E /* FirebaseAuth */,
 				62E33C8F29C00B5200A0F08E /* FirebaseFirestore */,
+				628C4DCB29D33F1200D29ADF /* FirebaseStorage */,
 			);
 			productName = myCloset;
 			productReference = 623503CA299BEE5C002BA53C /* myCloset.app */;
@@ -681,6 +692,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		628C4DCB29D33F1200D29ADF /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 62E33C8C29C00B5200A0F08E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
 		62E33C8D29C00B5200A0F08E /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 62E33C8C29C00B5200A0F08E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
