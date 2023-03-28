@@ -19,7 +19,7 @@ struct myClosetApp: App {
     
     var body: some Scene {
         WindowGroup {
-            FeedView()
+            LoginView()
         }
     }
 }
