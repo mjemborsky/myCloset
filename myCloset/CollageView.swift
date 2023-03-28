@@ -146,7 +146,6 @@ struct MenuContent: View {
                     }, label: {
                         Text("Open Closet")
                             .frame(width: 200, height: 50, alignment: .center)
-                        
                     })
                     .frame(maxHeight: .infinity, alignment: .bottom)
                 }
