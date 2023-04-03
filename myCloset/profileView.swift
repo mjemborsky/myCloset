@@ -75,7 +75,8 @@ struct profileView: View {
     var body: some View {
         VStack {
             ProfileHeader(post: SAMPLE_POST[0])
-                    }
+        }
+        
     
     }
     
