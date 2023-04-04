@@ -56,53 +56,53 @@ class ClothingItemManager: ObservableObject {
 
 // image picker code
 
-struct ImagePickers: UIViewControllerRepresentable{
-    
-    @Binding var selectedImage: UIImage?
-    @Binding var isPickerShowing: Bool
-    
-    func makeUIViewController(context: Context) -> some UIViewController {
-        let imagePickers = UIImagePickerController()
-        imagePickers.sourceType = .photoLibrary
-        imagePickers.delegate = context.coordinator // object that can recieve UIImagePickerController events
-        
-        return imagePickers
-    }
-    
-    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
-        
-    }
-    
-    func makeCoordinator() -> Coordinators {
-        return Coordinators(self)
-    }
-}
-
-class Coordinators: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    var parent: ImagePickers
-    
-    init(_ picker: ImagePickers){
-        self.parent = picker
-    }
-
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        // run code when the user has selected an image
-        print("image selected")
-        
-        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
-            // we were able to get the image
-            DispatchQueue.main.async {
-                self.parent.selectedImage = image
-            }
-        }
-        // Dismiss the picker
-        parent.isPickerShowing = false
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        // run code when the user has cancelled the picker UI
-        print("cancelled")
-        parent.isPickerShowing = false
-    }
-}
+//struct ImagePickers: UIViewControllerRepresentable{
+//    
+//    @Binding var selectedImage: UIImage?
+//    @Binding var isPickerShowing: Bool
+//    
+//    func makeUIViewController(context: Context) -> some UIViewController {
+//        let imagePickers = UIImagePickerController()
+//        imagePickers.sourceType = .photoLibrary
+//        imagePickers.delegate = context.coordinator // object that can recieve UIImagePickerController events
+//        
+//        return imagePickers
+//    }
+//    
+//    func updateUIViewController(_ uiViewController: UIViewControllerType, context: Context) {
+//        
+//    }
+//    
+//    func makeCoordinator() -> Coordinators {
+//        return Coordinators(self)
+//    }
+//}
+//
+//class Coordinators: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+//    
+//    var parent: ImagePickers
+//    
+//    init(_ picker: ImagePickers){
+//        self.parent = picker
+//    }
+//
+//    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+//        // run code when the user has selected an image
+//        print("image selected")
+//        
+//        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
+//            // we were able to get the image
+//            DispatchQueue.main.async {
+//                self.parent.selectedImage = image
+//            }
+//        }
+//        // Dismiss the picker
+//        parent.isPickerShowing = false
+//    }
+//    
+//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+//        // run code when the user has cancelled the picker UI
+//        print("cancelled")
+//        parent.isPickerShowing = false
+//    }
+//}
