@@ -6,7 +6,8 @@
 //
 
 import SwiftUI
-import Firebase
+import FirebaseStorage
+import FirebaseFirestore
 
 class ClothingItemManager: ObservableObject {
     @Published var clothingItems: [ClothingItem] = []
@@ -39,10 +40,11 @@ class ClothingItemManager: ObservableObject {
             }
         }
     }
-    func addClothingItem(newItemPhoto: String){
+    func addClothingItem(newItemTag: String, newItemPhoto: String){
+        let path = "images/\(UUID().uuidString).jpg"
         let db = Firestore.firestore()
-        let ref = db.collection("ClothingItems").document(newItemPhoto)
-        ref.setData(["id": 10, "ItemTag": "", "ItemPhoto": newItemPhoto]) {error in
+        let ref = db.collection("ClothingItems").document(newItemTag)
+        ref.setData(["id": 10, "ItemTag": newItemTag, "ItemPhoto": path]) {error in
             if let error = error {
                 print(error.localizedDescription)
             }
