@@ -41,10 +41,11 @@ class ClothingItemManager: ObservableObject {
         }
     }
     func addClothingItem(newItemTag: String, newItemPhoto: String){
-        let path = "images/\(UUID().uuidString).jpg"
+        let clothingPath = UUID().uuidString
+        let imagePath = "images/\(UUID().uuidString).jpg"
         let db = Firestore.firestore()
-        let ref = db.collection("ClothingItems").document(newItemTag)
-        ref.setData(["id": 10, "ItemTag": newItemTag, "ItemPhoto": path]) {error in
+        let ref = db.collection("ClothingItems").document(clothingPath)
+        ref.setData(["id": 10, "ItemTag": newItemTag, "ItemPhoto": imagePath]) {error in
             if let error = error {
                 print(error.localizedDescription)
             }

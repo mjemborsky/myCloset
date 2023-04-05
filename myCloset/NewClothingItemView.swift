@@ -30,7 +30,7 @@ struct NewClothingItemView: View {
                         } label:{
                             Text("Select a Photo")
                         }
-            TextField("Clothing Item", text:$newClothingItem)
+            TextField("Item Tag", text:$newClothingItem)
             
             Button {
                 let path = "images/\(UUID().uuidString).jpg"
