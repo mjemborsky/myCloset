@@ -1,16 +1,17 @@
-//
-//  PostCell.swift
-//  myCloset
-//
-//  Created by Michael Emborsky on 3/3/23.
+// PostCell.swift
+// myCloset
+// Created by Michael Emborsky on 3/3/23.
 //
 
 import SwiftUI
+import FirebaseFirestore
+import FirebaseStorage
 
 // UI for an individual post "cell" - responsible for all formatting of buttons, etc.. of an individual post. This is used by feedView to format all posts.
+
 struct PostCell: View {
     let post: Post
-    
+    @State var images = [UIImage]()
     // could include "placeholder" eventually using .redacted, for when it is loading
     var body: some View {
         // VStack for all post info
@@ -24,7 +25,7 @@ struct PostCell: View {
                     .frame(width: 25, height: 25)
                     .clipShape(Circle())
                 // this is the username of post creator
-                Text(getUsername(UserProfile:post.postCreator))
+                Text(post.postCreator)
                     .font(.headline)
                     .fontWeight(.semibold)
                 Spacer()
@@ -32,7 +33,7 @@ struct PostCell: View {
             .padding(.horizontal, 8)
             
             // insert image
-            Image(systemName: "photo.artframe")
+            Image(uiImage: images[0])
                 .resizable()
                 .scaledToFill()
                 .frame(width: UIScreen.main.bounds.width,
@@ -42,7 +43,7 @@ struct PostCell: View {
             HStack (spacing: 16) {
                 // should be replaced with a heart or like button
                 Image(systemName: "heart")
-                Text("\((post.postLikes).count) Likes")
+                Text(String((post.postLikes).count) + " Likes")
                     .font(.headline)
                 
                 Spacer()
@@ -55,7 +56,7 @@ struct PostCell: View {
             
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
-                    Text((getUsername(UserProfile:post.postCreator)))
+                    Text(post.postCreator)
                         .font(.headline)
                     + Text(" " + post.postDescription)
                 }
@@ -67,13 +68,46 @@ struct PostCell: View {
             .padding(.horizontal)
             Spacer()
             Spacer()
+        
+        }
+        .onAppear {
+            getImages()
         }
     }
+        
+    func getImages() {
+        let db = Firestore.firestore()
+        let path = "gs://mycloset-ea3a8.appspot.com/images/"
+            db.collection("images/").getDocuments { snapshot, error in
+                if error == nil && snapshot != nil {
+                    let storeRef = Storage.storage().reference()
+                    let fileRef = storeRef.child(path)
+                    // need another for post creator picture
+                    fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
+                        if error == nil {
+                            let image = UIImage(data: data!)
+                            DispatchQueue.main.async {
+                                images.append(image!)
+                            }
+                        }
+                        else {
+                            let error = error
+                            print(error?.localizedDescription as Any)
+                        }
+                    }
+                }
+                else {
+                    let error = error
+                    print(error?.localizedDescription as Any)
+                }
+            }
+        }
 }
+
 
 struct PostCellPreview_Previews: PreviewProvider {
     static var previews: some View {
-        PostCell(post: SAMPLE_POST[0])
+        PostCell(post: SAMPLE_POST)
     }
 }
 

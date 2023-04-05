@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Firebase
+import FirebaseFirestore
 
 class ClothingItemManager: ObservableObject {
     @Published var clothingItems: [ClothingItem] = []

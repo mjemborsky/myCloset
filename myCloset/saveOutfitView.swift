@@ -14,6 +14,8 @@ struct saveOutfitView: View {
     @State var titles: [String] = []
     @State var tag: String = ""
     @State var tags: [String] = []
+    let db = Firestore.firestore()
+    let outfitid = UUID().uuidString
     
     var body: some View {
         NavigationView{
@@ -49,12 +51,13 @@ struct saveOutfitView: View {
                 NavigationLink(destination: FeedView()) {
                     Text("Post").padding()
                 }
+                .onTapGesture {
+                    // save as post 
+                }
             }
         }
     }
     func saveoutfit() {
-          let db = Firestore.firestore()
-        let outfitid = UUID().uuidString
         db.collection("Saved Collages").document(outfitid).setData([
             "title": title,
             "tag": tag

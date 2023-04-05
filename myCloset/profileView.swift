@@ -27,7 +27,7 @@ struct ProfileHeader: View {
                         .foregroundColor(Color.white)
                         .padding(.top, 55)
                     VStack {
-                        Text("@\(getUsername(UserProfile:post.postCreator))").font(.system(size: 20).bold()).foregroundColor(.white)
+                        Text("username").font(.system(size: 20).bold()).foregroundColor(.white)
                         HStack {
                             VStack {
                                 Text("321") //Need to add the user profile following count
@@ -74,7 +74,7 @@ struct ProfileHeader: View {
 struct profileView: View {
     var body: some View {
         VStack {
-            ProfileHeader(post: SAMPLE_POST[0])
+            ProfileHeader(post: SAMPLE_POST)
         }
         
     

@@ -40,3 +40,4 @@ let SAMPLE_PROFILE:[UserProfile] = [
 func getUsername(UserProfile: UserProfile) -> String {
     return UserProfile.username
 }
+
