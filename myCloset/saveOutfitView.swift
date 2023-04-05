@@ -14,6 +14,7 @@ struct saveOutfitView: View {
     @State var titles: [String] = []
     @State var tag: String = ""
     @State var tags: [String] = []
+    var view1 = collage()
     
     var body: some View {
         NavigationView{
@@ -25,6 +26,8 @@ struct saveOutfitView: View {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button(action: {
                                 saveoutfit()
+                                let image = view1.asUiImage()
+                                UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
                             }) {
                                 Text("Save")
                             }
@@ -53,7 +56,7 @@ struct saveOutfitView: View {
         }
     }
     func saveoutfit() {
-          let db = Firestore.firestore()
+        let db = Firestore.firestore()
         let outfitid = UUID().uuidString
         db.collection("Saved Collages").document(outfitid).setData([
             "title": title,
@@ -64,9 +67,9 @@ struct saveOutfitView: View {
             }else {
                 print("Document successfully written!")
             }
-              
-            }
+            
         }
+    }
 }
 
     
@@ -88,11 +91,27 @@ struct collage: View {
             }
         }
         .frame(width: 350, height: 400)
-        
     }
-        
-    
 }
+extension collage {
+    func asUiImage() -> UIImage {
+        var uiImage = UIImage(systemName: "exclamationmark.triangle.fill")!
+        let controller = UIHostingController(rootView: self)
+       
+        if let view = controller.view {
+            let contentSize = view.intrinsicContentSize
+            view.bounds = CGRect(origin: .zero, size: contentSize)
+            view.backgroundColor = .clear
+
+            let renderer = UIGraphicsImageRenderer(size: contentSize)
+            uiImage = renderer.image { _ in
+                view.drawHierarchy(in: view.bounds, afterScreenUpdates: true)
+            }
+        }
+        return uiImage
+    }
+}
+
 
 struct saveOutfitView_Previews: PreviewProvider {
     static var previews: some View {
