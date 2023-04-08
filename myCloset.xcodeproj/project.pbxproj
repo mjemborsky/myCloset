@@ -36,6 +36,7 @@
 		C3651ED329D0EEEB0059EEB4 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3651ED229D0EEEB0059EEB4 /* MenuView.swift */; };
 		C3671E3129B3004F006BABAD /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3671E3029B3004F006BABAD /* FeedView.swift */; };
 		C3671E3329B30060006BABAD /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3671E3229B30060006BABAD /* PostCell.swift */; };
+		C36EF28429E2196900356A0F /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36EF28329E2196900356A0F /* SearchView.swift */; };
 		C37FBBB629A5436D00E23648 /* post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37FBBB529A5436D00E23648 /* post.swift */; };
 /* End PBXBuildFile section */
 
@@ -87,6 +88,7 @@
 		C3651ED229D0EEEB0059EEB4 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		C3671E3029B3004F006BABAD /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		C3671E3229B30060006BABAD /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
+		C36EF28329E2196900356A0F /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		C37FBBB529A5436D00E23648 /* post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = post.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -163,6 +165,7 @@
 				3731167A29C27314008F94B0 /* OutfitItemCell.swift */,
 				3731167C29D0A1D5008F94B0 /* saveOutfitView.swift */,
 				37BCAC4029DB3FAA00A6E94C /* profileView.swift */,
+				C36EF28329E2196900356A0F /* SearchView.swift */,
 				623503D1299BEE5D002BA53C /* Assets.xcassets */,
 				62E33C8B29C0067200A0F08E /* Info.plist */,
 				9476506B29D119CC0000E12D /* GoogleService-Info.plist */,
@@ -298,6 +301,7 @@
 			mainGroup = 623503C1299BEE5C002BA53C;
 			packageReferences = (
 				62E33C8C29C00B5200A0F08E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				C36EF27C29E1388F00356A0F /* XCRemoteSwiftPackageReference "FirebaseUI-iOS" */,
 			);
 			productRefGroup = 623503CB299BEE5C002BA53C /* Products */;
 			projectDirPath = "";
@@ -352,6 +356,7 @@
 				627B337529A6E33800F546A2 /* UserLoginData.swift in Sources */,
 				9476506829D10D6B0000E12D /* ClothingItemManager.swift in Sources */,
 				C3671E3329B30060006BABAD /* PostCell.swift in Sources */,
+				C36EF28429E2196900356A0F /* SearchView.swift in Sources */,
 				942F31F329BFF4C200BDD3B0 /* ClosetView.swift in Sources */,
 				3394603729A54102004884EB /* outfit.swift in Sources */,
 				942F31F529BFF51B00BDD3B0 /* VerifyTag.swift in Sources */,
@@ -691,6 +696,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 9.0.0;
+			};
+		};
+		C36EF27C29E1388F00356A0F /* XCRemoteSwiftPackageReference "FirebaseUI-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/FirebaseUI-iOS";
+			requirement = {
+				branch = master;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 struct UserProfile {
     
@@ -41,3 +42,16 @@ func getUsername(UserProfile: UserProfile) -> String {
     return UserProfile.username
 }
 
+
+//
+//func getUserDetails() -> String {
+//    if let user = Auth.auth().currentUser {
+//        let userInfo = [String]()
+//        let providerID: String = user.providerID
+//        let uid: String = user.uid
+//        let displayName: String = user.displayName ?? "username"
+////        let photoURL: String = user.photoURL ?? "gs://mycloset-ea3a8.appspot.com/images/sample1.png"
+//        let email: String = user.email ?? ""
+//
+//    }
+//}

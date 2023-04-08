@@ -37,21 +37,13 @@ struct Post: Identifiable {
         self.linkedOutfit = linkedOutfit
     }
     
-    func createPost(postCreator: String, postDescription: String, postTags: [String], postImage: String) {
-        let db = Firestore.firestore()
-        let id = UUID().uuidString
-        let date = Date()
-        let timestamp = date.timeIntervalSince1970
-        let postLikes = [String]()
-        let postSaves = [String]()
-        let linkedOutfit = "blah"
-        let ref = db.collection("Posts").document(id)
-        ref.setData(["ID": id, "postTime": timestamp, "postCreator": postCreator, "postDescription": postDescription, "postLikes": postLikes, "postSaves": postSaves, "postTags": postTags, "postImage": postImage, "linkedOutfit": linkedOutfit ]) {error in
-            if let error = error {
-                print(error.localizedDescription)
-            }
-        }
+    
+    
+    func getPostImageLink() -> String {
+        return self.postImage
     }
+    
+
 }
 
 
@@ -65,9 +57,27 @@ let SAMPLE_POST = Post(id: UUID(), postTime: currentdate, postCreator: "bob", po
 
 // need function to reformat date into string
 func getDateinString(Date: Date) -> String {
-    let timestamp = Date.timeIntervalSince1970
-    return String(timestamp)
+    let dateFormatter = DateFormatter()
+    dateFormatter.timeZone = TimeZone(abbreviation: "GMT") //Set timezone that you want
+    dateFormatter.locale = NSLocale.current
+    dateFormatter.dateFormat = "MM-dd-yyyy at HH:mm" //Specify your format that you want
+    let strDate = dateFormatter.string(from: Date)
+    return strDate
+
 }
 
 
-
+func createPost(postCreator: String, postDescription: String, postTags: [String], postImage: String, linkedOutfit: String) {
+    let db = Firestore.firestore()
+    let id = UUID().uuidString
+    let date = Date()
+    let timestamp = date.timeIntervalSince1970
+    let postLikes = [String]()
+    let postSaves = [String]()
+    let ref = db.collection("Posts").document(id)
+    ref.setData(["ID": id, "postTime": timestamp, "postCreator": postCreator, "postDescription": postDescription, "postLikes": postLikes, "postSaves": postSaves, "postTags": postTags, "postImage": postImage, "linkedOutfit": linkedOutfit ]) {error in
+        if let error = error {
+            print(error.localizedDescription)
+        }
+    }
+}

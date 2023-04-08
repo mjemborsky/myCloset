@@ -11,9 +11,12 @@ import FirebaseStorage
 
 struct PostCell: View {
     let post: Post
+    
     @State var images = [UIImage]()
     // could include "placeholder" eventually using .redacted, for when it is loading
     var body: some View {
+        let imageLink =  post.getPostImageLink()
+//        var imageView = UIImageView(getImage(imageLink: imageLink))
         // VStack for all post info
         VStack {
             // HStack for profile image, profile username
@@ -33,11 +36,14 @@ struct PostCell: View {
             .padding(.horizontal, 8)
             
             // insert image
-            Image(uiImage: images[0])
-                .resizable()
-                .scaledToFill()
-                .frame(width: UIScreen.main.bounds.width,
-                       height: UIScreen.main.bounds.width)
+            
+//            ImageView()
+//            .view.addSubview(ImageView)
+//            .frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
+//            UIImage(getImage(imageLink: imageLink))
+//                .scaledToFill()
+//                .frame(width: UIScreen.main.bounds.width,
+//                       height: UIScreen.main.bounds.width)
             
             // another HStack for like and save option
             HStack (spacing: 16) {
@@ -68,46 +74,119 @@ struct PostCell: View {
             .padding(.horizontal)
             Spacer()
             Spacer()
-        
         }
         .onAppear {
-            getImages()
+//            getImage(imageLink: imageLink)
         }
     }
+    
+    
+    
+    //
+    //    func getImages(imageLink: String) async {
+    //        let imageLink = URL(string: (imageLink.replacingOccurrences(of: "/images/", with: "")))
+    //        let reference =  Storage.storage().reference(forURL: "gs://mycloset-ea3a8.appspot.com")
+    //        do {
+    //            reference.downloadURL(completion: {(imageLink, error) in
+    //                let data = try Data(contentsOf: imageLink!)
+    //                let image = UIImage(data: data as Data)
+    //                DispatchQueue.main.async {
+    //                    images.append(image!)
+    //                }
+    //            })
+    //        } catch {
+    //            print("Unexpected error: \(error).")
+    //        }
+    //    }
+    //}
+    
+
+
+}
+//
+//func getImage(imageLink: String) -> UIImageView {
+//    let url = URL(string: ("gs://mycloset-ea3a8.appspot.com/images/365C8DBF-92CF-4AB7-B729-38F09524FE3D.jpg"))
+////    let storage = Storage.storage(url: "gs://mycloset-ea3a8.appspot.com/images/").reference()
+////    let storageRef = storage.child("365C8DBF-92CF-4AB7-B729-38F09524FE3D.jpg")
+//    let newImageView: UIImageView = UIImageView()
+//    let placeholder = UIImage(named: "placeholder.jpg")
+//    newImageView.sd_setImage(with: url, placeholderImage: placeholder)
+//    return newImageView
+//}
+//
+//
+//struct ImageView: View {
+////    @State var image: UIImageView
+//    var body: some View {
+//        UIImageView(UIImage: image)
+//        .frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
+//    }
+//    func getImage(imageLink: String) -> UIImageView {
+//        let url =  "gs://mycloset-ea3a8.appspot.com/images/365C8DBF-92CF-4AB7-B729-38F09524FE3D.jpg"
+//    //    let storage = Storage.storage(url: "gs://mycloset-ea3a8.appspot.com/images/").reference()
+//    //    let storageRef = storage.child("365C8DBF-92CF-4AB7-B729-38F09524FE3D.jpg")
+//        let newImageView: UIImageView = UIImageView()
+//        self.newImageView.image = Image(url)
+//        let placeholder = UIImage(named: "placeholder.jpg")
+//        [self.view addSubview:self.newImageView]
+//        return newImageView
+//    }
+//}
         
-    func getImages() {
-        let db = Firestore.firestore()
-        let path = "gs://mycloset-ea3a8.appspot.com/images/"
-            db.collection("images/").getDocuments { snapshot, error in
-                if error == nil && snapshot != nil {
-                    let storeRef = Storage.storage().reference()
-                    let fileRef = storeRef.child(path)
-                    // need another for post creator picture
-                    fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
-                        if error == nil {
-                            let image = UIImage(data: data!)
-                            DispatchQueue.main.async {
-                                images.append(image!)
-                            }
-                        }
-                        else {
-                            let error = error
-                            print(error?.localizedDescription as Any)
-                        }
-                    }
-                }
-                else {
-                    let error = error
-                    print(error?.localizedDescription as Any)
-                }
-            }
-        }
-}
+//
+//
+//
+//
+//        })) { (data, error) in
+//                if let _error = error {
+//                        print(_error)
+//                        failure(_error)
+//                }
+//                else {
+//                    if let _data  = data {
+//                        let myImage:UIImage! = UIImage(data: _data)
+//                        success(myImage)
+//                    }
+//                }
+//        }
+//    }
+//}
+//
+    
+    
+//    func getImages(imageLink: String) async {
+//        let db = Firestore.firestore()
+//        let path = "gs://mycloset-ea3a8.appspot.com/images"
+//        let imageLink = imageLink.replacingOccurrences(of: "images/", with: "")
+//        let docRef = db.collection(path).document(imageLink)
+//        docRef.getDocument { (document, error) in
+//            if let document = document, document.exists {
+//                var data = document.data()
+//                data.getData(maxSize: 5 * 1024 * 1024) { data, error in
+//                    if error == nil {
+//                        let image = UIImage(data: data!)
+//                        DispatchQueue.main.async {
+//                            images.append(image!)
+//                        }
+//                    }
+//                    else {
+//                        let error = error
+//                        print(error?.localizedDescription as Any)
+//                    }
+//                }
+//            }
+//            else {
+//                let error = error
+//                print(error?.localizedDescription as Any)
+//            }
+//        }
+//    }
+    
 
-
-struct PostCellPreview_Previews: PreviewProvider {
-    static var previews: some View {
-        PostCell(post: SAMPLE_POST)
-    }
-}
+//
+//struct PostCellPreview_Previews: PreviewProvider {
+//    static var previews: some View {
+//        PostCell(post: SAMPLE_POST)
+//    }
+//}
 

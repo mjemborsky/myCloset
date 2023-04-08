@@ -14,6 +14,7 @@ struct saveOutfitView: View {
     @State var titles: [String] = []
     @State var tag: String = ""
     @State var tags: [String] = []
+    @State private var showFeedView = false
     let db = Firestore.firestore()
     let outfitid = UUID().uuidString
     
@@ -48,13 +49,17 @@ struct saveOutfitView: View {
                     .background(Color.gray.opacity(0.05))
                     .cornerRadius(10)
                     .padding(.bottom, 10)
-                NavigationLink(destination: FeedView()) {
+                
+                Button(action: {
+                    createPost(postCreator: "username", postDescription: "My favorite outfit", postTags: ["trendy", "purple", "sweater"], postImage: "", linkedOutfit: outfitid)
+                    self.showFeedView = true
+                }, label: {
                     Text("Post").padding()
-                }
-                .onTapGesture {
-                    // save as post 
-                }
+                })
             }
+        }
+        .fullScreenCover(isPresented: $showFeedView) {
+            FeedView()
         }
     }
     func saveoutfit() {
