@@ -7,21 +7,23 @@
 
 import Foundation
 
-struct ClothingItem {
-    
-    var ItemID: Int
+struct ClothingItem: Identifiable{
+    var id: String
     var ItemTag: String
     var ItemPhoto: String
-    
-    /// constructor
-    init(ItemID: Int, ItemTag: String, ItemPhoto: String) {
-        self.ItemID = ItemID
+    let path = "images/\(UUID().uuidString).jpg"
+    //constructor
+    init(id: String, ItemTag: String, ItemPhoto: String) {
+        self.id = id
         self.ItemTag = ItemTag
-        self.ItemPhoto = ItemPhoto
+        self.ItemPhoto = path
     }
+    
 }
+
 let SAMPLE_ITEM:[ClothingItem] = [
-    ClothingItem(ItemID:1, ItemTag:"dress", ItemPhoto:"black-dress.heic"),
-    ClothingItem(ItemID:2, ItemTag:"bottom", ItemPhoto:"blue-jeans.heic"),
-    ClothingItem(ItemID:3, ItemTag:"shoes", ItemPhoto:"white-sneakers.heic")
+    ClothingItem(id:"1", ItemTag:"dress", ItemPhoto:"black-dress.heic"),
+    ClothingItem(id:"2", ItemTag:"bottom", ItemPhoto:"blue-jeans.heic"),
+    ClothingItem(id:"3", ItemTag:"shoes", ItemPhoto:"white-sneakers.heic")
 ]
+
