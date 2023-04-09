@@ -87,15 +87,18 @@ struct ProfileHeader: View {
                 .fullScreenCover(isPresented: $willMoveToSearch) {
                     SearchView()
                 }
-                .sheet(isPresented: $willMoveToCloset) {
+                .fullScreenCover(isPresented: $willMoveToCloset) {
                     ClosetView()
                         .environmentObject(ClothingItemManager())
                 }
-                // need to replace this with just toggling menu
-                .fullScreenCover(isPresented: $willMoveToProfile) {
-                    profileView()
+                .onAppear {
+                    returnToView()
                 }
-                // need conditional for profile view selection (toggle menu)
+        }
+    }
+    func returnToView() {
+        if willMoveToProfile {
+            toggleMenu.toggle()
         }
     }
 }

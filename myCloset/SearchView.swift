@@ -24,19 +24,23 @@ struct SearchView: View {
                 .fullScreenCover(isPresented: $willMoveToFeed) {
                     FeedView()
                 }
-                .fullScreenCover(isPresented: $willMoveToSearch) {
-                    // need to toggle menu instead
-                    SearchView()
-                }
-                .sheet(isPresented: $willMoveToCloset) {
+                .fullScreenCover(isPresented: $willMoveToCloset) {
                     ClosetView()
                         .environmentObject(ClothingItemManager())
                 }
                 .fullScreenCover(isPresented: $willMoveToProfile) {
                     profileView()
                 }
+                .onAppear {
+                    returnToView()
+                }
         }
         
+    }
+    func returnToView() {
+        if willMoveToSearch {
+            toggleMenu.toggle()
+        }
     }
 }
 

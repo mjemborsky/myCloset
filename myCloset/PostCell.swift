@@ -6,7 +6,6 @@
 import SwiftUI
 import FirebaseFirestore
 import FirebaseStorage
-
 // UI for an individual post "cell" - responsible for all formatting of buttons, etc.. of an individual post. This is used by feedView to format all posts.
 
 struct PostCell: View {

@@ -44,12 +44,17 @@ struct ClosetView: View {
                 .fullScreenCover(isPresented: $willMoveToSearch) {
                     SearchView()
                 }
-                .sheet(isPresented: $willMoveToCloset) {
-                   // need to just toggle menu again
-                }
                 .fullScreenCover(isPresented: $willMoveToProfile) {
                     profileView()
                 }
+                .onAppear {
+                    returnToView()
+                }
+        }
+    }
+    func returnToView() {
+        if willMoveToCloset {
+            toggleMenu.toggle()
         }
     }
 }

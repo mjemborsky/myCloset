@@ -45,9 +45,6 @@ struct FeedView: View {
             
             // SideMenu View and Conditionals to switch to other views
             MenuView(isOpen: $toggleMenu, feedSelected: $willMoveToFeed, searchSelected: $willMoveToSearch, closetSelected: $willMoveToCloset, profileSelected: $willMoveToProfile, hideFeed: $isHidden)
-                .fullScreenCover(isPresented: $willMoveToFeed) {
-                    FeedView()
-                }
                 .fullScreenCover(isPresented: $willMoveToSearch) {
                     SearchView()
                 }
@@ -58,7 +55,10 @@ struct FeedView: View {
                 .fullScreenCover(isPresented: $willMoveToProfile) {
                     profileView()
                 }
-                
+                .onAppear {
+                    returnToView()
+                }
+            
         }
     }
     
@@ -95,6 +95,13 @@ struct FeedView: View {
                 }
             }
         }
+    
+    
+    func returnToView() {
+        if willMoveToFeed {
+            toggleMenu.toggle()
+        }
+    }
 }
 
 
