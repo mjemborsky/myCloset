@@ -11,12 +11,12 @@ struct ClothingItem: Identifiable{
     var id: String
     var ItemTag: String
     var ItemPhoto: String
-    
+    let path = "images/\(UUID().uuidString).jpg"
     //constructor
     init(id: String, ItemTag: String, ItemPhoto: String) {
         self.id = id
         self.ItemTag = ItemTag
-        self.ItemPhoto = ItemPhoto
+        self.ItemPhoto = path
     }
     
 }
