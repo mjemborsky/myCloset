@@ -22,7 +22,7 @@ struct ClosetView: View {
                 Image(systemName: "plus")
             }))
             .sheet(isPresented: $showPopup) {
-                NewClothingItemView()
+                ContentView()
             }
         }
     }
