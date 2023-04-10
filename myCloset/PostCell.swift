@@ -6,6 +6,7 @@
 import SwiftUI
 import FirebaseFirestore
 import FirebaseStorage
+import FirebaseStorageUI
 // UI for an individual post "cell" - responsible for all formatting of buttons, etc.. of an individual post. This is used by feedView to format all posts.
 
 struct PostCell: View {
@@ -14,8 +15,9 @@ struct PostCell: View {
     @State var images = [UIImage]()
     // could include "placeholder" eventually using .redacted, for when it is loading
     var body: some View {
+        
         let imageLink =  post.getPostImageLink()
-//        var imageView = UIImageView(getImage(imageLink: imageLink))
+        //        var imageView = UIImageView(getImage(imageLink: imageLink))
         // VStack for all post info
         VStack {
             // HStack for profile image, profile username
@@ -35,14 +37,19 @@ struct PostCell: View {
             .padding(.horizontal, 8)
             
             // insert image
+            //            Image(uiImage: getImage(imageLink: imageLink))
+            Image(uiImage: images[0])
+                .scaledToFill()
+                .frame(width: UIScreen.main.bounds.width,
+                       height: UIScreen.main.bounds.width)
             
-//            ImageView()
-//            .view.addSubview(ImageView)
-//            .frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
-//            UIImage(getImage(imageLink: imageLink))
-//                .scaledToFill()
-//                .frame(width: UIScreen.main.bounds.width,
-//                       height: UIScreen.main.bounds.width)
+            //            ImageView()
+            //            .view.addSubview(ImageView)
+            //            .frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
+            //            UIImage(getImage(imageLink: imageLink))
+            //                .scaledToFill()
+            //                .frame(width: UIScreen.main.bounds.width,
+            //                       height: UIScreen.main.bounds.width)
             
             // another HStack for like and save option
             HStack (spacing: 16) {
@@ -74,11 +81,28 @@ struct PostCell: View {
             Spacer()
             Spacer()
         }
-        .onAppear {
-//            getImage(imageLink: imageLink)
+        .task {
+            await getImage(imageLink: imageLink)
         }
     }
     
+    func getImage(imageLink: String) async {
+        let storageRef = Storage.storage().reference()
+        let fileRef = storageRef.child("images/04F31D88-D014-4DAD-B186-755BEDD9AD58.jpg")
+//        let fileRef = storageRef.child("sample1" + ".png")
+        //let path = "gs://mycloset-ea3a8.appspot.com/images/"+imageLink+".jpg"
+        
+        fileRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+            if error == nil && data != nil {
+                if let image = UIImage(data: data!) {
+                    DispatchQueue.main.async {
+                        images.append(image)
+                    }
+                }
+            }
+        }
+    }
+}
     
     
     //
@@ -101,17 +125,21 @@ struct PostCell: View {
     
 
 
-}
+
 //
-//func getImage(imageLink: String) -> UIImageView {
+//func getImage(imageLink: String) -> UIImage {
 //    let url = URL(string: ("gs://mycloset-ea3a8.appspot.com/images/365C8DBF-92CF-4AB7-B729-38F09524FE3D.jpg"))
 ////    let storage = Storage.storage(url: "gs://mycloset-ea3a8.appspot.com/images/").reference()
 ////    let storageRef = storage.child("365C8DBF-92CF-4AB7-B729-38F09524FE3D.jpg")
 //    let newImageView: UIImageView = UIImageView()
 //    let placeholder = UIImage(named: "placeholder.jpg")
 //    newImageView.sd_setImage(with: url, placeholderImage: placeholder)
-//    return newImageView
+//    let image: UIImage = newImageView.image!
+//    return image
 //}
+
+
+
 //
 //
 //struct ImageView: View {

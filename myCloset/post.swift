@@ -42,7 +42,9 @@ struct Post: Identifiable {
     func getPostImageLink() -> String {
         return self.postImage
     }
-    
+    func getPostID() -> String {
+        return self.id.uuidString
+    }
 
 }
 

@@ -17,9 +17,20 @@ struct SearchView: View {
     @State private var willMoveToProfile: Bool = false
     // Variable to hide feedview
     @State private var isHidden: Bool = false
+    
+
+    @State private var searchText = ""
     var body: some View {
         ZStack {
-            Text("oh snap")
+            NavigationView {
+                VStack {
+                    Text("Waiting for input...")
+                }
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .navigationTitle("Search")
+            }
+            .searchable(text: $searchText)
             MenuView(isOpen: $toggleMenu, feedSelected: $willMoveToFeed, searchSelected: $willMoveToSearch, closetSelected: $willMoveToCloset, profileSelected: $willMoveToProfile, hideFeed: $isHidden)
                 .fullScreenCover(isPresented: $willMoveToFeed) {
                     FeedView()
