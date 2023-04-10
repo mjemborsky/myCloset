@@ -70,7 +70,6 @@ struct ProfileHeader: View {
                         Text("Saved Outfits")
                             .foregroundColor(.white)
                             .font(.title2)
-                        
                         savedGrid()
                     }
                     Spacer()
