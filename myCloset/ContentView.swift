@@ -18,13 +18,11 @@ struct ContentView: View {
  
 
     @State var isPickerShowing = false
-
     @State var selectedImage: UIImage?
-
     @State var retrievedImages = [UIImage]()
     @State private var newClothingItem = ""
 
-    @State private var newClothingItem = ""
+    
 
  
 
