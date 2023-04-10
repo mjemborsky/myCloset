@@ -19,7 +19,7 @@ struct saveOutfitView: View {
         NavigationView{
             VStack{
                 Spacer()
-                collage()
+                //collage()
                     .navigationTitle("Save Post ")
                     .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
@@ -72,27 +72,7 @@ struct saveOutfitView: View {
     
         
     
-    
 
-
-struct collage: View {
-    var body: some View {
-        Grid() {
-            GridRow {
-                OutfitItemCell(clothingItem: SAMPLE_ITEM[0])
-                OutfitItemCell(clothingItem: SAMPLE_ITEM[0])
-            }
-            GridRow {
-                OutfitItemCell(clothingItem: SAMPLE_ITEM[0])
-                OutfitItemCell(clothingItem: SAMPLE_ITEM[0])
-            }
-        }
-        .frame(width: 350, height: 400)
-        
-    }
-        
-    
-}
 
 struct saveOutfitView_Previews: PreviewProvider {
     static var previews: some View {
