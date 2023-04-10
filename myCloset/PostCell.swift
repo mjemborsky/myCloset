@@ -15,7 +15,6 @@ struct PostCell: View {
     @State var images = [UIImage]()
     // could include "placeholder" eventually using .redacted, for when it is loading
     var body: some View {
-        
         let imageLink =  post.getPostImageLink()
         //        var imageView = UIImageView(getImage(imageLink: imageLink))
         // VStack for all post info
@@ -38,10 +37,11 @@ struct PostCell: View {
             
             // insert image
             //            Image(uiImage: getImage(imageLink: imageLink))
-            Image(uiImage: images[0])
+            // Filler for now
+            Image(systemName: "person.crop.circle.fill")
                 .scaledToFill()
                 .frame(width: UIScreen.main.bounds.width,
-                       height: UIScreen.main.bounds.width)
+                        height: UIScreen.main.bounds.width)
             
             //            ImageView()
             //            .view.addSubview(ImageView)
@@ -81,18 +81,20 @@ struct PostCell: View {
             Spacer()
             Spacer()
         }
-        .task {
-            await getImage(imageLink: imageLink)
+        // calling to get array of images to use
+        .onAppear {
+            retrievePhotos(imageLink: imageLink)
         }
     }
     
-    func getImage(imageLink: String) async {
-        let storageRef = Storage.storage().reference()
-        let fileRef = storageRef.child("images/04F31D88-D014-4DAD-B186-755BEDD9AD58.jpg")
-//        let fileRef = storageRef.child("sample1" + ".png")
-        //let path = "gs://mycloset-ea3a8.appspot.com/images/"+imageLink+".jpg"
+    
+    func retrievePhotos(imageLink: String) {
+        // Get the data from the database
         
-        fileRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+        let storageRef = Storage.storage().reference()
+        let path = "images/04F31D88-D014-4DAD-B186-755BEDD9AD58.jpg"
+        let fileRef = storageRef.child(path)
+        fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
             if error == nil && data != nil {
                 if let image = UIImage(data: data!) {
                     DispatchQueue.main.async {
@@ -102,6 +104,23 @@ struct PostCell: View {
             }
         }
     }
+        
+//    func getImage(imageLink: String) async {
+//        let storageRef = Storage.storage()
+//        let fileRef = storageRef.reference().child("images/04F31D88-D014-4DAD-B186-755BEDD9AD58.jpg")
+////        let fileRef = storageRef.child("sample1" + ".png")
+//        //let path = "gs://mycloset-ea3a8.appspot.com/images/"+imageLink+".jpg"
+//
+//        fileRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+//            if error == nil && data != nil {
+//                if let image = UIImage(data: data!) {
+//                    DispatchQueue.main.async {
+//                        images.append(image)
+//                    }
+//                }
+//            }
+//        }
+//    }
 }
     
     
