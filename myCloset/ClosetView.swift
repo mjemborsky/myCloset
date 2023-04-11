@@ -20,7 +20,7 @@ struct ClosetView: View {
 
         NavigationView {
 
-            List(clothingItemManager.clothingItems, id: \.id) { clothingItem in (Text(clothingItem.ItemTag))
+            List(clothingItemManager.clothingItems, id: \.ItemTag) { clothingItem in (Text(clothingItem.ImageURL))
 
             }
 

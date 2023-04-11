@@ -9,21 +9,21 @@ import Foundation
 
 
 
-struct ClothingItem: Identifiable{
-
-    var id: String
+struct ClothingItem{
 
     var ItemTag: String
+
+    var ImageURL: String
 
     
 
     //constructor
 
-    init(id: String, ItemTag: String) {
-
-        self.id = id
+    init(ItemTag: String, ImageURL: String) {
 
         self.ItemTag = ItemTag
+
+        self.ImageURL = ImageURL
 
     }
 
@@ -35,7 +35,7 @@ struct ClothingItem: Identifiable{
 
 let SAMPLE_ITEM:[ClothingItem] = [
 
-    ClothingItem(id:"black-dress.heic", ItemTag:"dress"),
+    //ClothingItem(id:"black-dress.heic", ItemTag:"dress"),
 
     //ClothingItem(ItemTag:"bottom", id:"blue-jeans.heic"),
 
