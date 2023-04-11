@@ -7,17 +7,9 @@
 
 
 import SwiftUI
-<<<<<<< HEAD
 import Firebase
 import FirebaseFirestore
-=======
-
 import FirebaseStorage
-
-import FirebaseFirestore
-
-
->>>>>>> jonahMergeFeed
 
 class ClothingItemManager: ObservableObject {
 

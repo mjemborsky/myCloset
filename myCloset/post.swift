@@ -45,7 +45,6 @@ struct Post: Identifiable {
     func getPostID() -> String {
         return self.id.uuidString
     }
-
 }
 
 
