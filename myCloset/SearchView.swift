@@ -1,19 +1,13 @@
 //
-//  ClosetView.swift
+//  SearchView.swift
 //  myCloset
 //
-//  Created by Ryan Lounsbury on 3/11/23.
+//  Created by Michael Emborsky on 4/8/23.
 //
+
 import SwiftUI
 
-
-
-struct ClosetView: View {
-    
-    @EnvironmentObject var clothingItemManager: ClothingItemManager
-    
-    @State private var showPopup = false
-    
+struct SearchView: View {
     // Variable for if sidemenu is showing or not
     @State private var toggleMenu: Bool = false
     // Variables for which view will be switched to next (from sidemenu)
@@ -24,36 +18,26 @@ struct ClosetView: View {
     // Variable to hide feedview
     @State private var isHidden: Bool = false
     
+
+    @State private var searchText = ""
     var body: some View {
         ZStack {
             NavigationView {
-                List(clothingItemManager.clothingItems, id: \.ItemTag) { clothingItem in (Text(clothingItem.ImageURL))
-                    
+                VStack {
+                    Text("Waiting for input...")
                 }
-                
-                .navigationTitle("Closet")
-                
-                .navigationBarItems(trailing: Button(action: {
-                    
-                    showPopup.toggle()
-                    
-                }, label: {
-                    
-                    Image(systemName: "plus")
-                    
-                }))
-                
-                .sheet(isPresented: $showPopup) {
-                    
-                    ContentView()
-                }
+                .padding()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .navigationTitle("Search")
             }
+            .searchable(text: $searchText)
             MenuView(isOpen: $toggleMenu, feedSelected: $willMoveToFeed, searchSelected: $willMoveToSearch, closetSelected: $willMoveToCloset, profileSelected: $willMoveToProfile, hideFeed: $isHidden)
                 .fullScreenCover(isPresented: $willMoveToFeed) {
                     FeedView()
                 }
-                .fullScreenCover(isPresented: $willMoveToSearch) {
-                    SearchView()
+                .fullScreenCover(isPresented: $willMoveToCloset) {
+                    ClosetView()
+                        .environmentObject(ClothingItemManager())
                 }
                 .fullScreenCover(isPresented: $willMoveToProfile) {
                     profileView()
@@ -65,28 +49,14 @@ struct ClosetView: View {
         
     }
     func returnToView() {
-        if willMoveToCloset {
+        if willMoveToSearch {
             toggleMenu.toggle()
-            
         }
-        
     }
 }
 
-
-
-
-
-
-
-struct ClosetView_Previews: PreviewProvider {
-
+struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
-
-        ClosetView()
-
-            .environmentObject(ClothingItemManager())
-
+        SearchView()
     }
-
 }

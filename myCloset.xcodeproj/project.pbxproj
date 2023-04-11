@@ -36,10 +36,13 @@
 		9476506829D10D6B0000E12D /* ClothingItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9476506729D10D6B0000E12D /* ClothingItemManager.swift */; };
 		9476506A29D111430000E12D /* NewClothingItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9476506929D111430000E12D /* NewClothingItemView.swift */; };
 		9476506C29D119CC0000E12D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9476506B29D119CC0000E12D /* GoogleService-Info.plist */; };
+		C31C544929E2B686003E2FE0 /* SearchObservableObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = C31C544829E2B686003E2FE0 /* SearchObservableObject.swift */; };
 		C3651ED329D0EEEB0059EEB4 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3651ED229D0EEEB0059EEB4 /* MenuView.swift */; };
 		C3671E3129B3004F006BABAD /* FeedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3671E3029B3004F006BABAD /* FeedView.swift */; };
 		C3671E3329B30060006BABAD /* PostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3671E3229B30060006BABAD /* PostCell.swift */; };
+		C36EF28429E2196900356A0F /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36EF28329E2196900356A0F /* SearchView.swift */; };
 		C37FBBB629A5436D00E23648 /* post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37FBBB529A5436D00E23648 /* post.swift */; };
+		C3926EB829E2433000711B04 /* FirebaseStorageUI in Frameworks */ = {isa = PBXBuildFile; productRef = C3926EB729E2433000711B04 /* FirebaseStorageUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,9 +93,11 @@
 		9476506729D10D6B0000E12D /* ClothingItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClothingItemManager.swift; sourceTree = "<group>"; };
 		9476506929D111430000E12D /* NewClothingItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewClothingItemView.swift; sourceTree = "<group>"; };
 		9476506B29D119CC0000E12D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C31C544829E2B686003E2FE0 /* SearchObservableObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchObservableObject.swift; sourceTree = "<group>"; };
 		C3651ED229D0EEEB0059EEB4 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 		C3671E3029B3004F006BABAD /* FeedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedView.swift; sourceTree = "<group>"; };
 		C3671E3229B30060006BABAD /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
+		C36EF28329E2196900356A0F /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		C37FBBB529A5436D00E23648 /* post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = post.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -102,6 +107,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				62E33C8E29C00B5200A0F08E /* FirebaseAuth in Frameworks */,
+				C3926EB829E2433000711B04 /* FirebaseStorageUI in Frameworks */,
 				62E33C9029C00B5200A0F08E /* FirebaseFirestore in Frameworks */,
 				628C4DCC29D33F1200D29ADF /* FirebaseStorage in Frameworks */,
 			);
@@ -148,6 +154,7 @@
 		623503CC299BEE5C002BA53C /* myCloset */ = {
 			isa = PBXGroup;
 			children = (
+				C31C544829E2B686003E2FE0 /* SearchObservableObject.swift */,
 				623503CD299BEE5C002BA53C /* myClosetApp.swift */,
 				627B337229A6E31500F546A2 /* LoginView.swift */,
 				6240CFD829C8A94900D1F608 /* SignUpPage.swift */,
@@ -171,6 +178,7 @@
 				3731167A29C27314008F94B0 /* OutfitItemCell.swift */,
 				3731167C29D0A1D5008F94B0 /* saveOutfitView.swift */,
 				37BCAC4029DB3FAA00A6E94C /* profileView.swift */,
+				C36EF28329E2196900356A0F /* SearchView.swift */,
 				373BFF7E29E358580096F21F /* AltCollage View.swift */,
 				623503D1299BEE5D002BA53C /* Assets.xcassets */,
 				62E33C8B29C0067200A0F08E /* Info.plist */,
@@ -232,6 +240,7 @@
 				62E33C8D29C00B5200A0F08E /* FirebaseAuth */,
 				62E33C8F29C00B5200A0F08E /* FirebaseFirestore */,
 				628C4DCB29D33F1200D29ADF /* FirebaseStorage */,
+				C3926EB729E2433000711B04 /* FirebaseStorageUI */,
 			);
 			productName = myCloset;
 			productReference = 623503CA299BEE5C002BA53C /* myCloset.app */;
@@ -307,6 +316,7 @@
 			mainGroup = 623503C1299BEE5C002BA53C;
 			packageReferences = (
 				62E33C8C29C00B5200A0F08E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				C36EF27C29E1388F00356A0F /* XCRemoteSwiftPackageReference "FirebaseUI-iOS" */,
 			);
 			productRefGroup = 623503CB299BEE5C002BA53C /* Products */;
 			projectDirPath = "";
@@ -355,6 +365,7 @@
 				9452645429A542A200D24D5C /* ClothingItem.swift in Sources */,
 				C37FBBB629A5436D00E23648 /* post.swift in Sources */,
 				627B337329A6E31500F546A2 /* LoginView.swift in Sources */,
+				C31C544929E2B686003E2FE0 /* SearchObservableObject.swift in Sources */,
 				3731167D29D0A1D5008F94B0 /* saveOutfitView.swift in Sources */,
 				3731167929C27226008F94B0 /* CollageView.swift in Sources */,
 				9476506A29D111430000E12D /* NewClothingItemView.swift in Sources */,
@@ -362,6 +373,7 @@
 				9476506829D10D6B0000E12D /* ClothingItemManager.swift in Sources */,
 				9439BD6429DDF6EC00EE36C0 /* ImageManager.swift in Sources */,
 				C3671E3329B30060006BABAD /* PostCell.swift in Sources */,
+				C36EF28429E2196900356A0F /* SearchView.swift in Sources */,
 				627494F129E4E0D00057E4A4 /* forgotPassword.swift in Sources */,
 				942F31F329BFF4C200BDD3B0 /* ClosetView.swift in Sources */,
 				373BFF7F29E358590096F21F /* AltCollage View.swift in Sources */,
@@ -546,6 +558,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
+				"OTHER_SWIFT_FLAGS[arch=*]" = "-Xcc -fmodule-map-file=$(GENERATED_MODULEMAP_DIR)/FirebaseStorage.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.jonahgloss.myCloset;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -705,6 +718,14 @@
 				minimumVersion = 9.0.0;
 			};
 		};
+		C36EF27C29E1388F00356A0F /* XCRemoteSwiftPackageReference "FirebaseUI-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/FirebaseUI-iOS";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -722,6 +743,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 62E33C8C29C00B5200A0F08E /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestore;
+		};
+		C3926EB729E2433000711B04 /* FirebaseStorageUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C36EF27C29E1388F00356A0F /* XCRemoteSwiftPackageReference "FirebaseUI-iOS" */;
+			productName = FirebaseStorageUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

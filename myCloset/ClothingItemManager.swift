@@ -7,12 +7,9 @@
 
 
 import SwiftUI
-
-import FirebaseStorage
-
+import Firebase
 import FirebaseFirestore
-
-
+import FirebaseStorage
 
 class ClothingItemManager: ObservableObject {
 
