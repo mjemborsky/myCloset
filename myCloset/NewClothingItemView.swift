@@ -9,16 +9,40 @@ import SwiftUI
 
 struct NewClothingItemView: View {
     @EnvironmentObject var clothingItemManager: ClothingItemManager
+    
     @State private var newClothingItem = ""
+    @State var selectedImage: UIImage?
+    @State var isPickerShowing = false
+    @State var retrievedImages = [UIImage]()
     
     var body: some View {
         VStack {
-            TextField("Clothing Item", text:$newClothingItem)
+            if selectedImage != nil{
+                            Image(uiImage: selectedImage!)
+                                .resizable()
+                                .frame(width: 200, height: 200)
+                        }
+            Button{
+                            
+                            // Show the image picker
+                            isPickerShowing = true
+                            
+                        } label:{
+                            Text("Select a Photo")
+                        }
+            TextField("Item Tag", text:$newClothingItem)
             
             Button {
-                clothingItemManager.addClothingItem(newItemPhoto: newClothingItem)
+                let path = "images/\(UUID().uuidString).jpg"
+                uploadPhoto()
+                clothingItemManager.addClothingItem(newItemTag: newClothingItem, newItemPhoto: path)
+                
             } label : {
                 Text("Save")
+            }
+            .sheet(isPresented: $isPickerShowing, onDismiss: nil){
+                // Image picker
+                ImagePicker(selectedImage: $selectedImage, isPickerShowing: $isPickerShowing)
             }
         }
         .padding()

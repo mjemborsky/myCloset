@@ -7,23 +7,41 @@
 
 import Foundation
 
-struct ClothingItem: Identifiable{
-    var id: String
+
+
+struct ClothingItem{
+
     var ItemTag: String
-    var ItemPhoto: String
+
+    var ImageURL: String
+
     
+
     //constructor
-    init(id: String, ItemTag: String, ItemPhoto: String) {
-        self.id = id
+
+    init(ItemTag: String, ImageURL: String) {
+
         self.ItemTag = ItemTag
-        self.ItemPhoto = ItemPhoto
+
+        self.ImageURL = ImageURL
+
     }
+
     
+
 }
 
+
+
 let SAMPLE_ITEM:[ClothingItem] = [
-    ClothingItem(id:"1", ItemTag:"dress", ItemPhoto:"black-dress.heic"),
-    ClothingItem(id:"2", ItemTag:"bottom", ItemPhoto:"blue-jeans.heic"),
-    ClothingItem(id:"3", ItemTag:"shoes", ItemPhoto:"white-sneakers.heic")
+
+    //ClothingItem(id:"black-dress.heic", ItemTag:"dress"),
+
+    //ClothingItem(ItemTag:"bottom", id:"blue-jeans.heic"),
+
+    //ClothingItem(ItemTag:"shoes", id:"white-sneakers.heic"),
+
+    //ClothingItem(ItemTag:"jewelry", id:"diamond-necklace.heic")
+
 ]
 

@@ -5,48 +5,100 @@
 //  Created by Ryan Lounsbury on 3/26/23.
 //
 
+
 import SwiftUI
+<<<<<<< HEAD
 import Firebase
 import FirebaseFirestore
+=======
+
+import FirebaseStorage
+
+import FirebaseFirestore
+
+
+>>>>>>> jonahMergeFeed
 
 class ClothingItemManager: ObservableObject {
+
     @Published var clothingItems: [ClothingItem] = []
+
     
+
     init() {
+
         fetchClothingItems()
+
     }
+
     
+
     func fetchClothingItems() {
+
         clothingItems.removeAll()
+
         let db = Firestore.firestore()
-        let ref = db.collection("ClothingItems")
+
+        let ref = db.collection("images")
+
         ref.getDocuments { snapshot, error in
+
             guard error == nil else {
+
                 print(error!.localizedDescription)
+
                 return
+
             }
+
             
+
             if let snapshot = snapshot {
+
                 for document in snapshot.documents {
+
                     let data = document.data()
+
                     
-                    let id = data["id"] as? String ?? ""
-                    let ItemTag = data["ItemTag"] as? String ?? ""
-                    let ItemPhoto = data["ItemPhoto"] as? String ?? ""
+
+                    let ItemTag = data["newClothingItem"] as? String ?? ""
+
+                    let ImageURL = data["url"] as? String ?? ""
+
                     
-                    let clothingItem = ClothingItem(id: id, ItemTag: ItemTag, ItemPhoto: ItemPhoto)
+
+                    let clothingItem = ClothingItem(ItemTag: ItemTag, ImageURL: ImageURL)
+
                     self.clothingItems.append(clothingItem)
+
                 }
+
             }
+
         }
+
     }
-    func addClothingItem(newItemPhoto: String){
+
+    func addClothingItem(newItemTag: String, newItemPhoto: String){
+
+        let clothingPath = UUID().uuidString
+
+        let imagePath = "images/\(UUID().uuidString).jpg"
+
         let db = Firestore.firestore()
-        let ref = db.collection("ClothingItems").document(newItemPhoto)
-        ref.setData(["id": 10, "ItemTag": "", "ItemPhoto": newItemPhoto]) {error in
+
+        let ref = db.collection("ClothingItems").document(clothingPath)
+
+        ref.setData(["id": 10, "ItemTag": newItemTag, "ItemPhoto": imagePath]) {error in
+
             if let error = error {
+
                 print(error.localizedDescription)
+
             }
+
         }
+
     }
+
 }
