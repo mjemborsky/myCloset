@@ -56,13 +56,13 @@ class ClothingItemManager: ObservableObject {
 
                     
 
-                    let id = data["newClothingItem"] as? String ?? ""
+                    let ItemTag = data["newClothingItem"] as? String ?? ""
 
-                    let ItemTag = data["url"] as? String ?? ""
+                    let ImageURL = data["url"] as? String ?? ""
 
                     
 
-                    let clothingItem = ClothingItem(id: id, ItemTag: ItemTag)
+                    let clothingItem = ClothingItem(ItemTag: ItemTag, ImageURL: ImageURL)
 
                     self.clothingItems.append(clothingItem)
 
