@@ -13,6 +13,7 @@ struct LoginView: View {
     @State private var password: String = ""
     @State private var showSignUpPage = false
     @State private var showFeedView = false
+    @State private var showforgotPassword = false
 
     var body: some View {
         
@@ -65,7 +66,7 @@ struct LoginView: View {
                 }
 
                 Button(action: {
-                    // forgot password
+                    self.showforgotPassword = true
                 }) {
                     
                     Text("Forgot Password?")
@@ -79,6 +80,10 @@ struct LoginView: View {
         
         .sheet(isPresented: $showSignUpPage) {
             SignUpPage()
+        }
+        
+        .sheet(isPresented: $showforgotPassword) {
+            forgotPassword()
         }
         
         .fullScreenCover(isPresented: $showFeedView) {

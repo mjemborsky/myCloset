@@ -23,6 +23,7 @@
 		6240CFD929C8A94900D1F608 /* SignUpPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6240CFD829C8A94900D1F608 /* SignUpPage.swift */; };
 		6264376C29C213E600898FB6 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6264376B29C213E600898FB6 /* ImagePicker.swift */; };
 		6264376E29C213FB00898FB6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6264376D29C213FB00898FB6 /* ContentView.swift */; };
+		627494F129E4E0D00057E4A4 /* forgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627494F029E4E0D00057E4A4 /* forgotPassword.swift */; };
 		627B337329A6E31500F546A2 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627B337229A6E31500F546A2 /* LoginView.swift */; };
 		627B337529A6E33800F546A2 /* UserLoginData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627B337429A6E33800F546A2 /* UserLoginData.swift */; };
 		628C4DCC29D33F1200D29ADF /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 628C4DCB29D33F1200D29ADF /* FirebaseStorage */; };
@@ -78,6 +79,7 @@
 		6240CFD829C8A94900D1F608 /* SignUpPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPage.swift; sourceTree = "<group>"; };
 		6264376B29C213E600898FB6 /* ImagePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		6264376D29C213FB00898FB6 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		627494F029E4E0D00057E4A4 /* forgotPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = forgotPassword.swift; sourceTree = "<group>"; };
 		627B337229A6E31500F546A2 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		627B337429A6E33800F546A2 /* UserLoginData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserLoginData.swift; sourceTree = "<group>"; };
 		62E33C8B29C0067200A0F08E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 				623503CD299BEE5C002BA53C /* myClosetApp.swift */,
 				627B337229A6E31500F546A2 /* LoginView.swift */,
 				6240CFD829C8A94900D1F608 /* SignUpPage.swift */,
+				627494F029E4E0D00057E4A4 /* forgotPassword.swift */,
 				9476506929D111430000E12D /* NewClothingItemView.swift */,
 				C37FBBB529A5436D00E23648 /* post.swift */,
 				C3671E3029B3004F006BABAD /* FeedView.swift */,
@@ -359,6 +362,7 @@
 				9476506829D10D6B0000E12D /* ClothingItemManager.swift in Sources */,
 				9439BD6429DDF6EC00EE36C0 /* ImageManager.swift in Sources */,
 				C3671E3329B30060006BABAD /* PostCell.swift in Sources */,
+				627494F129E4E0D00057E4A4 /* forgotPassword.swift in Sources */,
 				942F31F329BFF4C200BDD3B0 /* ClosetView.swift in Sources */,
 				373BFF7F29E358590096F21F /* AltCollage View.swift in Sources */,
 				3394603729A54102004884EB /* outfit.swift in Sources */,
