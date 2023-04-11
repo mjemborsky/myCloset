@@ -38,7 +38,7 @@ struct PostCell: View {
             // insert image
             //            Image(uiImage: getImage(imageLink: imageLink))
             // Filler for now
-            Image(systemName: "person.crop.circle.fill")
+            Image("person.crop.circle.fill")
                 .scaledToFill()
                 .frame(width: UIScreen.main.bounds.width,
                         height: UIScreen.main.bounds.width)
@@ -82,28 +82,30 @@ struct PostCell: View {
             Spacer()
         }
         // calling to get array of images to use
-        .onAppear {
-            retrievePhotos(imageLink: imageLink)
-        }
+//        .onAppear {
+//            retrievePhotos(imageLink: imageLink)
+//        }
     }
-    
-    
-    func retrievePhotos(imageLink: String) {
-        // Get the data from the database
-        
-        let storageRef = Storage.storage().reference()
-        let path = "images/04F31D88-D014-4DAD-B186-755BEDD9AD58.jpg"
-        let fileRef = storageRef.child(path)
-        fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
-            if error == nil && data != nil {
-                if let image = UIImage(data: data!) {
-                    DispatchQueue.main.async {
-                        images.append(image)
-                    }
-                }
-            }
-        }
-    }
+//
+//
+//    func retrievePhotos(imageLink: String) {
+//        // Get the data from the database
+//
+//        let storageRef = Storage.storage().reference()
+//        let path = "images/04F31D88-D014-4DAD-B186-755BEDD9AD58.jpg"
+//        let fileRef = storageRef.child(path)
+//        fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
+//            if error == nil && data != nil {
+//
+//                if let data = data!.jpegData(compressionQuality: 0.9) {
+//                    let image = UIImage(data: data!)
+//                    DispatchQueue.main.async {
+//                        images.append(image)
+//                    }
+//                }
+//            }
+//        }
+//    }
         
 //    func getImage(imageLink: String) async {
 //        let storageRef = Storage.storage()
