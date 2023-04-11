@@ -90,7 +90,7 @@ struct ProfileHeader: View {
                     FeedView()
                 }
                 .fullScreenCover(isPresented: $willMoveToSearch) {
-                    FeedView()
+                    SearchView()
                 }
                 .fullScreenCover(isPresented: $willMoveToCloset) {
                     ClosetView()
