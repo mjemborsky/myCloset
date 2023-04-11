@@ -9,43 +9,72 @@ import SwiftUI
 
 
 struct ClosetView: View {
-
-    @EnvironmentObject var clothingItemManager: ClothingItemManager
-
-    @State private var showPopup = false
-
     
-
+    @EnvironmentObject var clothingItemManager: ClothingItemManager
+    
+    @State private var showPopup = false
+    // Variable for if sidemenu is showing or not
+    @State private var toggleMenu: Bool = false
+    // Variables for which view will be switched to next (from sidemenu)
+    @State private var willMoveToFeed: Bool = false
+    @State private var willMoveToSearch: Bool = false
+    @State private var willMoveToCloset: Bool = false
+    @State private var willMoveToProfile: Bool = false
+    // Variable to hide feedview
+    @State private var isHidden: Bool = false
+    
+    
+    
     var body: some View {
-
-        NavigationView {
-
-            List(clothingItemManager.clothingItems, id: \.ItemTag) { clothingItem in (Text(clothingItem.ImageURL))
-
+        ZStack {
+            NavigationView {
+                
+                List(clothingItemManager.clothingItems, id: \.ItemTag) { clothingItem in (Text(clothingItem.ImageURL))
+                    
+                }
+                
+                .navigationTitle("Closet")
+                
+                .navigationBarItems(trailing: Button(action: {
+                    
+                    showPopup.toggle()
+                    
+                }, label: {
+                    
+                    Image(systemName: "plus")
+                    
+                }))
+                
+                .sheet(isPresented: $showPopup) {
+                    
+                    ContentView()
+                    
+                }
+                
             }
-
-            .navigationTitle("Closet")
-
-            .navigationBarItems(trailing: Button(action: {
-
-                showPopup.toggle()
-
-            }, label: {
-
-                Image(systemName: "plus")
-
-            }))
-
-            .sheet(isPresented: $showPopup) {
-
-                ContentView()
-
-            }
-
+            MenuView(isOpen: $toggleMenu, feedSelected: $willMoveToFeed, searchSelected: $willMoveToSearch, closetSelected: $willMoveToCloset, profileSelected: $willMoveToProfile, hideFeed: $isHidden)
+                .fullScreenCover(isPresented: $willMoveToFeed) {
+                    FeedView()
+                }
+                .fullScreenCover(isPresented: $willMoveToSearch) {
+                    FeedView()
+                }
+                .fullScreenCover(isPresented: $willMoveToProfile) {
+                    profileView()
+                }
+                .onAppear {
+                    returnToView()
+                }
         }
-
+        
     }
-
+    func returnToView() {
+        if willMoveToCloset {
+            toggleMenu.toggle()
+            
+        }
+        
+    }
 }
 
 
