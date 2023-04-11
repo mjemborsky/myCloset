@@ -178,11 +178,8 @@
 				3731167A29C27314008F94B0 /* OutfitItemCell.swift */,
 				3731167C29D0A1D5008F94B0 /* saveOutfitView.swift */,
 				37BCAC4029DB3FAA00A6E94C /* profileView.swift */,
-<<<<<<< HEAD
 				C36EF28329E2196900356A0F /* SearchView.swift */,
-=======
 				373BFF7E29E358580096F21F /* AltCollage View.swift */,
->>>>>>> jonahMergeFeed
 				623503D1299BEE5D002BA53C /* Assets.xcassets */,
 				62E33C8B29C0067200A0F08E /* Info.plist */,
 				9476506B29D119CC0000E12D /* GoogleService-Info.plist */,
@@ -376,11 +373,8 @@
 				9476506829D10D6B0000E12D /* ClothingItemManager.swift in Sources */,
 				9439BD6429DDF6EC00EE36C0 /* ImageManager.swift in Sources */,
 				C3671E3329B30060006BABAD /* PostCell.swift in Sources */,
-<<<<<<< HEAD
 				C36EF28429E2196900356A0F /* SearchView.swift in Sources */,
-=======
 				627494F129E4E0D00057E4A4 /* forgotPassword.swift in Sources */,
->>>>>>> jonahMergeFeed
 				942F31F329BFF4C200BDD3B0 /* ClosetView.swift in Sources */,
 				373BFF7F29E358590096F21F /* AltCollage View.swift in Sources */,
 				3394603729A54102004884EB /* outfit.swift in Sources */,
