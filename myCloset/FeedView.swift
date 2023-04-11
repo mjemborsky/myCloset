@@ -7,8 +7,10 @@
 
 import SwiftUI
 import FirebaseFirestore
+import FirebaseStorage
 
 struct FeedView: View {
+    ///SideMenu Variables
     // Variable for if sidemenu is showing or not
     @State private var toggleMenu: Bool = false
     // Variables for which view will be switched to next (from sidemenu)
@@ -18,9 +20,10 @@ struct FeedView: View {
     @State private var willMoveToProfile: Bool = false
     // Variable to hide feedview
     @State private var isHidden: Bool = false
+    /// Database Variables
     // List to store posts with getAllPosts()
     @State private var postsInProgress = [Post]()
-
+    @State private var imagesInProgress = [UIImage]()
     // Main View
     var body: some View {
         ZStack {
@@ -30,7 +33,7 @@ struct FeedView: View {
                         .foregroundColor(.gray)
                     // Displaying Posts
                     ForEach(postsInProgress) { Post in
-                        PostCell(post: Post)
+                        PostCell(post: Post, images: imagesInProgress)
                     }
                     Spacer()
                 }
@@ -40,8 +43,8 @@ struct FeedView: View {
                 }
             }
             //Edit appearance of top navigation bar (currently not displaying?)
-            .navigationTitle("myCloset")
-            .navigationBarTitleDisplayMode(.inline)
+                .navigationTitle("myCloset")
+                .navigationBarTitleDisplayMode(.inline)
             
             // SideMenu View and Conditionals to switch to other views
             MenuView(isOpen: $toggleMenu, feedSelected: $willMoveToFeed, searchSelected: $willMoveToSearch, closetSelected: $willMoveToCloset, profileSelected: $willMoveToProfile, hideFeed: $isHidden)
@@ -66,8 +69,9 @@ struct FeedView: View {
      function: getAllPost()
      Asynchronous function with no arguments or returns that accesses all posts in the database, saves each post under the Post class and appends the created post to the list of all posts.
      */
-        func getAllPost() async {
+    func getAllPost() async {
             let db = Firestore.firestore()
+            let storageRef = Storage.storage().reference()
             db.collection("Posts").getDocuments { snapshot, error in
                 guard error == nil else {
                     print(error!.localizedDescription)
@@ -88,8 +92,16 @@ struct FeedView: View {
                             let postImage = data["postImage"] as? String ?? ""
                             let linkedOutfit = data["linkedOutfit"] as? String ?? ""
                             let post = Post(id: idUUID ?? UUID(), postTime: postDate, postCreator: postCreator, postDescription: postDescription, postLikes: postLikes, postSaves: postSaves, postTags: postTags, postImage: postImage, linkedOutfit: linkedOutfit)
-                            DispatchQueue.main.async {
-                                postsInProgress.append(post)
+                            let fileRef = storageRef.child(postImage)
+                            fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
+                                if error == nil && data != nil {
+                                    if let image = UIImage(data: data!) {
+                                        DispatchQueue.main.async {
+                                            postsInProgress.append(post)
+                                            imagesInProgress.append(image)
+                                        }
+                                    }
+                                }
                             }
                     }
                 }

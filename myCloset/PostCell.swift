@@ -7,15 +7,14 @@ import SwiftUI
 import FirebaseFirestore
 import FirebaseStorage
 import FirebaseStorageUI
+
 // UI for an individual post "cell" - responsible for all formatting of buttons, etc.. of an individual post. This is used by feedView to format all posts.
 
 struct PostCell: View {
     let post: Post
-    
-    @State var images = [UIImage]()
+    let images: [UIImage]
     // could include "placeholder" eventually using .redacted, for when it is loading
     var body: some View {
-        let imageLink =  post.getPostImageLink()
         //        var imageView = UIImageView(getImage(imageLink: imageLink))
         // VStack for all post info
         VStack {
@@ -34,23 +33,11 @@ struct PostCell: View {
                 Spacer()
             }
             .padding(.horizontal, 8)
-            
-            // insert image
-            //            Image(uiImage: getImage(imageLink: imageLink))
-            // Filler for now
-            Image("person.crop.circle.fill")
-                .scaledToFill()
+            Spacer()
+            Image(uiImage: images[0])
                 .frame(width: UIScreen.main.bounds.width,
-                        height: UIScreen.main.bounds.width)
-            
-            //            ImageView()
-            //            .view.addSubview(ImageView)
-            //            .frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
-            //            UIImage(getImage(imageLink: imageLink))
-            //                .scaledToFill()
-            //                .frame(width: UIScreen.main.bounds.width,
-            //                       height: UIScreen.main.bounds.width)
-            
+                   height: UIScreen.main.bounds.width)
+            Spacer()
             // another HStack for like and save option
             HStack (spacing: 16) {
                 // should be replaced with a heart or like button
@@ -83,9 +70,16 @@ struct PostCell: View {
         }
         // calling to get array of images to use
 //        .onAppear {
-//            retrievePhotos(imageLink: imageLink)
+//            getImage(imageLink: imageLink)
 //        }
     }
+//                func getImage(imageLink: String) -> UIImageView {
+//                    let view = UIImageView()
+//                    let ref = Storage.storage().reference()
+//                    let file = ref.child("images/04F31D88-D014-4DAD-B186-755BEDD9AD58.jpg")
+//                    view.sd_setImage(with: file)
+//                    return view
+//                }
 //
 //
 //    func retrievePhotos(imageLink: String) {
@@ -123,9 +117,26 @@ struct PostCell: View {
 //            }
 //        }
 //    }
+    
 }
     
-    
+//struct ImageView: View {
+//    @State var path: String
+//    var imageView: UIImageView()
+//
+//    var body: some View {
+//        imageView
+//    }
+//
+//    func getImage(imageLink: String) -> UIImageView {
+//        let view = UIImageView()
+//        let ref = Storage.storage().reference()
+//        let file = ref.child("images/04F31D88-D014-4DAD-B186-755BEDD9AD58.jpg")
+//        view.sd_setImage(with: file)
+//        return view
+//    }
+//}
+//
     //
     //    func getImages(imageLink: String) async {
     //        let imageLink = URL(string: (imageLink.replacingOccurrences(of: "/images/", with: "")))
