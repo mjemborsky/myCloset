@@ -20,8 +20,8 @@ struct PostCell: View {
         VStack {
             // HStack for profile image, profile username
             HStack (spacing: 10) {
-                // this is the user profile pic on each post
-                Image(systemName: "person.crop.circle.fill")
+                //  Display image at index 1 from array of post images (userImage).
+                Image(uiImage: images[1])
                     .resizable()
                     .scaledToFill()
                     .frame(width: 25, height: 25)
@@ -33,11 +33,12 @@ struct PostCell: View {
                 Spacer()
             }
             .padding(.horizontal, 8)
-            Spacer()
+            // Display image at index 0 from array of post images (postImage).
             Image(uiImage: images[0])
+                .resizable()
+                .scaledToFit()
                 .frame(width: UIScreen.main.bounds.width,
                    height: UIScreen.main.bounds.width)
-            Spacer()
             // another HStack for like and save option
             HStack (spacing: 16) {
                 // should be replaced with a heart or like button

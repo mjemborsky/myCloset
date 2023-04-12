@@ -24,6 +24,7 @@ struct FeedView: View {
     // List to store posts with getAllPosts()
     @State private var postsInProgress = [Post]()
     @State private var imagesInProgress = [UIImage]()
+    @State private var userProfileImages = [UIImage]()
     // Main View
     var body: some View {
         ZStack {
@@ -79,34 +80,60 @@ struct FeedView: View {
                 }
                 if let snapshot = snapshot {
                     for document in snapshot.documents {
-                            let data = document.data()
-                            let id = data["ID"] as! String
-                            let idUUID = UUID(uuidString: id)
-                            let postTime = data["postTime"] as? Double ?? 0.0
-                            let postDate = Date(timeIntervalSince1970: postTime)
-                            let postCreator = data["postCreator"] as? String ?? ""
-                            let postDescription = data["postDescription"] as? String ?? ""
-                            let postLikes = data["postLikes"] as? [String] ?? []
-                            let postSaves = data["postSaves"] as? [String] ?? []
-                            let postTags = data["postTags"] as? [String] ?? []
-                            let postImage = data["postImage"] as? String ?? ""
-                            let linkedOutfit = data["linkedOutfit"] as? String ?? ""
-                            let post = Post(id: idUUID ?? UUID(), postTime: postDate, postCreator: postCreator, postDescription: postDescription, postLikes: postLikes, postSaves: postSaves, postTags: postTags, postImage: postImage, linkedOutfit: linkedOutfit)
-                            let fileRef = storageRef.child(postImage)
-                            fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
-                                if error == nil && data != nil {
-                                    if let image = UIImage(data: data!) {
-                                        DispatchQueue.main.async {
-                                            postsInProgress.append(post)
-                                            imagesInProgress.append(image)
-                                        }
+                        var userImageLink: String
+                        let data = document.data()
+                        let id = data["ID"] as! String
+                        let idUUID = UUID(uuidString: id)
+                        let postTime = data["postTime"] as? Double ?? 0.0
+                        let postDate = Date(timeIntervalSince1970: postTime)
+                        let postCreator = data["postCreator"] as? String ?? ""
+                        let postDescription = data["postDescription"] as? String ?? ""
+                        let postLikes = data["postLikes"] as? [String] ?? []
+                        let postSaves = data["postSaves"] as? [String] ?? []
+                        let postTags = data["postTags"] as? [String] ?? []
+                        let postImage = data["postImage"] as? String ?? ""
+                        let linkedOutfit = data["linkedOutfit"] as? String ?? ""
+                        let linkedUser = data["linkedUser"] as? String ?? ""
+                        let userRef = db.collection("Users").document(linkedUser)
+                        userRef.getDocument(source: .cache) { (document, error) in
+                            if let document = document {
+                                let imageLink = document.get("profileImage") as! String
+                                userImageLink = imageLink
+                            }
+                        }
+                        let post = Post(id: idUUID ?? UUID(), postTime: postDate, postCreator: postCreator, postDescription: postDescription, postLikes: postLikes, postSaves: postSaves, postTags: postTags, postImage: postImage, linkedOutfit: linkedOutfit)
+                        let fileRef = storageRef.child(postImage)
+                        fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
+                            if error == nil && data != nil {
+                                if let image = UIImage(data: data!) {
+                                    DispatchQueue.main.async {
+                                        postsInProgress.append(post)
+                                        imagesInProgress.append(image)
                                     }
                                 }
+                                
                             }
+                        }
+                        await getUserImage(path: userImageLink)
                     }
                 }
             }
+    }
+    func getUserImage(path: String) {
+        let link = "images/\(path).jpg"
+        let storageRef = Storage.storage().reference()
+        let fileRef = storageRef.child(link)
+        fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
+            if error == nil && data != nil {
+                if let image = UIImage(data: data!) {
+                    DispatchQueue.main.async {
+                        imagesInProgress.append(image)
+                    }
+                }
+                
+            }
         }
+    }
     
     
     func returnToView() {
