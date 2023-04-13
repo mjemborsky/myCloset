@@ -108,29 +108,17 @@ struct FeedView: View {
             }
         }
     }
-    
-//    func getUserImage(path: String) {
-//        let link = "images/\(path).jpg"
-//        let storageRef = Storage.storage().reference()
-//        let fileRef = storageRef.child(link)
-//        fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
-//            if error == nil && data != nil {
-//                if let image = UIImage(data: data!) {
-//                    DispatchQueue.main.async {
-//                        imagesInProgress.append(image)
-//                    }
-//                }
-//
-//            }
-//        }
-//    }
-//
-    
     func returnToView() {
         if willMoveToFeed {
             toggleMenu.toggle()
         }
     }
+//  FUNCTIONS NEEDED
+    // getUserProfileImage
+    // - accepts string (path to User) and returns UIImage
+    // refresh
+    // View/Pull Down feature for user that refreshes pull from database
+
 }
 
 
