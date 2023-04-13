@@ -11,11 +11,12 @@ import FirebaseStorageUI
 // UI for an individual post "cell" - responsible for all formatting of buttons, etc.. of an individual post. This is used by feedView to format all posts.
 
 struct PostCell: View {
+    @State private var liked: Bool = false
     let post: Post
     let images: [UIImage]
     // could include "placeholder" eventually using .redacted, for when it is loading
     var body: some View {
-        //        var imageView = UIImageView(getImage(imageLink: imageLink))
+        // Check if the post is liked by user here
         // VStack for all post info
         VStack {
             // HStack for profile image, profile username
@@ -42,7 +43,20 @@ struct PostCell: View {
             // another HStack for like and save option
             HStack (spacing: 16) {
                 // should be replaced with a heart or like button
-                Image(systemName: "heart")
+                if liked {
+                    Button(action: {
+                        liked.toggle()
+                    }) {
+                        Image(systemName: "heart")
+                    }
+                }
+                else {
+                    Button(action: {
+                        liked.toggle()
+                    }) {
+                        Image(systemName: "heart.fill")
+                    }
+                }
                 Text(String((post.postLikes).count) + " Likes")
                     .font(.headline)
                 
