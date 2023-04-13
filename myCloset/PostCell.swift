@@ -21,7 +21,7 @@ struct PostCell: View {
             // HStack for profile image, profile username
             HStack (spacing: 10) {
                 //  Display image at index 1 from array of post images (userImage).
-                Image(uiImage: images[1])
+                Image(systemName: "person.crop.circle.fill")
                     .resizable()
                     .scaledToFill()
                     .frame(width: 25, height: 25)
