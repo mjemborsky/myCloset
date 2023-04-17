@@ -14,6 +14,7 @@ import FirebaseStorage
 class ClothingItemManager: ObservableObject {
 
     @Published var clothingItems: [ClothingItem] = []
+ 
 
     
 
