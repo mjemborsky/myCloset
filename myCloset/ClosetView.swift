@@ -11,6 +11,7 @@ import SwiftUI
 struct ClosetView: View {
     
     @EnvironmentObject var clothingItemManager: ClothingItemManager
+    @EnvironmentObject var selectedItemsManager: SelectedItemsManager
     
     @State private var showPopup = false
     @State private var isEditing = false
@@ -25,7 +26,7 @@ struct ClosetView: View {
     // Variable to hide feedview
     @State private var isHidden: Bool = false
     
-    @State private var selectedItems: [ClothingItem] = []
+//    @State private var selectedItems: [ClothingItem] = []
     
     
     var body: some View {
@@ -33,7 +34,7 @@ struct ClosetView: View {
             NavigationView {
                 List(clothingItemManager.clothingItems, id: \.ItemTag) { clothingItem in
                     if isEditing {
-                        CheckboxRow(clothingItem: clothingItem, selectedItems: $selectedItems)
+                        CheckboxRow(clothingItem: clothingItem, selectedItemsManager: selectedItemsManager)
                     } else {
                         (Text(clothingItem.ImageURL))
                     }
@@ -72,7 +73,7 @@ struct ClosetView: View {
         }
         .onChange(of: isEditing) { newValue in
             if !newValue {
-                print(selectedItems) // <-- Print the selected items
+                print(selectedItemsManager.selectedItems) // <-- Print the selected items
             }
         }
         
@@ -90,7 +91,7 @@ struct CheckboxRow: View {
     
     @State var isChecked: Bool = false
     let clothingItem: ClothingItem
-    @Binding var selectedItems: [ClothingItem]
+    @ObservedObject var selectedItemsManager: SelectedItemsManager
     
     var body: some View {
         HStack {
@@ -98,9 +99,9 @@ struct CheckboxRow: View {
                 .onTapGesture {
                     isChecked.toggle()
                     if isChecked {
-                        selectedItems.append(clothingItem)
+                        selectedItemsManager.selectedItems.append(clothingItem)
                     } else {
-                        selectedItems.removeAll(where: { $0.ImageURL == clothingItem.ImageURL})
+                        selectedItemsManager.selectedItems.removeAll(where: { $0.ImageURL == clothingItem.ImageURL})
                     }
                 }
             Text(clothingItem.ImageURL)
@@ -108,11 +109,15 @@ struct CheckboxRow: View {
     }
 }
 
+
 struct ContentofClosetView: View {
     @StateObject var clothingItemManager = ClothingItemManager()
+    @StateObject var selectedItemsManager = SelectedItemsManager()
 
     var body: some View {
-        ClosetView().environmentObject(clothingItemManager)
+        ClosetView()
+            .environmentObject(clothingItemManager)
+            .environmentObject(selectedItemsManager)
     }
 }
 
