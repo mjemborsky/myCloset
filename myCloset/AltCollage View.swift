@@ -8,19 +8,20 @@
 import SwiftUI
 
 struct Grid: Identifiable {
-    var id = UUID().uuidString
-    var iconName: String //newClothingItem
-    var image = Image(systemName: "photo").resizable() 
+    @EnvironmentObject var clothingItemManager: ClothingItemManager
+    var id = UUID()
+    let clothingItem: ClothingItem
+    var imageUrl: String { clothingItem.ImageURL }
 }
 class GridViewModel: ObservableObject {
     @Published var currentGrid: Grid?
-    @Published var gridItems = [Grid(iconName: "photo"),
-                                Grid(iconName: "photo"),
-                                Grid(iconName: "photo"),
-                                Grid(iconName: "photo"),
-                                Grid(iconName: "photo"),
-                                Grid(iconName: "photo")
-    ]
+    @EnvironmentObject var selectedItemsManager: SelectedItemsManager
+    @Published var gridItems:
+    [Grid] = [] {
+        didSet {
+            gridItems = selectedItemsManager.selectedItems.map { Grid(clothingItem: $0) }
+        }
+    }
 }
 struct DropViewDelegate: DropDelegate {
     
@@ -53,9 +54,11 @@ struct DropViewDelegate: DropDelegate {
         return DropProposal(operation: .move)
     }
 }
-struct collageGrid: View {
+struct altCollageGrid: View {
     
     @StateObject var gridData = GridViewModel()
+    @EnvironmentObject var selectedItemsManager: SelectedItemsManager
+       
     
     let columns = Array(repeating: GridItem(.flexible(), spacing: 10), count: 2)
     
@@ -65,17 +68,19 @@ struct collageGrid: View {
                     LazyVGrid(columns: columns,spacing: 0, content: {
                         ForEach(gridData.gridItems){ grid in
                             ZStack {
-                                grid.image
-                                    .font(.system(size: 120))
-                                    .foregroundStyle(Color.white.shadow(.drop(radius: 5)))
-                                    .scaledToFill()
-                                    .clipped()
+                                Text(grid.imageUrl) // Display the imageUrl
+                                    .font(.headline)
+                                    .padding()
+                                    .foregroundColor(.white)
+                                    .background(Color.blue)
+                                    .clipShape(RoundedRectangle(cornerRadius: 30))
+                                    .shadow(radius: 5)
                             }
                             .frame(height: 150)
                             .cornerRadius(30)
                             .onDrag({
                                 gridData.currentGrid = grid
-                                return NSItemProvider(object: String(grid.iconName) as NSString)
+                                return NSItemProvider(object: grid.imageUrl as NSString)
                             })
                             .onDrop(of: [.text], delegate: DropViewDelegate(grid: grid, gridData: gridData))
                         }
@@ -85,9 +90,12 @@ struct collageGrid: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
+        .environmentObject(selectedItemsManager)
     }
 }
 struct AltCollage_View: View {
+    @EnvironmentObject var selectedItemsManager: SelectedItemsManager
+       
     var body: some View {
         NavigationView {
             VStack {
@@ -107,7 +115,8 @@ struct AltCollage_View: View {
                     }
                 }
                 Spacer()
-                collageGrid()
+                altCollageGrid()
+                    .environmentObject(selectedItemsManager)
                     .frame(width: 350, height: 500, alignment: .center)
                 Spacer()
             }

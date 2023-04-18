@@ -26,7 +26,7 @@ struct ClosetView: View {
     // Variable to hide feedview
     @State private var isHidden: Bool = false
     
-//    @State private var selectedItems: [ClothingItem] = []
+
     
     
     var body: some View {
@@ -39,11 +39,10 @@ struct ClosetView: View {
                         (Text(clothingItem.ImageURL))
                     }
                 }
-            
-                
+    
                 .navigationTitle("Closet")
                 .navigationBarItems(leading: Button(action: {
-                        isEditing.toggle() // <-- Toggle editing mode
+                        isEditing.toggle()
                 }, label: {
                     Text(isEditing ? "Done" : "Select")
                         .padding()
@@ -53,7 +52,6 @@ struct ClosetView: View {
                     Image(systemName: "plus")
                 }))
                 .sheet(isPresented: $showPopup) {
-                    
                     ContentView()
                 }
             }
