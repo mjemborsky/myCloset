@@ -11,8 +11,10 @@ import SwiftUI
 struct ClosetView: View {
     
     @EnvironmentObject var clothingItemManager: ClothingItemManager
+    @EnvironmentObject var selectedItemsManager: SelectedItemsManager
     
     @State private var showPopup = false
+    @State private var isEditing = false
     
     // Variable for if sidemenu is showing or not
     @State private var toggleMenu: Bool = false
@@ -24,27 +26,32 @@ struct ClosetView: View {
     // Variable to hide feedview
     @State private var isHidden: Bool = false
     
+
+    
+    
     var body: some View {
         ZStack {
             NavigationView {
-                List(clothingItemManager.clothingItems, id: \.ItemTag) { clothingItem in (Text(clothingItem.ImageURL))
-                    
+                List(clothingItemManager.clothingItems, id: \.ItemTag) { clothingItem in
+                    if isEditing {
+                        CheckboxRow(clothingItem: clothingItem, selectedItemsManager: selectedItemsManager)
+                    } else {
+                        (Text(clothingItem.ImageURL))
+                    }
                 }
-                
+    
                 .navigationTitle("Closet")
-                
-                .navigationBarItems(trailing: Button(action: {
-                    
-                    showPopup.toggle()
-                    
+                .navigationBarItems(leading: Button(action: {
+                        isEditing.toggle()
                 }, label: {
-                    
+                    Text(isEditing ? "Done" : "Select")
+                        .padding()
+                }), trailing: Button(action: {
+                    showPopup.toggle()
+                }, label: {
                     Image(systemName: "plus")
-                    
                 }))
-                
                 .sheet(isPresented: $showPopup) {
-                    
                     ContentView()
                 }
             }
@@ -62,6 +69,11 @@ struct ClosetView: View {
                     returnToView()
                 }
         }
+        .onChange(of: isEditing) { newValue in
+            if !newValue {
+                print(selectedItemsManager.selectedItems) // <-- Print the selected items
+            }
+        }
         
     }
     func returnToView() {
@@ -73,19 +85,45 @@ struct ClosetView: View {
     }
 }
 
+struct CheckboxRow: View {
+    
+    @State var isChecked: Bool = false
+    let clothingItem: ClothingItem
+    @ObservedObject var selectedItemsManager: SelectedItemsManager
+    
+    var body: some View {
+        HStack {
+            Image(systemName: isChecked ? "checkmark.circle" : "circle")
+                .onTapGesture {
+                    isChecked.toggle()
+                    if isChecked {
+                        selectedItemsManager.selectedItems.append(clothingItem)
+                    } else {
+                        selectedItemsManager.selectedItems.removeAll(where: { $0.ImageURL == clothingItem.ImageURL})
+                    }
+                }
+            Text(clothingItem.ImageURL)
+        }
+    }
+}
 
 
+struct ContentofClosetView: View {
+    @StateObject var clothingItemManager = ClothingItemManager()
+    @StateObject var selectedItemsManager = SelectedItemsManager()
 
+    var body: some View {
+        ClosetView()
+            .environmentObject(clothingItemManager)
+            .environmentObject(selectedItemsManager)
+    }
+}
 
-
-
-struct ClosetView_Previews: PreviewProvider {
+struct ContentofCloset_Previews: PreviewProvider {
 
     static var previews: some View {
 
-        ClosetView()
-
-            .environmentObject(ClothingItemManager())
+        ContentofClosetView()
 
     }
 

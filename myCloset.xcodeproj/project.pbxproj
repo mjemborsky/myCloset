@@ -14,6 +14,7 @@
 		373BFF7F29E358590096F21F /* AltCollage View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 373BFF7E29E358580096F21F /* AltCollage View.swift */; };
 		3744E74929A6B83000D74B5A /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3744E74829A6B83000D74B5A /* UserProfile.swift */; };
 		37BCAC4129DB3FAA00A6E94C /* profileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BCAC4029DB3FAA00A6E94C /* profileView.swift */; };
+		37D64D1929EDEE68003E4C5A /* SelectedItemsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37D64D1829EDEE68003E4C5A /* SelectedItemsManager.swift */; };
 		623503CE299BEE5C002BA53C /* myClosetApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 623503CD299BEE5C002BA53C /* myClosetApp.swift */; };
 		623503D2299BEE5D002BA53C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 623503D1299BEE5D002BA53C /* Assets.xcassets */; };
 		623503D5299BEE5D002BA53C /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 623503D4299BEE5D002BA53C /* Preview Assets.xcassets */; };
@@ -70,6 +71,7 @@
 		373BFF7E29E358580096F21F /* AltCollage View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AltCollage View.swift"; sourceTree = "<group>"; };
 		3744E74829A6B83000D74B5A /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		37BCAC4029DB3FAA00A6E94C /* profileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = profileView.swift; sourceTree = "<group>"; };
+		37D64D1829EDEE68003E4C5A /* SelectedItemsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedItemsManager.swift; sourceTree = "<group>"; };
 		623503CA299BEE5C002BA53C /* myCloset.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = myCloset.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		623503CD299BEE5C002BA53C /* myClosetApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myClosetApp.swift; sourceTree = "<group>"; };
 		623503D1299BEE5D002BA53C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				37BCAC4029DB3FAA00A6E94C /* profileView.swift */,
 				C36EF28329E2196900356A0F /* SearchView.swift */,
 				373BFF7E29E358580096F21F /* AltCollage View.swift */,
+				37D64D1829EDEE68003E4C5A /* SelectedItemsManager.swift */,
 				623503D1299BEE5D002BA53C /* Assets.xcassets */,
 				62E33C8B29C0067200A0F08E /* Info.plist */,
 				9476506B29D119CC0000E12D /* GoogleService-Info.plist */,
@@ -362,6 +365,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3671E3129B3004F006BABAD /* FeedView.swift in Sources */,
+				37D64D1929EDEE68003E4C5A /* SelectedItemsManager.swift in Sources */,
 				9452645429A542A200D24D5C /* ClothingItem.swift in Sources */,
 				C37FBBB629A5436D00E23648 /* post.swift in Sources */,
 				627B337329A6E31500F546A2 /* LoginView.swift in Sources */,
