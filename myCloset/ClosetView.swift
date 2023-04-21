@@ -36,7 +36,9 @@ struct ClosetView: View {
                     if isEditing {
                         CheckboxRow(clothingItem: clothingItem, selectedItemsManager: selectedItemsManager)
                     } else {
-                        (Text(clothingItem.ImageURL))
+                        Image(uiImage: clothingItem.ImageURL)
+                            .resizable()
+                            .frame(width: 200, height: 200)
                     }
                 }
     
@@ -102,7 +104,9 @@ struct CheckboxRow: View {
                         selectedItemsManager.selectedItems.removeAll(where: { $0.ImageURL == clothingItem.ImageURL})
                     }
                 }
-            Text(clothingItem.ImageURL)
+            Image(uiImage: clothingItem.ImageURL)
+                .resizable()
+                .frame(width: 200, height: 200)
         }
     }
 }

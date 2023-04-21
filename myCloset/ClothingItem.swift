@@ -6,20 +6,20 @@
 //
 
 import Foundation
-
+import SwiftUI
 
 
 struct ClothingItem{
 
     var ItemTag: String
 
-    var ImageURL: String
+    var ImageURL: UIImage
 
     
 
     //constructor
 
-    init(ItemTag: String, ImageURL: String) {
+    init(ItemTag: String, ImageURL: UIImage) {
 
         self.ItemTag = ItemTag
 
