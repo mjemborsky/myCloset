@@ -15,7 +15,7 @@ struct Post: Identifiable {
     //               database. Types of information stored includes post number, date added,
     //               likes, etc...
     // Need some generator for ID, that increments with every post in the system
-    let id = UUID()
+    var id: UUID
     var postTime: Date
     var postCreator: String
     var postDescription: String
@@ -27,6 +27,7 @@ struct Post: Identifiable {
     
     
     init(id: UUID, postTime: Date, postCreator: String, postDescription: String, postLikes: [String], postSaves: [String], postTags: [String], postImage: String, linkedOutfit: String) {
+        self.id = id
         self.postCreator = postCreator
         self.postTime = postTime
         self.postDescription = postDescription
@@ -41,9 +42,6 @@ struct Post: Identifiable {
     
     func getPostImageLink() -> String {
         return self.postImage
-    }
-    func getPostID() -> String {
-        return self.id.uuidString
     }
 }
 

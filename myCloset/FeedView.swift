@@ -39,7 +39,7 @@ struct FeedView: View {
                 }
                 // Calling to retrieve posts
                 .task {
-                    await getAllPost()
+                    await loadAll()
                 }
             }
             //Edit appearance of top navigation bar (currently not displaying?)
@@ -91,6 +91,7 @@ struct FeedView: View {
                     let postTags = data["postTags"] as? [String] ?? []
                     let postImage = data["postImage"] as? String ?? ""
                     let linkedOutfit = data["linkedOutfit"] as? String ?? ""
+                    let linkedUser = data["linkedUser"] as! String
                     let post = Post(id: idUUID ?? UUID(), postTime: postDate, postCreator: postCreator, postDescription: postDescription, postLikes: postLikes, postSaves: postSaves, postTags: postTags, postImage: postImage, linkedOutfit: linkedOutfit)
                     let fileRef = storageRef.child(postImage)
                     fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
@@ -104,6 +105,24 @@ struct FeedView: View {
                             
                         }
                     }
+                    let userRef = db.collection("Users").document(linkedUser)
+                    userRef.getDocument { (user, error) in
+                        if let user = user {
+                            let userData = user.data()
+                            let userImage = userData!["profileImage"] as? String ?? ""
+                            let imageRef = storageRef.child(userImage)
+                            imageRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
+                                if error == nil && data != nil {
+                                    if let image = UIImage(data: data!) {
+                                        DispatchQueue.main.async {
+                                            imagesInProgress.append(image)
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -113,12 +132,46 @@ struct FeedView: View {
             toggleMenu.toggle()
         }
     }
+    
+    func getUserProfileImage(path: String) {
+        let db = Firestore.firestore()
+        let storageRef = Storage.storage().reference()
+        let docRef = db.collection("Users").document(path)
+        docRef.getDocument(completion: { (snapshot, error) in
+            guard error == nil else {
+                print(error!.localizedDescription)
+                return
+            }
+            if let snapshot = snapshot {
+                let data = snapshot.data()
+                let imageLink = data!["profileImage"] as? String ?? ""
+                let fileRef = storageRef.child(imageLink)
+                fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
+                    if error == nil && data != nil {
+                        if let image = UIImage(data: data!) {
+                            DispatchQueue.main.async {
+                                imagesInProgress.append(image)
+                            }
+                        }
+                        
+                    }
+                }
+            }
+        })
+        
+    }
 //  FUNCTIONS NEEDED
     // getUserProfileImage
     // - accepts string (path to User) and returns UIImage
     // refresh
     // View/Pull Down feature for user that refreshes pull from database
 
+}
+//
+extension FeedView {
+    func loadAll() async {
+        await getAllPost()
+    }
 }
 
 

@@ -7,12 +7,14 @@ import SwiftUI
 import FirebaseFirestore
 import FirebaseStorage
 import FirebaseStorageUI
+import FirebaseAuth
 
 // UI for an individual post "cell" - responsible for all formatting of buttons, etc.. of an individual post. This is used by feedView to format all posts.
 
 struct PostCell: View {
     @State private var liked: Bool = false
-    let post: Post
+    @State private var saved: Bool = false
+    var post: Post
     let images: [UIImage]
     // could include "placeholder" eventually using .redacted, for when it is loading
     var body: some View {
@@ -22,7 +24,7 @@ struct PostCell: View {
             // HStack for profile image, profile username
             HStack (spacing: 10) {
                 //  Display image at index 1 from array of post images (userImage).
-                Image(systemName: "person.crop.circle.fill")
+                Image(uiImage: images[0])
                     .resizable()
                     .scaledToFill()
                     .frame(width: 25, height: 25)
@@ -42,28 +44,48 @@ struct PostCell: View {
                    height: UIScreen.main.bounds.width)
             // another HStack for like and save option
             HStack (spacing: 16) {
-                // should be replaced with a heart or like button
+                // Like Button
                 if liked {
                     Button(action: {
                         liked.toggle()
+                        likePost()
+                        
                     }) {
-                        Image(systemName: "heart")
+                        Image(systemName: "heart.fill")
+                        Text(String((post.postLikes).count+1))
+                            .font(.headline)
                     }
                 }
                 else {
                     Button(action: {
                         liked.toggle()
+                        // Call Function - Unlike Post
                     }) {
-                        Image(systemName: "heart.fill")
+                        Image(systemName: "heart")
+                        Text(String((post.postLikes).count))
+                            .font(.headline)
                     }
                 }
-                Text(String((post.postLikes).count) + " Likes")
-                    .font(.headline)
                 
                 Spacer()
-                
-                // should be replaced with a save button
-                Image(systemName: "bookmark")
+           
+                // Save Button
+                if saved {
+                    Button(action: {
+                        saved.toggle()
+                        // Call Function - Save Post
+                    }) {
+                        Image(systemName: "bookmark.fill")
+                    }
+                }
+                else {
+                    Button(action: {
+                        saved.toggle()
+                        // Call Function - UnSave Post
+                    }) {
+                        Image(systemName: "bookmark")
+                    }
+                }
             }
             .font(.title2)
             .padding(6)
@@ -83,6 +105,28 @@ struct PostCell: View {
             Spacer()
             Spacer()
         }
+    }
+    
+    
+    func likePost() {
+        let database = Firestore.firestore().collection("Posts")
+        let postRef = database.document(post.id.uuidString)
+        postRef.updateData([
+            "postLikes": FieldValue.arrayUnion(["username"])
+        ])
+    }
+    func unlikePost() {
+        let database = Firestore.firestore().collection("Posts")
+        let postRef = database.document(post.id.uuidString)
+        postRef.updateData([
+            "postLikes": FieldValue.arrayRemove(["username"])
+        ])
+    }
+    func savePost() {
+        
+    }
+    func unsavePost() {
+        
     }
     //  FUNCTIONS NEEDED
         // likeAction
