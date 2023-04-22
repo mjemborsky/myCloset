@@ -33,7 +33,7 @@ struct FeedView: View {
                         .foregroundColor(.gray)
                     // Displaying Posts
                     ForEach(postsInProgress) { Post in
-                        PostCell(post: Post, images: imagesInProgress)
+                        PostCell(post: Post, images: imagesInProgress )
                     }
                     Spacer()
                 }

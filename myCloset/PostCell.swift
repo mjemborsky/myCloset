@@ -12,9 +12,9 @@ import FirebaseAuth
 // UI for an individual post "cell" - responsible for all formatting of buttons, etc.. of an individual post. This is used by feedView to format all posts.
 
 struct PostCell: View {
+    var post: Post
     @State private var liked: Bool = false
     @State private var saved: Bool = false
-    var post: Post
     let images: [UIImage]
     // could include "placeholder" eventually using .redacted, for when it is loading
     var body: some View {
@@ -45,51 +45,64 @@ struct PostCell: View {
             // another HStack for like and save option
             HStack (spacing: 16) {
                 // Like Button
+                // Conditional for if post is already liked
                 if liked {
                     Button(action: {
+                        // Calls to switch boolean of liked to false and removes like from database
                         liked.toggle()
-                        likePost()
-                        
-                    }) {
+                        unlikePost()
+                    }, label: {
+                        // If liked, heart will be filled. Still having issues currently with the count being off by 1
+                        // if the user has it liked when the page loads.
                         Image(systemName: "heart.fill")
-                        Text(String((post.postLikes).count+1))
+                        Text(String(post.postLikes.count+1))
                             .font(.headline)
-                    }
+                    })
                 }
+                // Conditional for if post is not liked
                 else {
                     Button(action: {
+                        // Calls to switch boolean of liked to true and adds like in database
                         liked.toggle()
-                        // Call Function - Unlike Post
-                    }) {
+                        likePost()
+                    }, label: {
+                        // If not liked, the heard will not be filled.
                         Image(systemName: "heart")
-                        Text(String((post.postLikes).count))
+                        Text(String(post.postLikes.count))
                             .font(.headline)
-                    }
+                    })
                 }
-                
                 Spacer()
-           
                 // Save Button
+                // Conditional for if user has post saved already
                 if saved {
                     Button(action: {
+                        // Calls to switch boolean of saved to false and removes save from database
                         saved.toggle()
-                        // Call Function - Save Post
+                        unsavePost()
                     }) {
+                        // The save icon will be filled if the user has the post saved
                         Image(systemName: "bookmark.fill")
                     }
                 }
                 else {
                     Button(action: {
+                        // Calls to switch boolean of saved to true and adds save in database
                         saved.toggle()
-                        // Call Function - UnSave Post
+                        savePost()
                     }) {
+                        // The save icon will be not filled if the user has not saved the post
                         Image(systemName: "bookmark")
                     }
                 }
             }
             .font(.title2)
             .padding(6)
-            
+            .onAppear {
+                isLiked()
+                isSaved()
+            }
+            Text(post.id.uuidString)
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
                     Text(post.postCreator)
@@ -107,38 +120,50 @@ struct PostCell: View {
         }
     }
     
-    
+    func isLiked() {
+        if (post.postLikes.contains("username2")) {
+            liked = true
+        } else {
+            liked = false
+        }
+    }
+    func isSaved() {
+        if (post.postSaves.contains("username2")) {
+            saved = true
+        } else {
+            saved = false
+        }
+    }
     func likePost() {
-        let database = Firestore.firestore().collection("Posts")
-        let postRef = database.document(post.id.uuidString)
-        postRef.updateData([
-            "postLikes": FieldValue.arrayUnion(["username"])
+        let db = Firestore.firestore()
+        let docRef = db.collection("Posts").document(post.id.uuidString)
+        docRef.updateData([
+            "postLikes": FieldValue.arrayUnion(["username2"])
         ])
     }
     func unlikePost() {
         let database = Firestore.firestore().collection("Posts")
         let postRef = database.document(post.id.uuidString)
         postRef.updateData([
-            "postLikes": FieldValue.arrayRemove(["username"])
+            "postLikes": FieldValue.arrayRemove(["username2"])
         ])
     }
     func savePost() {
-        
+        let db = Firestore.firestore()
+        let docRef = db.collection("Posts").document(post.id.uuidString)
+        docRef.updateData([
+            "postSaves": FieldValue.arrayUnion(["username2"])
+        ])
     }
     func unsavePost() {
-        
+        let db = Firestore.firestore()
+        let docRef = db.collection("Posts").document(post.id.uuidString)
+        docRef.updateData([
+            "postSaves": FieldValue.arrayRemove(["username2"])
+        ])
     }
     //  FUNCTIONS NEEDED
-        // likeAction
-        // - adds username to array of post's likes in database
-        // unlikeAction
-        // - removes username from array of post's likes in database
-        // saveAction
-        // - adds username to array of post's saves in database
-        // unsaveAction
-        // - adds username to array of post's saves in database
-    
-        // interactions when clicking on userProfile, and potentially post
+    //  need interactions when clicking on userProfile?, and potentially post?
 }
 
 //struct PostCellPreview_Previews: PreviewProvider {
