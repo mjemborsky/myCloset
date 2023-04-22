@@ -41,11 +41,14 @@ struct FeedView: View {
                 .task {
                     await loadAll()
                 }
+                .refreshable {
+                    await loadAll()
+                }
+            
             }
             //Edit appearance of top navigation bar (currently not displaying?)
             .navigationTitle("myCloset")
             .navigationBarTitleDisplayMode(.inline)
-            
             // SideMenu View and Conditionals to switch to other views
             MenuView(isOpen: $toggleMenu, feedSelected: $willMoveToFeed, searchSelected: $willMoveToSearch, closetSelected: $willMoveToCloset, profileSelected: $willMoveToProfile, hideFeed: $isHidden)
                 .fullScreenCover(isPresented: $willMoveToSearch) {
@@ -163,8 +166,6 @@ struct FeedView: View {
 //  FUNCTIONS NEEDED
     // getUserProfileImage
     // - accepts string (path to User) and returns UIImage
-    // refresh
-    // View/Pull Down feature for user that refreshes pull from database
 
 }
 //
