@@ -119,7 +119,8 @@ struct CheckboxRow: View {
                 }
                 Image(uiImage: clothingItem.ImageURL)
                     .resizable()
-                    .frame(width: 150, height: 150)
+                    .frame(width: 140, height: 140)
+                    .padding(-5)
         }
     }
 }
