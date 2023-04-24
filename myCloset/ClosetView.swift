@@ -15,9 +15,6 @@ struct ClosetView: View {
     @State private var showPopup = false
     @State private var isEditing = false
     
-    // Add this line
-        @Binding var newClothingItem: String
-    
     // Variable for if sidemenu is showing or not
     @State private var toggleMenu: Bool = false
     // Variables for which view will be switched to next (from sidemenu)
@@ -28,23 +25,34 @@ struct ClosetView: View {
     // Variable to hide feedview
     @State private var isHidden: Bool = false
     
-
+    let columns = [GridItem(.flexible()), GridItem(.flexible()),GridItem(.flexible())]
+    let items = Array(1...12).map({"image \($0)"})
+    
+    let layout = [ GridItem(.adaptive(minimum: 100))]
     
     
     var body: some View {
         ZStack {
             NavigationView {
-                //grid?
-                List(clothingItemManager.clothingItems, id: \.ItemTag) { clothingItem in
-                    if isEditing {
-                        CheckboxRow(clothingItem: clothingItem, selectedItemsManager: selectedItemsManager)
-                    } else {
-                        Image(uiImage: clothingItem.ImageURL)
-                            .resizable()
-                            .frame(width: 100, height: 100)
-                        
+                ScrollView(.vertical) {
+                    LazyVGrid(columns: layout, content: {
+                        //grid?
+                        ForEach(clothingItemManager.clothingItems, id: \.ItemTag) { clothingItem in
+                            if isEditing {
+                                CheckboxRow(clothingItem: clothingItem, selectedItemsManager: selectedItemsManager)
+                            } else {
+                                
+                                Image(uiImage: clothingItem.ImageURL)
+                                    .resizable()
+                                    .frame(width:100,height:100)
+                                    //.aspectRatio(contentMode: .fit)
+                                    .padding()
+                                
+                            }
+                        }
+                        })
                     }
-                }
+                
     
                 .navigationTitle("Closet")
                 .navigationBarItems(leading: Button(action: {
@@ -96,6 +104,7 @@ struct CheckboxRow: View {
     @State var isChecked: Bool = false
     let clothingItem: ClothingItem
     @ObservedObject var selectedItemsManager: SelectedItemsManager
+    let columns = [GridItem(.flexible()), GridItem(.flexible()),GridItem(.flexible())]
     
     var body: some View {
         HStack {
@@ -108,9 +117,9 @@ struct CheckboxRow: View {
                         selectedItemsManager.selectedItems.removeAll(where: { $0.ImageURL == clothingItem.ImageURL})
                     }
                 }
-            Image(uiImage: clothingItem.ImageURL)
-                .resizable()
-                .frame(width: 200, height: 200)
+                Image(uiImage: clothingItem.ImageURL)
+                    .resizable()
+                    .frame(width: 200, height: 200)
         }
     }
 }
