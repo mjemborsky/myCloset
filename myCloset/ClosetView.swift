@@ -44,9 +44,9 @@ struct ClosetView: View {
                                 
                                 Image(uiImage: clothingItem.ImageURL)
                                     .resizable()
-                                    .frame(width:100,height:100)
+                                    .frame(width:140,height:140)
                                     //.aspectRatio(contentMode: .fit)
-                                    .padding()
+                                    .padding(-5)
                                 
                             }
                         }
