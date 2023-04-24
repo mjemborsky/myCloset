@@ -26,7 +26,7 @@ struct ClosetView: View {
     @State private var isHidden: Bool = false
     
     let columns = [GridItem(.flexible()), GridItem(.flexible()),GridItem(.flexible())]
-    let items = Array(1...12).map({"image \($0)"})
+    let items = Array(1...100).map({"image \($0)"})
     
     let layout = [ GridItem(.adaptive(minimum: 100))]
     
@@ -35,7 +35,7 @@ struct ClosetView: View {
         ZStack {
             NavigationView {
                 ScrollView(.vertical) {
-                    LazyVGrid(columns: layout, content: {
+                    LazyVGrid(columns: columns, content: {
                         //grid?
                         ForEach(clothingItemManager.clothingItems, id: \.ItemTag) { clothingItem in
                             if isEditing {
@@ -119,7 +119,7 @@ struct CheckboxRow: View {
                 }
                 Image(uiImage: clothingItem.ImageURL)
                     .resizable()
-                    .frame(width: 200, height: 200)
+                    .frame(width: 150, height: 150)
         }
     }
 }
