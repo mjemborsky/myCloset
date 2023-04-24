@@ -7,14 +7,16 @@
 import SwiftUI
 
 
-
 struct ClosetView: View {
-    
+
     @EnvironmentObject var clothingItemManager: ClothingItemManager
     @EnvironmentObject var selectedItemsManager: SelectedItemsManager
     
     @State private var showPopup = false
     @State private var isEditing = false
+    
+    // Add this line
+        @Binding var newClothingItem: String
     
     // Variable for if sidemenu is showing or not
     @State private var toggleMenu: Bool = false
@@ -32,13 +34,15 @@ struct ClosetView: View {
     var body: some View {
         ZStack {
             NavigationView {
+                //grid?
                 List(clothingItemManager.clothingItems, id: \.ItemTag) { clothingItem in
                     if isEditing {
                         CheckboxRow(clothingItem: clothingItem, selectedItemsManager: selectedItemsManager)
                     } else {
                         Image(uiImage: clothingItem.ImageURL)
                             .resizable()
-                            .frame(width: 200, height: 200)
+                            .frame(width: 100, height: 100)
+                        
                     }
                 }
     
