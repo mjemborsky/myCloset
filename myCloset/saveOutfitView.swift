@@ -77,11 +77,6 @@ struct saveOutfitView: View {
         }
 }
 
-    
-        
-    
-
-
 struct saveOutfitView_Previews: PreviewProvider {
     static var previews: some View {
         saveOutfitView()
