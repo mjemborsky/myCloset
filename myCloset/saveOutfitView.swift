@@ -8,6 +8,7 @@
 import SwiftUI
 import Firebase
 import FirebaseFirestore
+import FirebaseStorage
 
 struct saveOutfitView: View {
     @State var title: String = ""
@@ -62,28 +63,53 @@ struct saveOutfitView: View {
             FeedView()
         }
     }
-    func saveoutfit() {
-        db.collection("Saved Collages").document(outfitid).setData([
-            "title": title,
-            "tag": tag
-        ]) { err in
-            if let err = err {
-                print("Error writing document: \(err)")
-            }else {
-                print("Document successfully written!")
-            }
-              
+    
+    @MainActor  func saveoutfit() {
+        @State var renderedImage = Image(systemName: "photo")
+        @Environment(\.displayScale) var displayScale
+        let storageRef =  Storage.storage().reference()
+        let path = "Saved Collages/\(UUID().uuidString).jpg"
+        let fileRef = storageRef.child(path)
+        
+        let renderer = ImageRenderer(content: SelectedItemsView())
+        renderer.scale = displayScale
+        
+        if let uiImage = renderer.uiImage {
+            let imageData = uiImage.jpegData(compressionQuality: 0.8)!
+            let uploadTask = fileRef.putData(imageData , metadata: nil) { (metadata, error) in
+                guard error == nil, metadata != nil else {
+                    print("Error uploading image:", error as Any)
+                    return
+                }
+                
+                let db = Firestore.firestore()
+                db.collection("Saved Collages").document(outfitid).setData([
+                    "title": title,
+                    "tag": tag,
+                    "url": path
+                ]) { error in
+                    guard error == nil else {
+                        print("Error saving data:", error as Any)
+                        return
+                    }
+                    
+                    DispatchQueue.main.async {
+                        // Update the UI with the newly saved image
+                    }
+                }
             }
         }
-}
-
+    }
     
-        
     
-
-
-struct saveOutfitView_Previews: PreviewProvider {
-    static var previews: some View {
-        saveOutfitView()
+    
+    
+    
+    // end UploadPhoto
+    
+    struct saveOutfitView_Previews: PreviewProvider {
+        static var previews: some View {
+            saveOutfitView()
+        }
     }
 }
