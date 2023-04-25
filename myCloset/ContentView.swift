@@ -20,7 +20,7 @@ struct ContentView: View {
     @State var isPickerShowing = false
     @State var selectedImage: UIImage?
     @State var retrievedImages = [UIImage]()
-    @State private var newClothingItem = ""
+    @State public var newClothingItem = ""
 
     
 
@@ -101,7 +101,7 @@ struct ContentView: View {
                         .resizable()
 
                         .frame(width: 100, height: 100)
-
+                    
                 }
 
             }

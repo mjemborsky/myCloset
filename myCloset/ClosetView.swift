@@ -5,16 +5,17 @@
 //  Created by Ryan Lounsbury on 3/11/23.
 //
 import SwiftUI
-
-
+import FirebaseFirestore
 
 struct ClosetView: View {
+
     
-    @EnvironmentObject var clothingItemManager: ClothingItemManager
-    @EnvironmentObject var selectedItemsManager: SelectedItemsManager
     
     @State private var showPopup = false
     @State private var isEditing = false
+    @State private var showDoneAlert = false
+    @State private var willMoveToSelectedItemsView = false
+
     
     // Variable for if sidemenu is showing or not
     @State private var toggleMenu: Bool = false
@@ -26,19 +27,38 @@ struct ClosetView: View {
     // Variable to hide feedview
     @State private var isHidden: Bool = false
     
-
+    let columns = [GridItem(.flexible()), GridItem(.flexible()),GridItem(.flexible())]
+    let items = Array(1...100).map({"image \($0)"})
     
+    let layout = [ GridItem(.adaptive(minimum: 100))]
+    
+    @EnvironmentObject var clothingItemManager: ClothingItemManager
+    @EnvironmentObject var selectedItemsManager: SelectedItemsManager
     
     var body: some View {
         ZStack {
             NavigationView {
-                List(clothingItemManager.clothingItems, id: \.ItemTag) { clothingItem in
-                    if isEditing {
-                        CheckboxRow(clothingItem: clothingItem, selectedItemsManager: selectedItemsManager)
-                    } else {
-                        (Text(clothingItem.ImageURL))
-                    }
+                ScrollView(.vertical) {
+                    LazyVGrid(columns: columns, content: {
+                        //grid?
+                        ForEach(clothingItemManager.clothingItems, id: \.ImageURL) { clothingItem in
+                            if isEditing {
+                                CheckboxRow(clothingItem: clothingItem, selectedItemsManager: selectedItemsManager)
+                            } else {
+                                
+                                Image(uiImage: clothingItem.ImageURL)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                                    .clipped()
+                                    .aspectRatio(1, contentMode: .fit)
+                                
+                                
+                            }
+                        }
+                    })
                 }
+                
     
                 .navigationTitle("Closet")
                 .navigationBarItems(leading: Button(action: {
@@ -69,12 +89,29 @@ struct ClosetView: View {
                     returnToView()
                 }
         }
+//        .environmentObject(self.selectedItemsManager)
+//        .environmentObject(self.clothingItemManager)
+
         .onChange(of: isEditing) { newValue in
             if !newValue {
-                print(selectedItemsManager.selectedItems) // <-- Print the selected items
+                print(selectedItemsManager.selectedItems)// <-- Print the selected items
+                showDoneAlert.toggle()
+
             }
         }
-        
+        .alert("Build Outfit?", isPresented: $showDoneAlert) {
+            Button("No", action: {})
+            Button("Yes", action: {
+               willMoveToSelectedItemsView = true
+                // Save the selected items to Firebase
+//                let selectedItems = selectedItemsManager.selectedItems.map { $0.ImageURL }
+//                let db = Firestore.firestore()
+//                db.collection("Selected Items").addDocument(data: ["items": selectedItems])
+            })
+        }
+        .fullScreenCover(isPresented: $willMoveToSelectedItemsView){
+            SelectedItemsView()
+        }
     }
     func returnToView() {
         if willMoveToCloset {
@@ -85,28 +122,31 @@ struct ClosetView: View {
     }
 }
 
+
 struct CheckboxRow: View {
     
-    @State var isChecked: Bool = false
+    @State var isSelected: Bool = false
     let clothingItem: ClothingItem
     @ObservedObject var selectedItemsManager: SelectedItemsManager
     
     var body: some View {
-        HStack {
-            Image(systemName: isChecked ? "checkmark.circle" : "circle")
-                .onTapGesture {
-                    isChecked.toggle()
-                    if isChecked {
-                        selectedItemsManager.selectedItems.append(clothingItem)
-                    } else {
-                        selectedItemsManager.selectedItems.removeAll(where: { $0.ImageURL == clothingItem.ImageURL})
-                    }
+        Image(uiImage: clothingItem.ImageURL)
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+            .clipped()
+            .aspectRatio(1, contentMode: .fit)
+            .border(isSelected ? Color.blue : Color.clear, width: 3)
+            .onTapGesture {
+                isSelected.toggle()
+                if isSelected {
+                    selectedItemsManager.selectedItems.append(clothingItem)
+                } else {
+                    selectedItemsManager.selectedItems.removeAll(where: { $0.ImageURL == clothingItem.ImageURL })
                 }
-            Text(clothingItem.ImageURL)
-        }
+            }
     }
 }
-
 
 struct ContentofClosetView: View {
     @StateObject var clothingItemManager = ClothingItemManager()
