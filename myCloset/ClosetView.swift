@@ -5,15 +5,16 @@
 //  Created by Ryan Lounsbury on 3/11/23.
 //
 import SwiftUI
-
+import FirebaseFirestore
 
 struct ClosetView: View {
 
-    @EnvironmentObject var clothingItemManager: ClothingItemManager
-    @EnvironmentObject var selectedItemsManager: SelectedItemsManager
+    
     
     @State private var showPopup = false
     @State private var isEditing = false
+    @State private var showDoneAlert = false
+
     
     // Variable for if sidemenu is showing or not
     @State private var toggleMenu: Bool = false
@@ -30,6 +31,8 @@ struct ClosetView: View {
     
     let layout = [ GridItem(.adaptive(minimum: 100))]
     
+    @EnvironmentObject var clothingItemManager: ClothingItemManager
+    @EnvironmentObject var selectedItemsManager: SelectedItemsManager
     
     var body: some View {
         ZStack {
@@ -37,21 +40,23 @@ struct ClosetView: View {
                 ScrollView(.vertical) {
                     LazyVGrid(columns: columns, content: {
                         //grid?
-                        ForEach(clothingItemManager.clothingItems, id: \.ItemTag) { clothingItem in
+                        ForEach(clothingItemManager.clothingItems, id: \.ImageURL) { clothingItem in
                             if isEditing {
                                 CheckboxRow(clothingItem: clothingItem, selectedItemsManager: selectedItemsManager)
                             } else {
                                 
                                 Image(uiImage: clothingItem.ImageURL)
                                     .resizable()
-                                    .frame(width:140,height:140)
-                                    //.aspectRatio(contentMode: .fit)
-                                    .padding(-5)
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                                    .clipped()
+                                    .aspectRatio(1, contentMode: .fit)
+                                
                                 
                             }
                         }
-                        })
-                    }
+                    })
+                }
                 
     
                 .navigationTitle("Closet")
@@ -83,12 +88,25 @@ struct ClosetView: View {
                     returnToView()
                 }
         }
+        .environmentObject(selectedItemsManager)
+        .environmentObject(clothingItemManager)
+
         .onChange(of: isEditing) { newValue in
             if !newValue {
-                print(selectedItemsManager.selectedItems) // <-- Print the selected items
+                print(selectedItemsManager.selectedItems)// <-- Print the selected items
+                showDoneAlert.toggle()
+
             }
         }
-        
+        .alert("Build Outfit?", isPresented: $showDoneAlert) {
+            Button("No", action: {})
+            Button("Yes", action: {
+                // Save the selected items to Firebase
+                let selectedItems = selectedItemsManager.selectedItems.map { $0.ImageURL }
+                let db = Firestore.firestore()
+                db.collection("Selected Items").addDocument(data: ["items": selectedItems])
+            })
+        }
     }
     func returnToView() {
         if willMoveToCloset {
@@ -99,32 +117,31 @@ struct ClosetView: View {
     }
 }
 
+
 struct CheckboxRow: View {
     
-    @State var isChecked: Bool = false
+    @State var isSelected: Bool = false
     let clothingItem: ClothingItem
     @ObservedObject var selectedItemsManager: SelectedItemsManager
-    let columns = [GridItem(.flexible()), GridItem(.flexible()),GridItem(.flexible())]
     
     var body: some View {
-        HStack {
-            Image(systemName: isChecked ? "checkmark.circle" : "circle")
-                .onTapGesture {
-                    isChecked.toggle()
-                    if isChecked {
-                        selectedItemsManager.selectedItems.append(clothingItem)
-                    } else {
-                        selectedItemsManager.selectedItems.removeAll(where: { $0.ImageURL == clothingItem.ImageURL})
-                    }
+        Image(uiImage: clothingItem.ImageURL)
+            .resizable()
+            .aspectRatio(contentMode: .fill)
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+            .clipped()
+            .aspectRatio(1, contentMode: .fit)
+            .border(isSelected ? Color.blue : Color.clear, width: 3)
+            .onTapGesture {
+                isSelected.toggle()
+                if isSelected {
+                    selectedItemsManager.selectedItems.append(clothingItem)
+                } else {
+                    selectedItemsManager.selectedItems.removeAll(where: { $0.ImageURL == clothingItem.ImageURL })
                 }
-                Image(uiImage: clothingItem.ImageURL)
-                    .resizable()
-                    .frame(width: 140, height: 140)
-                    .padding(-5)
-        }
+            }
     }
 }
-
 
 struct ContentofClosetView: View {
     @StateObject var clothingItemManager = ClothingItemManager()
