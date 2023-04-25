@@ -29,7 +29,8 @@ struct FeedView: View {
                 ScrollView(.vertical) {
                     Divider()
                         .foregroundColor(.gray)
-                    // Displaying Posts
+                    // Displaying Posts - Iterates through list of posts pulled from
+                    // database and displays each in PostCell format
                     ForEach(postsInProgress) { Post in
                         PostCell(post: Post)
                     }
@@ -66,9 +67,12 @@ struct FeedView: View {
         }
     }
     
-    /*
-     function: getAllPost()
-     Function with no arguments or returns that accesses all posts in the database, saves each post under the Post class and appends the created post to the list of all posts.
+    /**
+     Function: getAllPost()
+     Description: Main Function for pulling posts from database. Iterates through each post in database and creates
+        a new post from the data, including the post image which is pulled from Firebase storage.
+     Parameters: None
+     Returns: None (Updates list of posts (state variable for FeedView))
      */
     func getAllPost() {
         let db = Firestore.firestore()
@@ -107,6 +111,12 @@ struct FeedView: View {
             }
         }
     }
+    /**
+     Function:
+     Description:
+     Parameters: None
+     Returns: None
+     */
     func returnToView() {
         if willMoveToFeed {
             toggleMenu.toggle()

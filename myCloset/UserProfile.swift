@@ -7,6 +7,8 @@
 
 import Foundation
 import FirebaseAuth
+import FirebaseFirestore
+import FirebaseStorage
 import SwiftUI
 
 struct UserProfile {
@@ -32,16 +34,43 @@ func getUsername(UserProfile: UserProfile) -> String {
     return UserProfile.username
 }
 
-
-//
-//func getUserDetails() -> String {
-//    if let user = Auth.auth().currentUser {
-//        let userInfo = [String]()
-//        let providerID: String = user.providerID
-//        let uid: String = user.uid
-//        let displayName: String = user.displayName ?? "username"
-////        let photoURL: String = user.photoURL ?? "gs://mycloset-ea3a8.appspot.com/images/sample1.png"
-//        let email: String = user.email ?? ""
-//
+//func getUserInfo(username: String) -> UserProfile {
+//    let db = Firestore.firestore()
+//    let storageRef = Storage.storage().reference()
+//    db.collection("Users").getDocuments { snapshot, error in
+//        guard error == nil else {
+//            print(error!.localizedDescription)
+//            return
+//        }
+//        if let snapshot = snapshot {
+//            for document in snapshot.documents {
+//                let data = document.data()
+//                let usernameTwo = data["username"] as! String
+//                if (username == usernameTwo) {
+//                    let bio = data["bio"] as? String ?? ""
+////                    let profileImageLink = data["profileImage"] as? String ?? ""
+//                    let user = UserProfile(username: usernameTwo, bio: bio)
+//                    DispatchQueue.main.async {
+//                        return user
+//                    }
+////                    if profileImageLink == "" {
+////                        let user = UserProfile(username: usernameTwo, bio: bio)
+////                        userProfile = user
+////                    } else {
+////                        let fileRef = storageRef.child(profileImageLink)
+////                        fileRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+////                            if error == nil && data != nil {
+////                                let image = UIImage(data: data!)
+////                                let user = UserProfile(username: usernameTwo, bio: bio, profileImage: image)
+////                                userProfile = user
+////                            }
+////                        }
+////                    }
+//                }
+//                else {
+//                    break
+//                }
+//            }
+//        }
 //    }
-//}
+

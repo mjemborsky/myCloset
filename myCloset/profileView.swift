@@ -8,8 +8,6 @@ import SwiftUI
 
 
 struct ProfileHeader: View {
-    let post: Post
-    var userProfile: UserProfile
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     // Variable for if sidemenu is showing or not
     @State private var toggleMenu: Bool = false
@@ -20,7 +18,6 @@ struct ProfileHeader: View {
     @State private var willMoveToProfile: Bool = false
     // Variable to hide feedview
     @State private var isHidden: Bool = false
-    
     var body: some View {
         ZStack {
             ScrollView {
@@ -37,9 +34,9 @@ struct ProfileHeader: View {
                                 .foregroundColor(Color.white)
                                 .padding(.top, 55)
                             Spacer()
-                            Text(userProfile.username).font(.system(size: 20).bold()).foregroundColor(.white)
+                            Text("user.username").font(.system(size: 20).bold()).foregroundColor(.white)
                             Spacer()
-                            Text(userProfile.bio ?? "").font(.caption)
+                            Text("user.bio" ?? "").font(.caption)
                                 .foregroundColor(.white)
                             HStack{
                                 Spacer()
@@ -55,7 +52,7 @@ struct ProfileHeader: View {
                                 Spacer()
                             }
                             Spacer()
-                            postGrid()
+//                            postGrid()
                             Spacer()
                             Text("Saved Outfits")
                                 .foregroundColor(.white)
@@ -92,54 +89,54 @@ struct ProfileHeader: View {
     }
 }
     
-    
-struct postGrid: View {
-    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
-    var body: some View {
-        LazyVGrid(columns: columns, spacing:0) {
-            ForEach(0 ..< 15, id: \.self) {
-                index in Image(systemName: "photo")
-                    .resizable()
-                    .scaledToFill()
-                    .border(Color.white)
-                    .clipped()
-                
-            }
-            .padding(.top, 5)
-        }
-    }
-}
-struct savedGrid: View {
-    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
-    var body: some View {
-        LazyVGrid(columns: columns, spacing:0) {
-            ForEach(0 ..< 15, id: \.self) {
-                index in Image(systemName: "photo")
-                    .resizable()
-                    .scaledToFill()
-                    .border(Color.white)
-                    .clipped()
-                
-            }
-            .padding(.top, 5)
-        }
-    }
-}
+//
+//struct postGrid: View {
+//    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+//    var body: some View {
+//        LazyVGrid(columns: columns, spacing:0) {
+//            ForEach(0 ..< 15, id: \.self) {
+//                index in Image(systemName: "photo")
+//                    .resizable()
+//                    .scaledToFill()
+//                    .border(Color.white)
+//                    .clipped()
+//
+//            }
+//            .padding(.top, 5)
+//        }
+//    }
+//}
+//struct savedGrid: View {
+//    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+//    var body: some View {
+//        LazyVGrid(columns: columns, spacing:0) {
+//            ForEach(0 ..< 15, id: \.self) {
+//                index in Image(systemName: "photo")
+//                    .resizable()
+//                    .scaledToFill()
+//                    .border(Color.white)
+//                    .clipped()
+//
+//            }
+//            .padding(.top, 5)
+//        }
+//    }
+//}
 struct profileView: View {
     let gradient = Gradient(colors: [.pink, .white])
     var body: some View {
         VStack {
-            ProfileHeader(post: SAMPLE_POST, userProfile: SAMPLE_PROFILE[0])
+            ProfileHeader()
         }
         .background(LinearGradient(gradient: gradient, startPoint: .top, endPoint: .bottom))
-                        .edgesIgnoringSafeArea(.all)
+        .edgesIgnoringSafeArea(.all)
     }
     
     
 }
 
 
-
+// need function - go to UserProfile
 
 struct profileView_Previews: PreviewProvider {
     static var previews: some View {

@@ -18,22 +18,21 @@ struct PostCell: View {
         // Check if the post is liked by user here
         // VStack for all post info
         VStack {
-            // HStack for profile image, profile username
+            // HStack for profile username
             HStack (spacing: 10) {
-                //  Display image at index 1 from array of post images (userImage).
-                Image(uiImage: post.postImage)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 25, height: 25)
-                    .clipShape(Circle())
                 // this is the username of post creator
-                Text(post.postCreator)
-                    .font(.headline)
-                    .fontWeight(.semibold)
+                NavigationLink(destination: {
+                    profileView()
+                }, label: {
+                    Text(post.postCreator)
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.black)
+                })
                 Spacer()
             }
             .padding(.horizontal, 8)
-            // Display image at index 0 from array of post images (postImage).
+            // Display post image.
             Image(uiImage: post.postImage)
                 .resizable()
                 .scaledToFit()
@@ -96,15 +95,21 @@ struct PostCell: View {
             .font(.title2)
             .padding(6)
             .onAppear {
+                // Checks if post is liked or save when it appears
                 isLiked()
                 isSaved()
             }
-            Text(post.id.uuidString)
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
-                    Text(post.postCreator)
-                        .font(.headline)
-                    + Text(" " + post.postDescription)
+                    NavigationLink(destination: {
+                        profileView()
+                    }, label: {
+                        Text(post.postCreator)
+                            .font(.headline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.black)
+                    })
+                    Text(" " + post.postDescription)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 Text(getDateinString(Date:post.postTime))
@@ -116,7 +121,12 @@ struct PostCell: View {
             Spacer()
         }
     }
-    
+    /**
+     Function: isLiked()
+     Description:
+     Parameters: None
+     Returns: None
+     */
     func isLiked() {
         if (post.postLikes.contains("username2")) {
             liked = true
@@ -124,6 +134,12 @@ struct PostCell: View {
             liked = false
         }
     }
+    /**
+     Function: isLiked()
+     Description:
+     Parameters: None
+     Returns: None
+     */
     func isSaved() {
         if (post.postSaves.contains("username2")) {
             saved = true
@@ -131,6 +147,12 @@ struct PostCell: View {
             saved = false
         }
     }
+    /**
+     Function: isLiked()
+     Description:
+     Parameters: None
+     Returns: None
+     */
     func likePost() {
         let db = Firestore.firestore()
         let docRef = db.collection("Posts").document(post.id.uuidString)
@@ -138,6 +160,12 @@ struct PostCell: View {
             "postLikes": FieldValue.arrayUnion(["username2"])
         ])
     }
+    /**
+     Function: isLiked()
+     Description:
+     Parameters: None
+     Returns: None
+     */
     func unlikePost() {
         let database = Firestore.firestore().collection("Posts")
         let postRef = database.document(post.id.uuidString)
@@ -145,6 +173,12 @@ struct PostCell: View {
             "postLikes": FieldValue.arrayRemove(["username2"])
         ])
     }
+    /**
+     Function: isLiked()
+     Description:
+     Parameters: None
+     Returns: None
+     */
     func savePost() {
         let db = Firestore.firestore()
         let docRef = db.collection("Posts").document(post.id.uuidString)
@@ -152,6 +186,12 @@ struct PostCell: View {
             "postSaves": FieldValue.arrayUnion(["username2"])
         ])
     }
+    /**
+     Function: 
+     Description:
+     Parameters: None
+     Returns: None
+     */
     func unsavePost() {
         let db = Firestore.firestore()
         let docRef = db.collection("Posts").document(post.id.uuidString)
@@ -161,12 +201,18 @@ struct PostCell: View {
     }
     //  FUNCTIONS NEEDED
     //  need interactions when clicking on userProfile
-    // ideally a function that would pull the user data based on the username and make a UserProfile instance from it. Then
-    // this could be passed through the profileView when clicking on the username
     
-//    func getUserInfo(username: String) {
+    
+    
+    
+    
+    // OPTIONAL USER PROFILE IMAGE
+    
+//    func getUserInfo(username: String) -> UserProfile {
 //        let db = Firestore.firestore()
 //        let storageRef = Storage.storage().reference()
+//        var userProfile: UserProfile?
+//
 //        db.collection("Users").getDocuments { snapshot, error in
 //            guard error == nil else {
 //                print(error!.localizedDescription)
@@ -175,20 +221,21 @@ struct PostCell: View {
 //            if let snapshot = snapshot {
 //                for document in snapshot.documents {
 //                    let data = document.data()
-//                    let usernameTwo = data["username"] as? String ?? ""
-//                    if username == usernameTwo {
+//                    let usernameTwo = data["username"] as! String
+//                    if (username == usernameTwo) {
 //                        let bio = data["bio"] as? String ?? ""
 //                        let profileImageLink = data["profileImage"] as? String ?? ""
-//                        let fileRef = storageRef.child(profileImageLink)
-//                        fileRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
-//                            if error == nil && data != nil {
-//                                if let image = UIImage(data: data!) {
+//                        if profileImageLink == "" {
+//                            let user = UserProfile(username: usernameTwo, bio: bio)
+//                            userProfile = user
+//                        } else {
+//                            let fileRef = storageRef.child(profileImageLink)
+//                            fileRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+//                                if error == nil && data != nil {
+//                                    let image = UIImage(data: data!)
 //                                    let user = UserProfile(username: usernameTwo, bio: bio, profileImage: image)
-//                                    DispatchQueue.main.async {
-//                                        userInProgress.append(user)
-//                                    }
+//                                    userProfile = user
 //                                }
-//
 //                            }
 //                        }
 //                    }
@@ -198,16 +245,6 @@ struct PostCell: View {
 //                }
 //            }
 //        }
+//        return userProfile!
 //    }
 }
-
-
-
-
-
-//struct PostCellPreview_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PostCell(post: SAMPLE_POST)
-//    }
-//}
-
