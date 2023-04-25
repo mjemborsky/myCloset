@@ -12,7 +12,7 @@ struct SelectedItemsView: View {
 
     var body: some View {
         ScrollView(.vertical) {
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))], content: {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 100)),GridItem(.adaptive(minimum: 100))], content: {
                 ForEach(selectedItemsManager.selectedItems, id: \.ImageURL) { item in
                     Image(uiImage: item.ImageURL)
                         .resizable()
