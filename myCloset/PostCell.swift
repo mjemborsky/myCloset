@@ -6,8 +6,6 @@
 import SwiftUI
 import FirebaseFirestore
 import FirebaseStorage
-import FirebaseStorageUI
-import FirebaseAuth
 
 // UI for an individual post "cell" - responsible for all formatting of buttons, etc.. of an individual post. This is used by feedView to format all posts.
 
@@ -15,7 +13,6 @@ struct PostCell: View {
     var post: Post
     @State private var liked: Bool = false
     @State private var saved: Bool = false
-    let images: [UIImage]
     // could include "placeholder" eventually using .redacted, for when it is loading
     var body: some View {
         // Check if the post is liked by user here
@@ -24,7 +21,7 @@ struct PostCell: View {
             // HStack for profile image, profile username
             HStack (spacing: 10) {
                 //  Display image at index 1 from array of post images (userImage).
-                Image(uiImage: images[0])
+                Image(uiImage: post.postImage)
                     .resizable()
                     .scaledToFill()
                     .frame(width: 25, height: 25)
@@ -37,7 +34,7 @@ struct PostCell: View {
             }
             .padding(.horizontal, 8)
             // Display image at index 0 from array of post images (postImage).
-            Image(uiImage: images[0])
+            Image(uiImage: post.postImage)
                 .resizable()
                 .scaledToFit()
                 .frame(width: UIScreen.main.bounds.width,
@@ -163,8 +160,50 @@ struct PostCell: View {
         ])
     }
     //  FUNCTIONS NEEDED
-    //  need interactions when clicking on userProfile?, and potentially post?
+    //  need interactions when clicking on userProfile
+    // ideally a function that would pull the user data based on the username and make a UserProfile instance from it. Then
+    // this could be passed through the profileView when clicking on the username
+    
+//    func getUserInfo(username: String) {
+//        let db = Firestore.firestore()
+//        let storageRef = Storage.storage().reference()
+//        db.collection("Users").getDocuments { snapshot, error in
+//            guard error == nil else {
+//                print(error!.localizedDescription)
+//                return
+//            }
+//            if let snapshot = snapshot {
+//                for document in snapshot.documents {
+//                    let data = document.data()
+//                    let usernameTwo = data["username"] as? String ?? ""
+//                    if username == usernameTwo {
+//                        let bio = data["bio"] as? String ?? ""
+//                        let profileImageLink = data["profileImage"] as? String ?? ""
+//                        let fileRef = storageRef.child(profileImageLink)
+//                        fileRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+//                            if error == nil && data != nil {
+//                                if let image = UIImage(data: data!) {
+//                                    let user = UserProfile(username: usernameTwo, bio: bio, profileImage: image)
+//                                    DispatchQueue.main.async {
+//                                        userInProgress.append(user)
+//                                    }
+//                                }
+//
+//                            }
+//                        }
+//                    }
+//                    else {
+//                        break
+//                    }
+//                }
+//            }
+//        }
+//    }
 }
+
+
+
+
 
 //struct PostCellPreview_Previews: PreviewProvider {
 //    static var previews: some View {

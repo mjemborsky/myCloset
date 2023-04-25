@@ -5,6 +5,7 @@
 import Foundation
 import FirebaseFirestore
 import Firebase
+import SwiftUI
 
 let currentdate = Date()
 let database = Firestore.firestore()
@@ -22,11 +23,11 @@ struct Post: Identifiable {
     var postLikes: [String]
     var postSaves: [String]
     var postTags: [String]
-    var postImage: String
+    var postImage: UIImage
     var linkedOutfit: String
     
     
-    init(id: UUID, postTime: Date, postCreator: String, postDescription: String, postLikes: [String], postSaves: [String], postTags: [String], postImage: String, linkedOutfit: String) {
+    init(id: UUID, postTime: Date, postCreator: String, postDescription: String, postLikes: [String], postSaves: [String], postTags: [String], postImage: UIImage, linkedOutfit: String) {
         self.id = id
         self.postCreator = postCreator
         self.postTime = postTime
@@ -37,17 +38,12 @@ struct Post: Identifiable {
         self.postImage = postImage
         self.linkedOutfit = linkedOutfit
     }
-    
-    
-    
-    func getPostImageLink() -> String {
-        return self.postImage
-    }
+  
 }
 
 
 //sample data
-let SAMPLE_POST = Post(id: UUID(), postTime: currentdate, postCreator: "bob", postDescription: "My favorite outfit", postLikes: ["mary", "bob"], postSaves: ["steve", "joe"], postTags: ["cardigan", "comfort"], postImage: "favorite_outfit.heic", linkedOutfit: "blah")
+let SAMPLE_POST = Post(id: UUID(), postTime: currentdate, postCreator: "bob", postDescription: "My favorite outfit", postLikes: ["mary", "bob"], postSaves: ["steve", "joe"], postTags: ["cardigan", "comfort"], postImage: UIImage(systemName: "person.circle.crop.fill")!, linkedOutfit: "blah")
 //    Post(id: UUID(), postTime: currentdate, postCreator: SAMPLE_PROFILE[1], postDescription: "Beach Day", postLikes: [SAMPLE_PROFILE[2]], postSaves: [SAMPLE_PROFILE[1], SAMPLE_PROFILE[3]], postTags: ["beach", "swimming"], postImage: "beach_outfit.heic", linkedOutfit: SAMPLE_OUTFIT[1]),
 //    Post(id: UUID(), postTime: currentdate, postCreator: SAMPLE_PROFILE[1], postDescription: "At the Concert!", postLikes: [SAMPLE_PROFILE[1], SAMPLE_PROFILE[2], SAMPLE_PROFILE[3]], postSaves: [SAMPLE_PROFILE[2], SAMPLE_PROFILE[3]], postTags: ["boujee", "rave"], postImage: "rockstar_outfit.heic", linkedOutfit: SAMPLE_OUTFIT[1]),
 

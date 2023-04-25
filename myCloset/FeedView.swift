@@ -20,11 +20,9 @@ struct FeedView: View {
     @State private var willMoveToProfile: Bool = false
     // Variable to hide feedview
     @State private var isHidden: Bool = false
-    /// Database Variables
     // List to store posts with getAllPosts()
     @State private var postsInProgress = [Post]()
-    @State private var imagesInProgress = [UIImage]()
-    // Main View
+    // View
     var body: some View {
         ZStack {
             NavigationView  {
@@ -33,16 +31,16 @@ struct FeedView: View {
                         .foregroundColor(.gray)
                     // Displaying Posts
                     ForEach(postsInProgress) { Post in
-                        PostCell(post: Post, images: imagesInProgress )
+                        PostCell(post: Post)
                     }
                     Spacer()
                 }
                 // Calling to retrieve posts
-                .task {
-                    await loadAll()
+                .onAppear {
+                    getAllPost()
                 }
                 .refreshable {
-                    await loadAll()
+                    getAllPost()
                 }
             
             }
@@ -70,9 +68,9 @@ struct FeedView: View {
     
     /*
      function: getAllPost()
-     Asynchronous function with no arguments or returns that accesses all posts in the database, saves each post under the Post class and appends the created post to the list of all posts.
+     Function with no arguments or returns that accesses all posts in the database, saves each post under the Post class and appends the created post to the list of all posts.
      */
-    func getAllPost() async {
+    func getAllPost() {
         let db = Firestore.firestore()
         let storageRef = Storage.storage().reference()
         db.collection("Posts").getDocuments { snapshot, error in
@@ -94,35 +92,14 @@ struct FeedView: View {
                     let postTags = data["postTags"] as? [String] ?? []
                     let postImage = data["postImage"] as? String ?? ""
                     let linkedOutfit = data["linkedOutfit"] as? String ?? ""
-                    let linkedUser = data["linkedUser"] as! String
-                    let post = Post(id: idUUID ?? UUID(), postTime: postDate, postCreator: postCreator, postDescription: postDescription, postLikes: postLikes, postSaves: postSaves, postTags: postTags, postImage: postImage, linkedOutfit: linkedOutfit)
                     let fileRef = storageRef.child(postImage)
-                    fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
+                    fileRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
                         if error == nil && data != nil {
                             if let image = UIImage(data: data!) {
+                                let post = Post(id: idUUID ?? UUID(), postTime: postDate, postCreator: postCreator, postDescription: postDescription, postLikes: postLikes, postSaves: postSaves, postTags: postTags, postImage: image, linkedOutfit: linkedOutfit)
                                 DispatchQueue.main.async {
                                     postsInProgress.append(post)
-                                    imagesInProgress.append(image)
                                 }
-                            }
-                            
-                        }
-                    }
-                    let userRef = db.collection("Users").document(linkedUser)
-                    userRef.getDocument { (user, error) in
-                        if let user = user {
-                            let userData = user.data()
-                            let userImage = userData!["profileImage"] as? String ?? ""
-                            let imageRef = storageRef.child(userImage)
-                            imageRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
-                                if error == nil && data != nil {
-                                    if let image = UIImage(data: data!) {
-                                        DispatchQueue.main.async {
-                                            imagesInProgress.append(image)
-                                        }
-                                    }
-                                }
-
                             }
                         }
                     }
@@ -134,44 +111,6 @@ struct FeedView: View {
         if willMoveToFeed {
             toggleMenu.toggle()
         }
-    }
-    
-    func getUserProfileImage(path: String) {
-        let db = Firestore.firestore()
-        let storageRef = Storage.storage().reference()
-        let docRef = db.collection("Users").document(path)
-        docRef.getDocument(completion: { (snapshot, error) in
-            guard error == nil else {
-                print(error!.localizedDescription)
-                return
-            }
-            if let snapshot = snapshot {
-                let data = snapshot.data()
-                let imageLink = data!["profileImage"] as? String ?? ""
-                let fileRef = storageRef.child(imageLink)
-                fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
-                    if error == nil && data != nil {
-                        if let image = UIImage(data: data!) {
-                            DispatchQueue.main.async {
-                                imagesInProgress.append(image)
-                            }
-                        }
-                        
-                    }
-                }
-            }
-        })
-        
-    }
-//  FUNCTIONS NEEDED
-    // getUserProfileImage
-    // - accepts string (path to User) and returns UIImage
-
-}
-//
-extension FeedView {
-    func loadAll() async {
-        await getAllPost()
     }
 }
 

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ProfileHeader: View {
     let post: Post
+    var userProfile: UserProfile
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     // Variable for if sidemenu is showing or not
     @State private var toggleMenu: Bool = false
@@ -35,49 +36,31 @@ struct ProfileHeader: View {
                                 .clipped()
                                 .foregroundColor(Color.white)
                                 .padding(.top, 55)
-                            VStack {
-                                Text("username").font(.system(size: 20).bold()).foregroundColor(.white)
-                                HStack {
-                                    VStack {
-                                        Text("321") //Need to add the user profile following count
-                                            .font(.subheadline)
-                                            .fontWeight(.semibold)
-                                            .foregroundColor(.white)
-                                        Text("Following")
-                                            .font(.caption)
-                                            .foregroundColor(.white)
-                                    }
-                                    VStack {
-                                        Text("500") //Need to add the user profile followers count
-                                            .font(.subheadline)
-                                            .fontWeight(.semibold)
-                                            .foregroundColor(.white)
-                                        Text("Followers")
-                                            .font(.caption)
-                                            .foregroundColor(.white)
-                                    }
-                                }
-                                HStack{
-                                    Spacer()
-                                    Image(systemName: "squareshape.split.3x3")
-                                        .foregroundColor(.white)
-                                        .padding(.top, 5)
-                                        .font(.title2)
-                                    Spacer()
-                                    Image(systemName: "square.and.arrow.down")
-                                        .foregroundColor(.white)
-                                        .padding(.top, 5)
-                                        .font(.title2)
-                                    Spacer()
-                                }
+                            Spacer()
+                            Text(userProfile.username).font(.system(size: 20).bold()).foregroundColor(.white)
+                            Spacer()
+                            Text(userProfile.bio ?? "").font(.caption)
+                                .foregroundColor(.white)
+                            HStack{
+                                Spacer()
+                                Image(systemName: "squareshape.split.3x3")
+                                    .foregroundColor(.white)
+                                    .padding(.top, 5)
+                                    .font(.title2)
+                                Spacer()
+                                Image(systemName: "square.and.arrow.down")
+                                    .foregroundColor(.white)
+                                    .padding(.top, 5)
+                                    .font(.title2)
                                 Spacer()
                             }
+                            Spacer()
                             postGrid()
                             Spacer()
                             Text("Saved Outfits")
                                 .foregroundColor(.white)
                                 .font(.title2)
-                            savedGrid()
+//                            savedGrid()
                         }
                         Spacer()
                     }
@@ -146,7 +129,7 @@ struct profileView: View {
     let gradient = Gradient(colors: [.pink, .white])
     var body: some View {
         VStack {
-            ProfileHeader(post: SAMPLE_POST)
+            ProfileHeader(post: SAMPLE_POST, userProfile: SAMPLE_PROFILE[0])
         }
         .background(LinearGradient(gradient: gradient, startPoint: .top, endPoint: .bottom))
                         .edgesIgnoringSafeArea(.all)
@@ -154,6 +137,9 @@ struct profileView: View {
     
     
 }
+
+
+
 
 struct profileView_Previews: PreviewProvider {
     static var previews: some View {

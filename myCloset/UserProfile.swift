@@ -7,34 +7,24 @@
 
 import Foundation
 import FirebaseAuth
+import SwiftUI
 
 struct UserProfile {
-    
     var username: String
-    var bio: String
-    var following: [UserProfile]
-    var followers: [UserProfile]
-    var following_count: Int
-    var followers_count: Int
-    var createdPosts: [Post]
-    var likedPosts: [Post]
+    var bio: String?
+    var profileImage: UIImage?
     
-    init(username: String, bio: String, following: [UserProfile], followers: [UserProfile]) {
+    init(username: String, bio: String?=nil, profileImage: UIImage?=nil) {
         self.username = username
         self.bio = bio
-        self.following = []
-        self.followers = []
-        self.following_count = following.count
-        self.followers_count = followers.count
-        self.createdPosts = []
-        self.likedPosts = []
+        self.profileImage = profileImage
     }
 }
 
 let SAMPLE_PROFILE:[UserProfile] = [
-    UserProfile(username: "Bob01", bio: "Love movies and cooking", following: [], followers: []),
-    UserProfile(username: "Alice_Woods", bio: "UNCW '23", following: [], followers: []),
-    UserProfile(username: "ClaireM", bio: "Wilmington, NC", following: [], followers: [])
+    UserProfile(username: "Bob01" , bio: "Love movies and cooking"),
+    UserProfile(username: "Alice_Woods", bio: "UNCW '23"),
+    UserProfile(username: "ClaireM", bio: "Wilmington, NC")
 ]
 
 // simple getter function to pass in a profile and recieve back username as a string
