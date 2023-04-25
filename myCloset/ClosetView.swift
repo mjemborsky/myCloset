@@ -14,6 +14,7 @@ struct ClosetView: View {
     @State private var showPopup = false
     @State private var isEditing = false
     @State private var showDoneAlert = false
+    @State private var willMoveToSelectedItemsView = false
 
     
     // Variable for if sidemenu is showing or not
@@ -101,11 +102,15 @@ struct ClosetView: View {
         .alert("Build Outfit?", isPresented: $showDoneAlert) {
             Button("No", action: {})
             Button("Yes", action: {
+               willMoveToSelectedItemsView = true
                 // Save the selected items to Firebase
-                let selectedItems = selectedItemsManager.selectedItems.map { $0.ImageURL }
-                let db = Firestore.firestore()
-                db.collection("Selected Items").addDocument(data: ["items": selectedItems])
+//                let selectedItems = selectedItemsManager.selectedItems.map { $0.ImageURL }
+//                let db = Firestore.firestore()
+//                db.collection("Selected Items").addDocument(data: ["items": selectedItems])
             })
+        }
+        .fullScreenCover(isPresented: $willMoveToSelectedItemsView){
+            SelectedItemsView()
         }
     }
     func returnToView() {

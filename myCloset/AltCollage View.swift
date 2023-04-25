@@ -6,22 +6,30 @@
 
 
 import SwiftUI
-import FirebaseFirestore
 
+struct SelectedItemsView: View {
+    @EnvironmentObject var selectedItemsManager: SelectedItemsManager
 
-
-struct AltCollage: View {
-    
     var body: some View {
-        Text("hi")
+        ScrollView(.vertical) {
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))], content: {
+                ForEach(selectedItemsManager.selectedItems, id: \.ImageURL) { item in
+                    Image(uiImage: item.ImageURL)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                        .clipped()
+                        .aspectRatio(1, contentMode: .fit)
+                }
+            })
+        }
+        .navigationTitle("Selected Items")
     }
-    
-    
 }
 
-
-struct Previews_AltCollage_View_Previews: PreviewProvider {
+struct AltCollageView_Previews: PreviewProvider {
     static var previews: some View {
-        AltCollage()
+        SelectedItemsView()
+            
     }
 }
