@@ -88,8 +88,8 @@ struct ClosetView: View {
                     returnToView()
                 }
         }
-        .environmentObject(selectedItemsManager)
-        .environmentObject(clothingItemManager)
+//        .environmentObject(self.selectedItemsManager)
+//        .environmentObject(self.clothingItemManager)
 
         .onChange(of: isEditing) { newValue in
             if !newValue {
