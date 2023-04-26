@@ -22,7 +22,7 @@ struct saveOutfitView: View {
         NavigationView{
             VStack{
                 Spacer()
-                //collage()
+                SelectedItemsView()
                     .navigationTitle("Save Post ")
                     .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
@@ -33,7 +33,7 @@ struct saveOutfitView: View {
                             }
                         }
                         ToolbarItem(placement: .navigationBarLeading) {
-                            NavigationLink(destination: CollageView()) {
+                            NavigationLink(destination: SelectedItemsView()) {
                                 Text("Back")
                             }
                         }
@@ -76,11 +76,6 @@ struct saveOutfitView: View {
             }
         }
 }
-
-    
-        
-    
-
 
 struct saveOutfitView_Previews: PreviewProvider {
     static var previews: some View {
