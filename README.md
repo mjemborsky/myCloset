@@ -13,3 +13,15 @@ Instructions (Building/Running the Project):
 - Interactable elements regarding the View files will be coded in a controller file. (ex. the code for controlling what the login page actually does (LoginPageController))
 - Data classes can be stored in a seperate file/files. Whatever is convienent to programmer.
 - Code requested to be merged into main must be at the very least able to be compiled/ran. (Will be checked by lead dev.)
+
+
+TESTING:
+#9 - US: As a user, I want to log in with email and password so that I can access my account and closet data.
+Acceptance criteria:
+  -The user is taken to the home page after a successful login.
+  -The user is shown an error message when an invalid input is entered.
+- Tested by: Inputting a valid email (an email used to sign up) and valid password. Took me to the home page.
+- Tested by: Inputting an invalid email (email that was not used to sign up) and invalid password. Does not let me login.
+
+#8 - US: As a user, I want to be able to upload a photo of my clothing item, so that it is available in my closet to be used.
+- Tested by: Tapping upload photo, selecting the photo I would like to upload,
