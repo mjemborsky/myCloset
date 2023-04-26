@@ -20,7 +20,9 @@ struct myClosetApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ClosetView().environmentObject(clothingItemManager).environmentObject(selectedItemsManager)
+            LoginView()
+                .environmentObject(clothingItemManager)
+                .environmentObject(selectedItemsManager)
         }
     }
 }
