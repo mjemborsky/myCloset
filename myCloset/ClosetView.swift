@@ -27,6 +27,8 @@ struct ClosetView: View {
     // Variable to hide feedview
     @State private var isHidden: Bool = false
     
+    let maxSelectionCount = 4
+    
     let columns = [GridItem(.flexible()), GridItem(.flexible()),GridItem(.flexible())]
     let items = Array(1...100).map({"image \($0)"})
     
@@ -93,12 +95,22 @@ struct ClosetView: View {
 //        .environmentObject(self.clothingItemManager)
 
         .onChange(of: isEditing) { newValue in
-            if !newValue {
-                print(selectedItemsManager.selectedItems)// <-- Print the selected items
-                showDoneAlert.toggle()
-
-            }
-        }
+                   if !newValue {
+                       if selectedItemsManager.selectedItems.count > maxSelectionCount {
+                           // Display an error alert if the user selected too many items
+                           let message = "Too many items chosen! Select up to four items to build your outfit!"
+                           let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+                           alert.addAction(UIAlertAction(title: "OK", style: .default))
+                           UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
+                           
+                           // Reset the selected items to the first four
+                           selectedItemsManager.selectedItems = Array(selectedItemsManager.selectedItems.prefix(maxSelectionCount))
+                           showDoneAlert.toggle()
+                       }
+                       print(selectedItemsManager.selectedItems)
+                       showDoneAlert.toggle()
+                   }
+               }
         .alert("Build Outfit?", isPresented: $showDoneAlert) {
             Button("No", action: {})
             Button("Yes", action: {
