@@ -24,7 +24,7 @@ struct saveOutfitView: View {
             VStack{
                 Spacer()
                 SelectedItemsView()
-                    .navigationTitle("Save Post ")
+                    .navigationTitle("Save Post")
                     .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button(action: {
@@ -34,7 +34,7 @@ struct saveOutfitView: View {
                             }
                         }
                         ToolbarItem(placement: .navigationBarLeading) {
-                            NavigationLink(destination: SelectedItemsView()) {
+                            NavigationLink(destination: ClosetView()) {
                                 Text("Back")
                             }
                         }
@@ -99,17 +99,12 @@ struct saveOutfitView: View {
                 }
             }
         }
-    }
-    
-    
-    
-    
-    
-    // end UploadPhoto
-    
-    struct saveOutfitView_Previews: PreviewProvider {
-        static var previews: some View {
-            saveOutfitView()
-        }
+    }     
+}
+
+struct saveOutfitView_Previews: PreviewProvider {
+    static var previews: some View {
+        saveOutfitView()
+
     }
 }
