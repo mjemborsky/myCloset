@@ -53,6 +53,8 @@ struct saveOutfitView: View {
                 
                 Button(action: {
                     createPost(postCreator: "username", postDescription: "My favorite outfit", postTags: ["trendy", "purple", "sweater"], postImage: "", linkedOutfit: outfitid)
+                    let image = takeScreenshot()
+                    uploadScreenshot(image)
                     self.showFeedView = true
                 }, label: {
                     Text("Post").padding()
@@ -63,6 +65,32 @@ struct saveOutfitView: View {
             FeedView()
         }
     }
+    
+    func takeScreenshot() -> UIImage {
+        let format = UIGraphicsImageRendererFormat()
+        format.opaque = false
+        let renderer = UIGraphicsImageRenderer(size: UIScreen.main.bounds.size, format: format)
+        let image = renderer.image { context in
+            UIApplication.shared.windows.first?.rootViewController?.view.layer.render(in: context.cgContext)
+        }
+        return image
+    }
+    
+    func uploadScreenshot(_ image: UIImage) {
+        let storage = Storage.storage()
+        let storageRef = storage.reference()
+        let screenshotRef = storageRef.child("screenshots/\(UUID().uuidString).png")
+        if let imageData = image.pngData() {
+            screenshotRef.putData(imageData, metadata: nil) { metadata, error in
+                if let error = error {
+                    print("Error uploading screenshot: \(error.localizedDescription)")
+                } else {
+                    print("Screenshot uploaded successfully")
+                }
+            }
+        }
+    }
+    
     
     @MainActor  func saveoutfit() {
         @State var renderedImage = Image(systemName: "photo")
