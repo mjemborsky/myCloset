@@ -23,7 +23,7 @@ struct saveOutfitView: View {
             VStack{
                 Spacer()
                 SelectedItemsView()
-                    .navigationTitle("Save Post ")
+                    .navigationTitle("Save Post")
                     .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button(action: {
@@ -33,7 +33,7 @@ struct saveOutfitView: View {
                             }
                         }
                         ToolbarItem(placement: .navigationBarLeading) {
-                            NavigationLink(destination: SelectedItemsView()) {
+                            NavigationLink(destination: ClosetView()) {
                                 Text("Back")
                             }
                         }

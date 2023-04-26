@@ -103,11 +103,6 @@ struct ClosetView: View {
             Button("No", action: {})
             Button("Yes", action: {
                willMoveToSelectedItemsView = true
-                
-                // Save the selected items to Firebase
-//                let selectedItems = selectedItemsManager.selectedItems.map { $0.ImageURL }
-//                let db = Firestore.firestore()
-//                db.collection("Selected Items").addDocument(data: ["items": selectedItems])
             })
         }
         .fullScreenCover(isPresented: $willMoveToSelectedItemsView){
