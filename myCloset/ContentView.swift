@@ -6,130 +6,65 @@
 //
 
 import SwiftUI
-
 import FirebaseStorage
-
 import FirebaseFirestore
 
- 
-
 struct ContentView: View {
-
- 
 
     @State var isPickerShowing = false
     @State var selectedImage: UIImage?
     @State var retrievedImages = [UIImage]()
     @State public var newClothingItem = ""
-
+    @State var showingAlert : Bool = false
     
-
- 
-
     var body: some View {
-
- 
-
         VStack {
-
             if selectedImage != nil{
-
                 Image(uiImage: selectedImage!)
-
                     .resizable()
-
                     .frame(width: 200, height: 200)
-
             }
-
- 
-
             Button{
-
- 
-
                 // Show the image picker
-
                 isPickerShowing = true
-
- 
-
             } label:{
-
                 Text("Select a Photo")
-
             }
-
- 
-
             // Upload button
-
             if selectedImage != nil{
-
                 TextField("Clothing Item", text:$newClothingItem).multilineTextAlignment(.center)
-
                 Button {
-
                     // Upload the image
-
                     uploadPhoto()
-
+                    showingAlert = true
                 } label: {
-
                     Text("Upload photo")
-
                 }
-
-            }
-
- 
-
-            Divider()
-
- 
-
-            HStack{
-
- 
-
-                // loop through the images and display them
-
-                ForEach(retrievedImages, id: \.self) { image in
-
-                    Image(uiImage: image)
-
-                        .resizable()
-
-                        .frame(width: 100, height: 100)
-                    
+                .alert(isPresented: $showingAlert){
+                    Alert(title: Text("Successfully uploaded clothing item to closet, tap 'Select a Photo' to upload more!"))
                 }
-
             }
-
+//            Divider()
+//            HStack{
+//                // loop through the images and display them
+//                ForEach(retrievedImages, id: \.self) { image in
+//                    Image(uiImage: image)
+//                        .resizable()
+//                        .frame(width: 100, height: 100)
+//                }
+//            }
         }
-
         .sheet(isPresented: $isPickerShowing, onDismiss: nil){
-
             // Image picker
-
             ImagePicker(selectedImage: $selectedImage, isPickerShowing: $isPickerShowing)
-
         }
-
-
 //        .onAppear {
-
 //            retrievePhotos()
-
 //        }
-
     }
 
- 
-
     func uploadPhoto(){
-        
-        
+           
         
         // Make sure that the selected image property isn't nil
         
@@ -251,14 +186,8 @@ struct ContentView: View {
 
 }
 
- 
-
 struct ContentView_Previews: PreviewProvider {
-
     static var previews: some View {
-
         ContentView()
-
     }
-
 }

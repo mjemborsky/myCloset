@@ -6,58 +6,110 @@
 import SwiftUI
 import FirebaseFirestore
 import FirebaseStorage
-import FirebaseStorageUI
 
 // UI for an individual post "cell" - responsible for all formatting of buttons, etc.. of an individual post. This is used by feedView to format all posts.
 
 struct PostCell: View {
-    let post: Post
-    let images: [UIImage]
+    var post: Post
+    @State private var liked: Bool = false
+    @State private var saved: Bool = false
     // could include "placeholder" eventually using .redacted, for when it is loading
     var body: some View {
-        //        var imageView = UIImageView(getImage(imageLink: imageLink))
+        // Check if the post is liked by user here
         // VStack for all post info
         VStack {
-            // HStack for profile image, profile username
+            // HStack for profile username
             HStack (spacing: 10) {
-                // this is the user profile pic on each post
-                Image(systemName: "person.crop.circle.fill")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 25, height: 25)
-                    .clipShape(Circle())
                 // this is the username of post creator
-                Text(post.postCreator)
-                    .font(.headline)
-                    .fontWeight(.semibold)
+                NavigationLink(destination: {
+                    profileView()
+                }, label: {
+                    Text(post.postCreator)
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.black)
+                })
                 Spacer()
             }
             .padding(.horizontal, 8)
-            Spacer()
-            Image(uiImage: images[0])
+            // Display post image.
+            Image(uiImage: post.postImage)
+                .resizable()
+                .scaledToFit()
                 .frame(width: UIScreen.main.bounds.width,
                    height: UIScreen.main.bounds.width)
-            Spacer()
             // another HStack for like and save option
             HStack (spacing: 16) {
-                // should be replaced with a heart or like button
-                Image(systemName: "heart")
-                Text(String((post.postLikes).count) + " Likes")
-                    .font(.headline)
-                
+                // Like Button
+                // Conditional for if post is already liked
+                if liked {
+                    Button(action: {
+                        // Calls to switch boolean of liked to false and removes like from database
+                        liked.toggle()
+                        unlikePost()
+                    }, label: {
+                        // If liked, heart will be filled. Still having issues currently with the count being off by 1
+                        // if the user has it liked when the page loads.
+                        Image(systemName: "heart.fill")
+                        Text(String(post.postLikes.count+1))
+                            .font(.headline)
+                    })
+                }
+                // Conditional for if post is not liked
+                else {
+                    Button(action: {
+                        // Calls to switch boolean of liked to true and adds like in database
+                        liked.toggle()
+                        likePost()
+                    }, label: {
+                        // If not liked, the heard will not be filled.
+                        Image(systemName: "heart")
+                        Text(String(post.postLikes.count))
+                            .font(.headline)
+                    })
+                }
                 Spacer()
-                
-                // should be replaced with a save button
-                Image(systemName: "bookmark")
+                // Save Button
+                // Conditional for if user has post saved already
+                if saved {
+                    Button(action: {
+                        // Calls to switch boolean of saved to false and removes save from database
+                        saved.toggle()
+                        unsavePost()
+                    }) {
+                        // The save icon will be filled if the user has the post saved
+                        Image(systemName: "bookmark.fill")
+                    }
+                }
+                else {
+                    Button(action: {
+                        // Calls to switch boolean of saved to true and adds save in database
+                        saved.toggle()
+                        savePost()
+                    }) {
+                        // The save icon will be not filled if the user has not saved the post
+                        Image(systemName: "bookmark")
+                    }
+                }
             }
             .font(.title2)
             .padding(6)
-            
+            .onAppear {
+                // Checks if post is liked or save when it appears
+                isLiked()
+                isSaved()
+            }
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
-                    Text(post.postCreator)
-                        .font(.headline)
-                    + Text(" " + post.postDescription)
+                    NavigationLink(destination: {
+                        profileView()
+                    }, label: {
+                        Text(post.postCreator)
+                            .font(.headline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.black)
+                    })
+                    Text(" " + post.postDescription)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 Text(getDateinString(Date:post.postTime))
@@ -68,184 +120,131 @@ struct PostCell: View {
             Spacer()
             Spacer()
         }
-        // calling to get array of images to use
-//        .onAppear {
-//            getImage(imageLink: imageLink)
-//        }
     }
-//                func getImage(imageLink: String) -> UIImageView {
-//                    let view = UIImageView()
-//                    let ref = Storage.storage().reference()
-//                    let file = ref.child("images/04F31D88-D014-4DAD-B186-755BEDD9AD58.jpg")
-//                    view.sd_setImage(with: file)
-//                    return view
-//                }
-//
-//
-//    func retrievePhotos(imageLink: String) {
-//        // Get the data from the database
-//
-//        let storageRef = Storage.storage().reference()
-//        let path = "images/04F31D88-D014-4DAD-B186-755BEDD9AD58.jpg"
-//        let fileRef = storageRef.child(path)
-//        fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
-//            if error == nil && data != nil {
-//
-//                if let data = data!.jpegData(compressionQuality: 0.9) {
-//                    let image = UIImage(data: data!)
-//                    DispatchQueue.main.async {
-//                        images.append(image)
-//                    }
-//                }
-//            }
-//        }
-//    }
-        
-//    func getImage(imageLink: String) async {
-//        let storageRef = Storage.storage()
-//        let fileRef = storageRef.reference().child("images/04F31D88-D014-4DAD-B186-755BEDD9AD58.jpg")
-////        let fileRef = storageRef.child("sample1" + ".png")
-//        //let path = "gs://mycloset-ea3a8.appspot.com/images/"+imageLink+".jpg"
-//
-//        fileRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
-//            if error == nil && data != nil {
-//                if let image = UIImage(data: data!) {
-//                    DispatchQueue.main.async {
-//                        images.append(image)
-//                    }
-//                }
-//            }
-//        }
-//    }
-    
-}
-    
-//struct ImageView: View {
-//    @State var path: String
-//    var imageView: UIImageView()
-//
-//    var body: some View {
-//        imageView
-//    }
-//
-//    func getImage(imageLink: String) -> UIImageView {
-//        let view = UIImageView()
-//        let ref = Storage.storage().reference()
-//        let file = ref.child("images/04F31D88-D014-4DAD-B186-755BEDD9AD58.jpg")
-//        view.sd_setImage(with: file)
-//        return view
-//    }
-//}
-//
-    //
-    //    func getImages(imageLink: String) async {
-    //        let imageLink = URL(string: (imageLink.replacingOccurrences(of: "/images/", with: "")))
-    //        let reference =  Storage.storage().reference(forURL: "gs://mycloset-ea3a8.appspot.com")
-    //        do {
-    //            reference.downloadURL(completion: {(imageLink, error) in
-    //                let data = try Data(contentsOf: imageLink!)
-    //                let image = UIImage(data: data as Data)
-    //                DispatchQueue.main.async {
-    //                    images.append(image!)
-    //                }
-    //            })
-    //        } catch {
-    //            print("Unexpected error: \(error).")
-    //        }
-    //    }
-    //}
-    
-
-
-
-//
-//func getImage(imageLink: String) -> UIImage {
-//    let url = URL(string: ("gs://mycloset-ea3a8.appspot.com/images/365C8DBF-92CF-4AB7-B729-38F09524FE3D.jpg"))
-////    let storage = Storage.storage(url: "gs://mycloset-ea3a8.appspot.com/images/").reference()
-////    let storageRef = storage.child("365C8DBF-92CF-4AB7-B729-38F09524FE3D.jpg")
-//    let newImageView: UIImageView = UIImageView()
-//    let placeholder = UIImage(named: "placeholder.jpg")
-//    newImageView.sd_setImage(with: url, placeholderImage: placeholder)
-//    let image: UIImage = newImageView.image!
-//    return image
-//}
-
-
-
-//
-//
-//struct ImageView: View {
-////    @State var image: UIImageView
-//    var body: some View {
-//        UIImageView(UIImage: image)
-//        .frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
-//    }
-//    func getImage(imageLink: String) -> UIImageView {
-//        let url =  "gs://mycloset-ea3a8.appspot.com/images/365C8DBF-92CF-4AB7-B729-38F09524FE3D.jpg"
-//    //    let storage = Storage.storage(url: "gs://mycloset-ea3a8.appspot.com/images/").reference()
-//    //    let storageRef = storage.child("365C8DBF-92CF-4AB7-B729-38F09524FE3D.jpg")
-//        let newImageView: UIImageView = UIImageView()
-//        self.newImageView.image = Image(url)
-//        let placeholder = UIImage(named: "placeholder.jpg")
-//        [self.view addSubview:self.newImageView]
-//        return newImageView
-//    }
-//}
-        
-//
-//
-//
-//
-//        })) { (data, error) in
-//                if let _error = error {
-//                        print(_error)
-//                        failure(_error)
-//                }
-//                else {
-//                    if let _data  = data {
-//                        let myImage:UIImage! = UIImage(data: _data)
-//                        success(myImage)
-//                    }
-//                }
-//        }
-//    }
-//}
-//
+    /**
+     Function: isLiked()
+     Description:
+     Parameters: None
+     Returns: None
+     */
+    func isLiked() {
+        if (post.postLikes.contains("username2")) {
+            liked = true
+        } else {
+            liked = false
+        }
+    }
+    /**
+     Function: isLiked()
+     Description:
+     Parameters: None
+     Returns: None
+     */
+    func isSaved() {
+        if (post.postSaves.contains("username2")) {
+            saved = true
+        } else {
+            saved = false
+        }
+    }
+    /**
+     Function: isLiked()
+     Description:
+     Parameters: None
+     Returns: None
+     */
+    func likePost() {
+        let db = Firestore.firestore()
+        let docRef = db.collection("Posts").document(post.id.uuidString)
+        docRef.updateData([
+            "postLikes": FieldValue.arrayUnion(["username2"])
+        ])
+    }
+    /**
+     Function: isLiked()
+     Description:
+     Parameters: None
+     Returns: None
+     */
+    func unlikePost() {
+        let database = Firestore.firestore().collection("Posts")
+        let postRef = database.document(post.id.uuidString)
+        postRef.updateData([
+            "postLikes": FieldValue.arrayRemove(["username2"])
+        ])
+    }
+    /**
+     Function: isLiked()
+     Description:
+     Parameters: None
+     Returns: None
+     */
+    func savePost() {
+        let db = Firestore.firestore()
+        let docRef = db.collection("Posts").document(post.id.uuidString)
+        docRef.updateData([
+            "postSaves": FieldValue.arrayUnion(["username2"])
+        ])
+    }
+    /**
+     Function: 
+     Description:
+     Parameters: None
+     Returns: None
+     */
+    func unsavePost() {
+        let db = Firestore.firestore()
+        let docRef = db.collection("Posts").document(post.id.uuidString)
+        docRef.updateData([
+            "postSaves": FieldValue.arrayRemove(["username2"])
+        ])
+    }
+    //  FUNCTIONS NEEDED
+    //  need interactions when clicking on userProfile
     
     
-//    func getImages(imageLink: String) async {
+    
+    
+    
+    // OPTIONAL USER PROFILE IMAGE
+    
+//    func getUserInfo(username: String) -> UserProfile {
 //        let db = Firestore.firestore()
-//        let path = "gs://mycloset-ea3a8.appspot.com/images"
-//        let imageLink = imageLink.replacingOccurrences(of: "images/", with: "")
-//        let docRef = db.collection(path).document(imageLink)
-//        docRef.getDocument { (document, error) in
-//            if let document = document, document.exists {
-//                var data = document.data()
-//                data.getData(maxSize: 5 * 1024 * 1024) { data, error in
-//                    if error == nil {
-//                        let image = UIImage(data: data!)
-//                        DispatchQueue.main.async {
-//                            images.append(image!)
+//        let storageRef = Storage.storage().reference()
+//        var userProfile: UserProfile?
+//
+//        db.collection("Users").getDocuments { snapshot, error in
+//            guard error == nil else {
+//                print(error!.localizedDescription)
+//                return
+//            }
+//            if let snapshot = snapshot {
+//                for document in snapshot.documents {
+//                    let data = document.data()
+//                    let usernameTwo = data["username"] as! String
+//                    if (username == usernameTwo) {
+//                        let bio = data["bio"] as? String ?? ""
+//                        let profileImageLink = data["profileImage"] as? String ?? ""
+//                        if profileImageLink == "" {
+//                            let user = UserProfile(username: usernameTwo, bio: bio)
+//                            userProfile = user
+//                        } else {
+//                            let fileRef = storageRef.child(profileImageLink)
+//                            fileRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+//                                if error == nil && data != nil {
+//                                    let image = UIImage(data: data!)
+//                                    let user = UserProfile(username: usernameTwo, bio: bio, profileImage: image)
+//                                    userProfile = user
+//                                }
+//                            }
 //                        }
 //                    }
 //                    else {
-//                        let error = error
-//                        print(error?.localizedDescription as Any)
+//                        break
 //                    }
 //                }
 //            }
-//            else {
-//                let error = error
-//                print(error?.localizedDescription as Any)
-//            }
 //        }
+//        return userProfile!
 //    }
-    
-
-//
-//struct PostCellPreview_Previews: PreviewProvider {
-//    static var previews: some View {
-//        PostCell(post: SAMPLE_POST)
-//    }
-//}
-
+}
