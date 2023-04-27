@@ -17,6 +17,8 @@ struct saveOutfitView: View {
     @State private var showFeedView = false
     let db = Firestore.firestore()
     let outfitid = UUID().uuidString
+    @State private var backtocloset = false
+    
     
     var body: some View {
         NavigationView{
@@ -33,10 +35,16 @@ struct saveOutfitView: View {
                             }
                         }
                         ToolbarItem(placement: .navigationBarLeading) {
-                            NavigationLink(destination: ClosetView()) {
-                                Text("Back")
+                            Button(action: {
+                                backtocloset = true
+                            }) {
+                                Text("Cancel")
                             }
                         }
+                        
+                    }
+                    .fullScreenCover(isPresented: $backtocloset) {
+                        ClosetView()
                     }
                 Spacer()
                 TextField("Enter Outfit Title", text: $title)

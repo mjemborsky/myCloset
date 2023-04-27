@@ -42,7 +42,6 @@ struct ClosetView: View {
             NavigationView {
                 ScrollView(.vertical) {
                     LazyVGrid(columns: columns, content: {
-                        //grid?
                         ForEach(clothingItemManager.clothingItems, id: \.ImageURL) { clothingItem in
                             if isEditing {
                                 CheckboxRow(clothingItem: clothingItem, selectedItemsManager: selectedItemsManager)
@@ -76,6 +75,23 @@ struct ClosetView: View {
                 .sheet(isPresented: $showPopup) {
                     ContentView()
                 }
+                .onChange(of: isEditing) { newValue in
+                           if !newValue {
+                               if selectedItemsManager.selectedItems.count > maxSelectionCount {
+                                   // Display an error alert if the user selected too many items
+                                   let message = "Too many items chosen! Select up to four items to build your outfit!"
+                                   let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+                                   alert.addAction(UIAlertAction(title: "OK", style: .default))
+                                   UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
+                                   
+        //                           // Reset the selected items to the first four
+                                   selectedItemsManager.selectedItems = Array(selectedItemsManager.selectedItems.prefix(maxSelectionCount))
+                                   showDoneAlert.toggle()
+                               }
+                               print(selectedItemsManager.selectedItems)
+                               showDoneAlert.toggle()
+                           }
+                       }
             }
             MenuView(isOpen: $toggleMenu, feedSelected: $willMoveToFeed, searchSelected: $willMoveToSearch, closetSelected: $willMoveToCloset, profileSelected: $willMoveToProfile, hideFeed: $isHidden)
                 .fullScreenCover(isPresented: $willMoveToFeed) {
@@ -91,26 +107,13 @@ struct ClosetView: View {
                     returnToView()
                 }
         }
+        .onAppear {
+            selectedItemsManager.selectedItems.removeAll()
+        }
 //        .environmentObject(self.selectedItemsManager)
 //        .environmentObject(self.clothingItemManager)
 
-        .onChange(of: isEditing) { newValue in
-                   if !newValue {
-                       if selectedItemsManager.selectedItems.count > maxSelectionCount {
-                           // Display an error alert if the user selected too many items
-                           let message = "Too many items chosen! Select up to four items to build your outfit!"
-                           let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-                           alert.addAction(UIAlertAction(title: "OK", style: .default))
-                           UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
-                           
-                           // Reset the selected items to the first four
-                           selectedItemsManager.selectedItems = Array(selectedItemsManager.selectedItems.prefix(maxSelectionCount))
-                           showDoneAlert.toggle()
-                       }
-                       print(selectedItemsManager.selectedItems)
-                       showDoneAlert.toggle()
-                   }
-               }
+     
         .alert("Build Outfit?", isPresented: $showDoneAlert) {
             Button("No", action: {})
             Button("Yes", action: {
@@ -129,6 +132,8 @@ struct ClosetView: View {
         }
         
     }
+   
+    
 }
 
 
@@ -137,6 +142,7 @@ struct CheckboxRow: View {
     @State var isSelected: Bool = false
     let clothingItem: ClothingItem
     @ObservedObject var selectedItemsManager: SelectedItemsManager
+    let maxSelectionCount = 4
     
     var body: some View {
         Image(uiImage: clothingItem.ImageURL)
@@ -149,7 +155,16 @@ struct CheckboxRow: View {
             .onTapGesture {
                 isSelected.toggle()
                 if isSelected {
-                    selectedItemsManager.selectedItems.append(clothingItem)
+                    if selectedItemsManager.selectedItems.count > maxSelectionCount {
+                        let message = "Too many items chosen! Select up to four items to build your outfit!"
+                        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default))
+                        UIApplication.shared.windows.first?.rootViewController?.present(alert, animated: true, completion: nil)
+                        
+                    }
+                    else {
+                        selectedItemsManager.selectedItems.append(clothingItem)
+                    }
                 } else {
                     selectedItemsManager.selectedItems.removeAll(where: { $0.ImageURL == clothingItem.ImageURL })
                 }
