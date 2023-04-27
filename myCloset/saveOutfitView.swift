@@ -17,29 +17,22 @@ struct saveOutfitView: View {
     @State var tags: [String] = []
     @State private var showFeedView = false
     let db = Firestore.firestore()
+    let storage = Storage.storage().reference()
     let outfitid = UUID().uuidString
     @State private var backtocloset = false
-    @State private var selectedRect: CGRect?
-
+    
     
     var body: some View {
-        NavigationView{
-            VStack{
+        NavigationView {
+            VStack {
                 Spacer()
                 SelectedItemsView()
-                    .background(
-                        GeometryReader { proxy in
-                            Color.clear
-                                .onAppear {
-                                    selectedRect = CGRect(x: 0, y: 100, width: 400, height: 500)
-                                }
-                        }
-                    )
                     .navigationTitle("Save Post")
                     .toolbar {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button(action: {
-                                saveoutfit()
+                                saveOutfit()
+                                screenshotSelectedItemsView()
                             }) {
                                 Text("Save")
                             }
@@ -51,7 +44,6 @@ struct saveOutfitView: View {
                                 Text("Cancel")
                             }
                         }
-                        
                     }
                     .fullScreenCover(isPresented: $backtocloset) {
                         ClosetView()
@@ -67,13 +59,9 @@ struct saveOutfitView: View {
                     .background(Color.gray.opacity(0.05))
                     .cornerRadius(10)
                     .padding(.bottom, 10)
-                
                 Button(action: {
                     createPost(postCreator: "username", postDescription: "My favorite outfit", postTags: ["trendy", "purple", "sweater"], postImage: "", linkedOutfit: outfitid)
-                    if let selectedRect = selectedRect {
-                        let image = takeScreenshot(rect: selectedRect)
-                        uploadScreenshot(image)
-                    }
+                    screenshotSelectedItemsView()
                     self.showFeedView = true
                 }, label: {
                     Text("Post").padding()
@@ -85,73 +73,48 @@ struct saveOutfitView: View {
         }
     }
     
-    func takeScreenshot(rect: CGRect) -> UIImage {
-        let format = UIGraphicsImageRendererFormat()
-        format.opaque = false
-        let renderer = UIGraphicsImageRenderer(bounds: rect, format: format)
-        let image = renderer.image { context in
-            UIApplication.shared.windows.first?.rootViewController?.view.layer.render(in: context.cgContext)
-        }
-        return image
-    }
-    
-    func uploadScreenshot(_ image: UIImage) {
-        let storage = Storage.storage()
-        let storageRef = storage.reference()
-        let screenshotRef = storageRef.child("screenshots/\(UUID().uuidString).png")
-        if let imageData = image.pngData() {
-            screenshotRef.putData(imageData, metadata: nil) { metadata, error in
-                if let error = error {
-                    print("Error uploading screenshot: \(error.localizedDescription)")
-                } else {
-                    print("Screenshot uploaded successfully")
-                }
+    func saveOutfit() {
+        db.collection("Saved Collages").document(outfitid).setData([
+            "title": title,
+            "tag": tag
+        ]) { err in
+            if let err = err {
+                print("Error writing document: \(err)")
+            } else {
+                print("Document successfully written!")
             }
         }
     }
     
-    
-    @MainActor  func saveoutfit() {
-        @State var renderedImage = Image(systemName: "photo")
-        @Environment(\.displayScale) var displayScale
-        let storageRef =  Storage.storage().reference()
-        let path = "Saved Collages/\(UUID().uuidString).jpg"
-        let fileRef = storageRef.child(path)
+    func screenshotSelectedItemsView() {
+        guard let window = UIApplication.shared.windows.first else { return }
         
-        let renderer = ImageRenderer(content: SelectedItemsView())
-        renderer.scale = displayScale
-        
-        if let uiImage = renderer.uiImage {
-            let imageData = uiImage.jpegData(compressionQuality: 0.8)!
-            let uploadTask = fileRef.putData(imageData , metadata: nil) { (metadata, error) in
-                guard error == nil, metadata != nil else {
-                    print("Error uploading image:", error as Any)
-                    return
-                }
-                
-                let db = Firestore.firestore()
-                db.collection("Saved Collages").document(outfitid).setData([
-                    "title": title,
-                    "tag": tag,
-                    "url": path
-                ]) { error in
-                    guard error == nil else {
-                        print("Error saving data:", error as Any)
-                        return
-                    }
-                    
-                    DispatchQueue.main.async {
-                        // Update the UI with the newly saved image
-                    }
-                }
-            }
+        let renderer = UIGraphicsImageRenderer(bounds: window.bounds)
+        let screenshot = renderer.image { _ in
+            window.drawHierarchy(in: window.bounds, afterScreenUpdates: true)
         }
-    }     
+        
+        guard let imageData = screenshot.pngData() else { return }
+        
+        let imageName = UUID().uuidString + ".png"
+        let imageRef = storage.child("Screenshotted selected outfits/\(imageName)")
+        
+        let metadata = StorageMetadata()
+        metadata.contentType = "image/png"
+        
+        _ = imageRef.putData(imageData, metadata: metadata) { metadata, error in
+            guard metadata != nil else {
+                print("Error uploading image: \(error!)")
+                return
+            }
+            print("Image uploaded successfully!")
+        }
+    }
+    
 }
 
 struct saveOutfitView_Previews: PreviewProvider {
     static var previews: some View {
         saveOutfitView()
-
     }
 }
