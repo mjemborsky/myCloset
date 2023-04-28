@@ -10,6 +10,15 @@ import Firebase
 import FirebaseFirestore
 import FirebaseStorage
 
+extension UIImage {
+    func crop(to rect: CGRect) -> UIImage {
+        guard let cgImage = cgImage?.cropping(to: rect) else {
+            return self
+        }
+        return UIImage(cgImage: cgImage)
+    }
+}
+
 struct saveOutfitView: View {
     @State var title: String = ""
     @State var titles: [String] = []
@@ -32,7 +41,7 @@ struct saveOutfitView: View {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button(action: {
                                 saveOutfit()
-                                screenshotSelectedItemsView()
+                                screenshotSelectedItemsView(captureRect: CGRect(x: 0, y: 550, width: 1500, height: 100))
                             }) {
                                 Text("Save")
                             }
@@ -61,7 +70,7 @@ struct saveOutfitView: View {
                     .padding(.bottom, 10)
                 Button(action: {
                     createPost(postCreator: "username", postDescription: "My favorite outfit", postTags: ["trendy", "purple", "sweater"], postImage: "", linkedOutfit: outfitid)
-                    screenshotSelectedItemsView()
+                    screenshotSelectedItemsView(captureRect: CGRect(x: 0, y: 550, width: 1500, height: 1000))
                     self.showFeedView = true
                 }, label: {
                     Text("Post").padding()
@@ -84,24 +93,30 @@ struct saveOutfitView: View {
                 print("Document successfully written!")
             }
         }
+        
+        // Capture the selected items view
+        let captureRect = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.8)
+        screenshotSelectedItemsView(captureRect: captureRect)
     }
     
-    func screenshotSelectedItemsView() {
+    func screenshotSelectedItemsView(captureRect: CGRect) {
         guard let window = UIApplication.shared.windows.first else { return }
-        
+
         let renderer = UIGraphicsImageRenderer(bounds: window.bounds)
         let screenshot = renderer.image { _ in
             window.drawHierarchy(in: window.bounds, afterScreenUpdates: true)
         }
-        
-        guard let imageData = screenshot.pngData() else { return }
-        
+
+        let croppedScreenshot = screenshot.crop(to: captureRect)
+
+        guard let imageData = croppedScreenshot.pngData() else { return }
+
         let imageName = UUID().uuidString + ".png"
         let imageRef = storage.child("Screenshotted selected outfits/\(imageName)")
-        
+
         let metadata = StorageMetadata()
         metadata.contentType = "image/png"
-        
+
         _ = imageRef.putData(imageData, metadata: metadata) { metadata, error in
             guard metadata != nil else {
                 print("Error uploading image: \(error!)")
@@ -110,6 +125,7 @@ struct saveOutfitView: View {
             print("Image uploaded successfully!")
         }
     }
+    
     
 }
 
