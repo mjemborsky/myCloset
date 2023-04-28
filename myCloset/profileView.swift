@@ -128,17 +128,25 @@ struct ProfileHeader: View {
 //}
 struct profileView: View {
     let gradient = Gradient(colors: [.pink, .white])
-    @State var username: String
+    var username: String
+    @StateObject var profileViewManager: ProfileViewManager
     var body: some View {
         VStack {
             ProfileHeader()
-                .environmentObject(ProfileViewManager(username: username))
+                .environmentObject(profileViewManager)
         }
         .background(LinearGradient(gradient: gradient, startPoint: .top, endPoint: .bottom))
         .edgesIgnoringSafeArea(.all)
     }
 }
 
+
+struct ContentOfProfileView: View {
+    @State var username: String
+    var body: some View {
+        profileView(username: username, profileViewManager: ProfileViewManager(username: username))
+    }
+}
 
 // need function - getUser
 // this will access database and find user to load profileview with
@@ -151,6 +159,6 @@ struct profileView: View {
 
 struct profileView_Previews: PreviewProvider {
     static var previews: some View {
-        profileView(username: "username")
+        ContentOfProfileView(username: "username")
     }
 }

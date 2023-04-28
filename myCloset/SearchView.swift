@@ -40,7 +40,7 @@ struct SearchView: View {
                         .environmentObject(ClothingItemManager())
                 }
                 .fullScreenCover(isPresented: $willMoveToProfile) {
-                    profileView(username: "username")
+                    ContentOfProfileView(username: "username")
                 }
                 .onAppear {
                     returnToView()

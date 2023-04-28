@@ -83,7 +83,7 @@ struct ClosetView: View {
                     SearchView()
                 }
                 .fullScreenCover(isPresented: $willMoveToProfile) {
-                    profileView(username: "username")
+                    ContentOfProfileView(username: "username")
                 }
                 .onAppear {
                     returnToView()
