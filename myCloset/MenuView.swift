@@ -17,11 +17,12 @@ struct MenuView: View {
     @Binding var hideFeed: Bool
     var sideBarWidth = UIScreen.main.bounds.size.width * 0.7
     var bgColor: Color =
-    Color(.init(
-        red: 52 / 255,
-        green: 70 / 255,
-        blue: 182 / 255,
-        alpha: 1))
+    Color("turquoise")
+//        .init(
+//        red: 174 / 255,
+//        green: 245 / 255,
+//        blue: 234 / 255,
+//        alpha: 1))
     var secondaryColor: Color =
     Color(.init(
         red: 100 / 255,
@@ -83,18 +84,18 @@ struct MenuView: View {
                 isOpen.toggle()
                 feedSelected.toggle()
             }
-            HStack {
-                Image(systemName: "magnifyingglass")
-                    .resizable()
-                    .frame(width: 20, height: 20)
-                    .padding(.trailing, 18)
-                Text("Search")
-            }
-            .onTapGesture {
-                isOpen.toggle()
-                searchSelected.toggle()
-                hideFeed.toggle()
-            }
+//            HStack {
+//                Image(systemName: "magnifyingglass")
+//                    .resizable()
+//                    .frame(width: 20, height: 20)
+//                    .padding(.trailing, 18)
+//                Text("Search")
+//            }
+//            .onTapGesture {
+//                isOpen.toggle()
+//                searchSelected.toggle()
+//                hideFeed.toggle()
+//            }
             HStack {
                 Image(systemName: "door.sliding.left.hand.closed")
                     .resizable()
@@ -142,7 +143,7 @@ struct MenuView: View {
                     isOpen ?
                     Angle(degrees: 180) : Angle(degrees: 0))
                 .offset(x: isOpen ? -4 : 8)
-                .foregroundColor(.blue)
+                .foregroundColor(Color("wb"))
         }
         .offset(x: sideBarWidth / 2, y: 50)
         .animation(.default, value: isOpen)

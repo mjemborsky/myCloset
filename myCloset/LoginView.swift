@@ -21,9 +21,9 @@ struct LoginView: View {
             
             Spacer()
             
-            Image("my closet")
+            Image("logo")
                 .resizable()
-                .frame(width:250, height: 100)
+                .frame(width:250, height: 200)
                 .padding()
             
             TextField("Email", text: $email )

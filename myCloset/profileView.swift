@@ -18,6 +18,8 @@ struct ProfileHeader: View {
     @State private var willMoveToProfile: Bool = false
     // Variable to hide feedview
     @State private var isHidden: Bool = false
+    @State private var username = "" // default username
+
     var body: some View {
         ZStack {
             ScrollView {
@@ -28,36 +30,69 @@ struct ProfileHeader: View {
                             Image(systemName: "photo.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
-                                .frame(width: 200, height: 200)
+                                .frame(width: 150, height: 150)
                                 .clipShape(Circle())
                                 .clipped()
                                 .foregroundColor(Color.white)
                                 .padding(.top, 55)
-                            Spacer()
-                            Text("user.username").font(.system(size: 20).bold()).foregroundColor(.white)
-                            Spacer()
-                            Text("user.bio" ?? "").font(.caption)
-                                .foregroundColor(.white)
-                            HStack{
-                                Spacer()
-                                Image(systemName: "squareshape.split.3x3")
+                            VStack (alignment: .center){
+                                TextField("enter username", text: $username)
+                                    .font(.system(size: 25).bold())
                                     .foregroundColor(.white)
-                                    .padding(.top, 5)
-                                    .font(.title2)
-                                Spacer()
-                                Image(systemName: "square.and.arrow.down")
-                                    .foregroundColor(.white)
-                                    .padding(.top, 5)
-                                    .font(.title2)
+                                    .multilineTextAlignment(.center)
+                                    .onTapGesture {
+                                    // do something when the user taps the username
+                                        TextField("enter username", text: $username)
+                                            .multilineTextAlignment(.center)
+                                    }
+                                    .onSubmit {
+                                        // add 's to the username
+                                        username += "'s"
+                                    }
+//                                HStack {
+//                                    VStack {
+//                                        Text("321") //Need to add the user profile following count
+//                                            .font(.subheadline)
+//                                            .fontWeight(.semibold)
+//                                            .foregroundColor(.white)
+//                                        Text("Following")
+//                                            .font(.caption)
+//                                            .foregroundColor(.white)
+//                                    }
+//                                    VStack {
+//                                        Text("500") //Need to add the user profile followers count
+//                                            .font(.subheadline)
+//                                            .fontWeight(.semibold)
+//                                            .foregroundColor(.white)
+//                                        Text("Followers")
+//                                            .font(.caption)
+//                                            .foregroundColor(.white)
+//                                    }
+//                                }
+//                                HStack{
+//                                    Spacer()
+//                                    Image(systemName: "squareshape.split.3x3")
+//                                        .foregroundColor(.white)
+//                                        .padding(.top, 5)
+//                                        .font(.title2)
+//                                    Spacer()
+//                                    Image(systemName: "square.and.arrow.down")
+//                                        .foregroundColor(.white)
+//                                        .padding(.top, 5)
+//                                        .font(.title2)
+//                                    Spacer()
+//                                }
                                 Spacer()
                             }
-                            Spacer()
-//                            postGrid()
-                            Spacer()
                             Text("Saved Outfits")
                                 .foregroundColor(.white)
                                 .font(.title2)
-//                            savedGrid()
+                            postGrid()
+                            Spacer()
+//                            Text("Saved Outfits")
+//                                .foregroundColor(.white)
+//                                .font(.title2)
+                            savedGrid()
                         }
                         Spacer()
                     }
@@ -89,41 +124,42 @@ struct ProfileHeader: View {
     }
 }
     
-//
-//struct postGrid: View {
-//    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
-//    var body: some View {
-//        LazyVGrid(columns: columns, spacing:0) {
-//            ForEach(0 ..< 15, id: \.self) {
-//                index in Image(systemName: "photo")
-//                    .resizable()
-//                    .scaledToFill()
-//                    .border(Color.white)
-//                    .clipped()
-//
-//            }
-//            .padding(.top, 5)
-//        }
-//    }
-//}
-//struct savedGrid: View {
-//    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
-//    var body: some View {
-//        LazyVGrid(columns: columns, spacing:0) {
-//            ForEach(0 ..< 15, id: \.self) {
-//                index in Image(systemName: "photo")
-//                    .resizable()
-//                    .scaledToFill()
-//                    .border(Color.white)
-//                    .clipped()
-//
-//            }
-//            .padding(.top, 5)
-//        }
-//    }
-//}
+
+struct postGrid: View {
+    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+    var body: some View {
+        LazyVGrid(columns: columns, spacing:0) {
+            ForEach(0 ..< 15, id: \.self) {
+                index in Image(systemName: "photo")
+                    .resizable()
+                    .scaledToFill()
+                    .border(Color.white)
+                    .clipped()
+
+            }
+            .padding(.top, 5)
+        }
+    }
+}
+struct savedGrid: View {
+    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+    var body: some View {
+        LazyVGrid(columns: columns, spacing:0) {
+            ForEach(0 ..< 15, id: \.self) {
+                index in Image(systemName: "photo")
+                    .resizable()
+                    .scaledToFill()
+                    .border(Color.white)
+                    .clipped()
+
+            }
+            .padding(.top, 5)
+        }
+    }
+}
 struct profileView: View {
-    let gradient = Gradient(colors: [.pink, .white])
+    let gradient = Gradient(colors: [.teal, .green])
+    
     var body: some View {
         VStack {
             ProfileHeader()
