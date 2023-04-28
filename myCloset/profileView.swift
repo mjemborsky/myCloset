@@ -8,7 +8,6 @@ import SwiftUI
 
 
 struct ProfileHeader: View {
-    let post: Post
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     // Variable for if sidemenu is showing or not
     @State private var toggleMenu: Bool = false
@@ -19,7 +18,6 @@ struct ProfileHeader: View {
     @State private var willMoveToProfile: Bool = false
     // Variable to hide feedview
     @State private var isHidden: Bool = false
-    // Variable for storing the user's name
     @State private var username = "" // default username
 
     var body: some View {
@@ -126,7 +124,7 @@ struct ProfileHeader: View {
     }
 }
     
-    
+
 struct postGrid: View {
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     var body: some View {
@@ -137,7 +135,7 @@ struct postGrid: View {
                     .scaledToFill()
                     .border(Color.white)
                     .clipped()
-                
+
             }
             .padding(.top, 5)
         }
@@ -153,7 +151,7 @@ struct savedGrid: View {
                     .scaledToFill()
                     .border(Color.white)
                     .clipped()
-                
+
             }
             .padding(.top, 5)
         }
@@ -164,14 +162,17 @@ struct profileView: View {
     
     var body: some View {
         VStack {
-            ProfileHeader(post: SAMPLE_POST)
+            ProfileHeader()
         }
         .background(LinearGradient(gradient: gradient, startPoint: .top, endPoint: .bottom))
-                        .edgesIgnoringSafeArea(.all)
+        .edgesIgnoringSafeArea(.all)
     }
     
     
 }
+
+
+// need function - go to UserProfile
 
 struct profileView_Previews: PreviewProvider {
     static var previews: some View {
