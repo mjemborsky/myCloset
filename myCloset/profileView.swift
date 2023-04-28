@@ -19,7 +19,9 @@ struct ProfileHeader: View {
     @State private var willMoveToProfile: Bool = false
     // Variable to hide feedview
     @State private var isHidden: Bool = false
-    
+    // Variable for storing the user's name
+    @State private var username = "" // default username
+
     var body: some View {
         ZStack {
             ScrollView {
@@ -30,53 +32,68 @@ struct ProfileHeader: View {
                             Image(systemName: "photo.fill")
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
-                                .frame(width: 200, height: 200)
+                                .frame(width: 150, height: 150)
                                 .clipShape(Circle())
                                 .clipped()
                                 .foregroundColor(Color.white)
                                 .padding(.top, 55)
-                            VStack {
-                                Text("username").font(.system(size: 20).bold()).foregroundColor(.white)
-                                HStack {
-                                    VStack {
-                                        Text("321") //Need to add the user profile following count
-                                            .font(.subheadline)
-                                            .fontWeight(.semibold)
-                                            .foregroundColor(.white)
-                                        Text("Following")
-                                            .font(.caption)
-                                            .foregroundColor(.white)
+                            VStack (alignment: .center){
+                                TextField("enter username", text: $username)
+                                    .font(.system(size: 25).bold())
+                                    .foregroundColor(.white)
+                                    .multilineTextAlignment(.center)
+                                    .onTapGesture {
+                                    // do something when the user taps the username
+                                        TextField("enter username", text: $username)
+                                            .multilineTextAlignment(.center)
                                     }
-                                    VStack {
-                                        Text("500") //Need to add the user profile followers count
-                                            .font(.subheadline)
-                                            .fontWeight(.semibold)
-                                            .foregroundColor(.white)
-                                        Text("Followers")
-                                            .font(.caption)
-                                            .foregroundColor(.white)
+                                    .onSubmit {
+                                        // add 's to the username
+                                        username += "'s"
                                     }
-                                }
-                                HStack{
-                                    Spacer()
-                                    Image(systemName: "squareshape.split.3x3")
-                                        .foregroundColor(.white)
-                                        .padding(.top, 5)
-                                        .font(.title2)
-                                    Spacer()
-                                    Image(systemName: "square.and.arrow.down")
-                                        .foregroundColor(.white)
-                                        .padding(.top, 5)
-                                        .font(.title2)
-                                    Spacer()
-                                }
+//                                HStack {
+//                                    VStack {
+//                                        Text("321") //Need to add the user profile following count
+//                                            .font(.subheadline)
+//                                            .fontWeight(.semibold)
+//                                            .foregroundColor(.white)
+//                                        Text("Following")
+//                                            .font(.caption)
+//                                            .foregroundColor(.white)
+//                                    }
+//                                    VStack {
+//                                        Text("500") //Need to add the user profile followers count
+//                                            .font(.subheadline)
+//                                            .fontWeight(.semibold)
+//                                            .foregroundColor(.white)
+//                                        Text("Followers")
+//                                            .font(.caption)
+//                                            .foregroundColor(.white)
+//                                    }
+//                                }
+//                                HStack{
+//                                    Spacer()
+//                                    Image(systemName: "squareshape.split.3x3")
+//                                        .foregroundColor(.white)
+//                                        .padding(.top, 5)
+//                                        .font(.title2)
+//                                    Spacer()
+//                                    Image(systemName: "square.and.arrow.down")
+//                                        .foregroundColor(.white)
+//                                        .padding(.top, 5)
+//                                        .font(.title2)
+//                                    Spacer()
+//                                }
                                 Spacer()
                             }
-                            postGrid()
-                            Spacer()
                             Text("Saved Outfits")
                                 .foregroundColor(.white)
                                 .font(.title2)
+                            postGrid()
+                            Spacer()
+//                            Text("Saved Outfits")
+//                                .foregroundColor(.white)
+//                                .font(.title2)
                             savedGrid()
                         }
                         Spacer()
@@ -143,7 +160,8 @@ struct savedGrid: View {
     }
 }
 struct profileView: View {
-    let gradient = Gradient(colors: [.pink, .white])
+    let gradient = Gradient(colors: [.teal, .green])
+    
     var body: some View {
         VStack {
             ProfileHeader(post: SAMPLE_POST)
