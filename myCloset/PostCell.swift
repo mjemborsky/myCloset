@@ -21,9 +21,7 @@ struct PostCell: View {
             // HStack for profile username
             HStack (spacing: 10) {
                 // this is the username of post creator
-                NavigationLink(destination: {
-                    profileView()
-                }, label: {
+                NavigationLink(destination: profileView(username: "username"), label: {
                     Text(post.postCreator)
                         .font(.headline)
                         .fontWeight(.semibold)
@@ -101,9 +99,7 @@ struct PostCell: View {
             }
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
-                    NavigationLink(destination: {
-                        profileView()
-                    }, label: {
+                    NavigationLink(destination: profileView(username: "username"), label: {
                         Text(post.postCreator)
                             .font(.headline)
                             .fontWeight(.semibold)

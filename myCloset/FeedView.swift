@@ -58,7 +58,7 @@ struct FeedView: View {
                         .environmentObject(ClothingItemManager())
                 }
                 .fullScreenCover(isPresented: $willMoveToProfile) {
-                    profileView()
+                    profileView(username: "username")
                 }
                 .onAppear {
                     returnToView()
