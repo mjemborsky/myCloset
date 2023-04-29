@@ -12,7 +12,8 @@ import Firebase
 
 struct ProfileHeader: View {
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
-    @EnvironmentObject var profileViewManager: ProfileViewManager
+    var user: UserProfile
+    var posts: [Post]
     // Variable for if sidemenu is showing or not
     @State private var toggleMenu: Bool = false
     // Variables for which view will be switched to next (from sidemenu)
@@ -38,9 +39,9 @@ struct ProfileHeader: View {
                                 .foregroundColor(Color.white)
                                 .padding(.top, 55)
                             Spacer()
-                            Text(profileViewManager.user[0].username).font(.system(size: 20).bold()).foregroundColor(.white)
+                            Text(user.username).font(.system(size: 20).bold()).foregroundColor(.white)
                             Spacer()
-                            Text(profileViewManager.user[0].bio ?? "").font(.caption)
+                            Text(user.bio ?? "").font(.caption)
                                 .foregroundColor(.white)
                             HStack{
                                 Spacer()
@@ -56,11 +57,14 @@ struct ProfileHeader: View {
                                 Spacer()
                             }
                             Spacer()
-//                            postGrid()
-                            Spacer()
-                            Text("Saved Outfits")
+                            Text("User Posts")
                                 .foregroundColor(.white)
                                 .font(.title2)
+                            postGrid(posts: posts, currentUser: user)
+                            Spacer()
+//                            Text("Saved Posts")
+//                                .foregroundColor(.white)
+//                                .font(.title2)
 //                            savedGrid()
                         }
                         Spacer()
@@ -94,22 +98,25 @@ struct ProfileHeader: View {
 }
     
 //
-//struct postGrid: View {
-//    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
-//    var body: some View {
-//        LazyVGrid(columns: columns, spacing:0) {
-//            ForEach(0 ..< 15, id: \.self) {
-//                index in Image(systemName: "photo")
-//                    .resizable()
-//                    .scaledToFill()
-//                    .border(Color.white)
-//                    .clipped()
-//
-//            }
-//            .padding(.top, 5)
-//        }
-//    }
-//}
+struct postGrid: View {
+    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+    var posts: [Post]
+    var currentUser: UserProfile
+    var body: some View {
+        LazyVGrid(columns: columns, spacing:0) {
+            ForEach(posts) { Post in
+                if Post.postCreator == currentUser.username {
+                    Image(uiImage: Post.postImage)
+                        .resizable()
+                        .scaledToFill()
+                        .border(Color.white)
+                        .clipped()
+                }
+            }
+            .padding(.top, 5)
+        }
+    }
+}
 //struct savedGrid: View {
 //    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
 //    var body: some View {
@@ -128,25 +135,17 @@ struct ProfileHeader: View {
 //}
 struct profileView: View {
     let gradient = Gradient(colors: [.pink, .white])
-    var username: String
-    @StateObject var profileViewManager: ProfileViewManager
+    var user: UserProfile
+    var posts: [Post]
     var body: some View {
         VStack {
-            ProfileHeader()
-                .environmentObject(profileViewManager)
+            ProfileHeader(user: user, posts: posts)
         }
         .background(LinearGradient(gradient: gradient, startPoint: .top, endPoint: .bottom))
         .edgesIgnoringSafeArea(.all)
     }
 }
 
-
-struct ContentOfProfileView: View {
-    @State var username: String
-    var body: some View {
-        profileView(username: username, profileViewManager: ProfileViewManager(username: username))
-    }
-}
 
 // need function - getUser
 // this will access database and find user to load profileview with
@@ -155,10 +154,10 @@ struct ContentOfProfileView: View {
 
 
 
-
-
-struct profileView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentOfProfileView(username: "username")
-    }
-}
+//
+//
+//struct profileView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        profileView(user: UserProfile(username: "joe", bio: "bloe"))
+//    }
+//}

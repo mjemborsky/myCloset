@@ -22,6 +22,7 @@ struct FeedView: View {
     @State private var isHidden: Bool = false
     // List to store posts with getAllPosts()
     @State private var postsInProgress = [Post]()
+    @State private var usersInProgress = [UserProfile]()
     // View
     var body: some View {
         ZStack {
@@ -32,18 +33,18 @@ struct FeedView: View {
                     // Displaying Posts - Iterates through list of posts pulled from
                     // database and displays each in PostCell format
                     ForEach(postsInProgress) { Post in
-                        PostCell(post: Post)
+                        PostCell(post: Post, users: usersInProgress, allPosts: postsInProgress)
                     }
                     Spacer()
                 }
                 // Calling to retrieve posts
                 .onAppear {
                     getAllPost()
+                    getUsers()
                 }
                 .refreshable {
                     getAllPost()
                 }
-            
             }
             //Edit appearance of top navigation bar (currently not displaying?)
             .navigationTitle("myCloset")
@@ -58,7 +59,7 @@ struct FeedView: View {
                         .environmentObject(ClothingItemManager())
                 }
                 .fullScreenCover(isPresented: $willMoveToProfile) {
-                    ContentOfProfileView(username: "username")
+                    profileView(user: usersInProgress[0], posts: postsInProgress)
                 }
                 .onAppear {
                     returnToView()
@@ -106,6 +107,26 @@ struct FeedView: View {
                                 }
                             }
                         }
+                    }
+                }
+            }
+        }
+    }
+    func getUsers() {
+        let db = Firestore.firestore()
+        db.collection("Users").getDocuments { snapshot, error in
+            guard error == nil else {
+                print(error!.localizedDescription)
+                return
+            }
+            if let snapshot = snapshot {
+                for document in snapshot.documents {
+                    let data = document.data()
+                    let username = data["username"] as! String
+                    let bio = data["bio"] as? String ?? ""
+                    let user = UserProfile(username: username, bio: bio)
+                    DispatchQueue.main.async {
+                        usersInProgress.append(user)
                     }
                 }
             }

@@ -110,6 +110,7 @@ struct LoginView: View {
             }
             
         }
+        // needs to also create user document in "Users" with 2 fields: username (whatever they enter) and the linkedEmail
     }
 }
 

@@ -40,7 +40,7 @@ struct SearchView: View {
                         .environmentObject(ClothingItemManager())
                 }
                 .fullScreenCover(isPresented: $willMoveToProfile) {
-                    ContentOfProfileView(username: "username")
+                    profileView(user: UserProfile(username: "bob"), posts: [Post(id: UUID(), postTime: currentdate, postCreator: "bob", postDescription: "My favorite outfit", postLikes: ["mary", "bob"], postSaves: ["steve", "joe"], postTags: ["cardigan", "comfort"], postImage: UIImage(systemName: "person.circle.crop.fill")!, linkedOutfit: "blah")])
                 }
                 .onAppear {
                     returnToView()
