@@ -6,9 +6,6 @@
 //
 
 import Foundation
-import FirebaseAuth
-import FirebaseFirestore
-import FirebaseStorage
 import SwiftUI
 
 struct UserProfile {
@@ -33,44 +30,3 @@ let SAMPLE_PROFILE:[UserProfile] = [
 func getUsername(UserProfile: UserProfile) -> String {
     return UserProfile.username
 }
-
-//func getUserInfo(username: String) -> UserProfile {
-//    let db = Firestore.firestore()
-//    let storageRef = Storage.storage().reference()
-//    db.collection("Users").getDocuments { snapshot, error in
-//        guard error == nil else {
-//            print(error!.localizedDescription)
-//            return
-//        }
-//        if let snapshot = snapshot {
-//            for document in snapshot.documents {
-//                let data = document.data()
-//                let usernameTwo = data["username"] as! String
-//                if (username == usernameTwo) {
-//                    let bio = data["bio"] as? String ?? ""
-////                    let profileImageLink = data["profileImage"] as? String ?? ""
-//                    let user = UserProfile(username: usernameTwo, bio: bio)
-//                    DispatchQueue.main.async {
-//                        return user
-//                    }
-////                    if profileImageLink == "" {
-////                        let user = UserProfile(username: usernameTwo, bio: bio)
-////                        userProfile = user
-////                    } else {
-////                        let fileRef = storageRef.child(profileImageLink)
-////                        fileRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
-////                            if error == nil && data != nil {
-////                                let image = UIImage(data: data!)
-////                                let user = UserProfile(username: usernameTwo, bio: bio, profileImage: image)
-////                                userProfile = user
-////                            }
-////                        }
-////                    }
-//                }
-//                else {
-//                    break
-//                }
-//            }
-//        }
-//    }
-

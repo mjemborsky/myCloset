@@ -101,7 +101,7 @@ struct ClosetView: View {
                     SearchView()
                 }
                 .fullScreenCover(isPresented: $willMoveToProfile) {
-                    profileView()
+                    profileView(user: UserProfile(username: "joe"), posts: [Post(id: UUID(), postTime: currentdate, postCreator: "bob", postDescription: "My favorite outfit", postLikes: ["mary", "bob"], postSaves: ["steve", "joe"], postTags: ["cardigan", "comfort"], postImage: UIImage(systemName: "person.circle.crop.fill")!, linkedOutfit: "blah")])
                 }
                 .onAppear {
                     returnToView()

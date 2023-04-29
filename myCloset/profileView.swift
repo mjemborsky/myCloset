@@ -5,10 +5,15 @@
 //  Created by Taylor  on 4/3/23.
 //
 import SwiftUI
+import FirebaseFirestore
+import FirebaseStorage
+import Firebase
 
 
 struct ProfileHeader: View {
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+    var user: UserProfile
+    var posts: [Post]
     // Variable for if sidemenu is showing or not
     @State private var toggleMenu: Bool = false
     // Variables for which view will be switched to next (from sidemenu)
@@ -35,9 +40,19 @@ struct ProfileHeader: View {
                                 .clipped()
                                 .foregroundColor(Color.white)
                                 .padding(.top, 55)
-                            VStack (alignment: .center){
-                                TextField("enter username", text: $username)
-                                    .font(.system(size: 25).bold())
+                            Spacer()
+                            Text(user.username).font(.system(size: 20).bold()).foregroundColor(.white)
+                            Spacer()
+                            Text(user.bio ?? "").font(.caption)
+                                .foregroundColor(.white)
+                            HStack{
+                                Spacer()
+                                Image(systemName: "squareshape.split.3x3")
+                                    .foregroundColor(.white)
+                                    .padding(.top, 5)
+                                    .font(.title2)
+                                Spacer()
+                                Image(systemName: "square.and.arrow.down")
                                     .foregroundColor(.white)
                                     .multilineTextAlignment(.center)
                                     .onTapGesture {
@@ -84,15 +99,16 @@ struct ProfileHeader: View {
 //                                }
                                 Spacer()
                             }
-                            Text("Saved Outfits")
+                            Spacer()
+                            Text("User Posts")
                                 .foregroundColor(.white)
                                 .font(.title2)
-                            postGrid()
+                            postGrid(posts: posts, currentUser: user)
                             Spacer()
-//                            Text("Saved Outfits")
+//                            Text("Saved Posts")
 //                                .foregroundColor(.white)
 //                                .font(.title2)
-                            savedGrid()
+//                            savedGrid()
                         }
                         Spacer()
                     }
@@ -124,58 +140,67 @@ struct ProfileHeader: View {
     }
 }
     
-
+//
 struct postGrid: View {
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+    var posts: [Post]
+    var currentUser: UserProfile
     var body: some View {
         LazyVGrid(columns: columns, spacing:0) {
-            ForEach(0 ..< 15, id: \.self) {
-                index in Image(systemName: "photo")
-                    .resizable()
-                    .scaledToFill()
-                    .border(Color.white)
-                    .clipped()
-
+            ForEach(posts) { Post in
+                if Post.postCreator == currentUser.username {
+                    Image(uiImage: Post.postImage)
+                        .resizable()
+                        .scaledToFit()
+                        .clipped()
+                }
             }
             .padding(.top, 5)
         }
     }
 }
-struct savedGrid: View {
-    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
-    var body: some View {
-        LazyVGrid(columns: columns, spacing:0) {
-            ForEach(0 ..< 15, id: \.self) {
-                index in Image(systemName: "photo")
-                    .resizable()
-                    .scaledToFill()
-                    .border(Color.white)
-                    .clipped()
 
-            }
-            .padding(.top, 5)
-        }
-    }
-}
+//struct savedGrid: View {
+//    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+//    var body: some View {
+//        LazyVGrid(columns: columns, spacing:0) {
+//            ForEach(0 ..< 15, id: \.self) {
+//                index in Image(systemName: "photo")
+//                    .resizable()
+//                    .scaledToFill()
+//                    .border(Color.white)
+//                    .clipped()
+//
+//            }
+//            .padding(.top, 5)
+//        }
+//    }
+//}
 struct profileView: View {
-    let gradient = Gradient(colors: [.teal, .green])
-    
+    let gradient = Gradient(colors: [.pink, .white])
+    var user: UserProfile
+    var posts: [Post]
     var body: some View {
         VStack {
-            ProfileHeader()
+            ProfileHeader(user: user, posts: posts)
         }
         .background(LinearGradient(gradient: gradient, startPoint: .top, endPoint: .bottom))
         .edgesIgnoringSafeArea(.all)
     }
-    
-    
 }
 
 
-// need function - go to UserProfile
+// need function - getUser
+// this will access database and find user to load profileview with
+// need to change profileview so it needs a UserProfile to load
 
-struct profileView_Previews: PreviewProvider {
-    static var previews: some View {
-        profileView()
-    }
-}
+
+
+
+//
+//
+//struct profileView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        profileView(user: UserProfile(username: "joe", bio: "bloe"))
+//    }
+//}

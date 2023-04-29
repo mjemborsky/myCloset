@@ -43,6 +43,7 @@
 		C36EF28429E2196900356A0F /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36EF28329E2196900356A0F /* SearchView.swift */; };
 		C37FBBB629A5436D00E23648 /* post.swift in Sources */ = {isa = PBXBuildFile; fileRef = C37FBBB529A5436D00E23648 /* post.swift */; };
 		C3926EB829E2433000711B04 /* FirebaseStorageUI in Frameworks */ = {isa = PBXBuildFile; productRef = C3926EB729E2433000711B04 /* FirebaseStorageUI */; };
+		C3AAC83029FC554B0038B398 /* ProfileViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3AAC82F29FC554B0038B398 /* ProfileViewManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +100,7 @@
 		C3671E3229B30060006BABAD /* PostCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCell.swift; sourceTree = "<group>"; };
 		C36EF28329E2196900356A0F /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		C37FBBB529A5436D00E23648 /* post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = post.swift; sourceTree = "<group>"; };
+		C3AAC82F29FC554B0038B398 /* ProfileViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +174,7 @@
 				627B337429A6E33800F546A2 /* UserLoginData.swift */,
 				9452645329A542A200D24D5C /* ClothingItem.swift */,
 				9476506729D10D6B0000E12D /* ClothingItemManager.swift */,
+				C3AAC82F29FC554B0038B398 /* ProfileViewManager.swift */,
 				3744E74829A6B83000D74B5A /* UserProfile.swift */,
 				3394603629A54102004884EB /* outfit.swift */,
 				3731167A29C27314008F94B0 /* OutfitItemCell.swift */,
@@ -376,6 +379,7 @@
 				C36EF28429E2196900356A0F /* SearchView.swift in Sources */,
 				627494F129E4E0D00057E4A4 /* forgotPassword.swift in Sources */,
 				942F31F329BFF4C200BDD3B0 /* ClosetView.swift in Sources */,
+				C3AAC83029FC554B0038B398 /* ProfileViewManager.swift in Sources */,
 				373BFF7F29E358590096F21F /* SelectedItemsView.swift in Sources */,
 				3394603729A54102004884EB /* outfit.swift in Sources */,
 				942F31F529BFF51B00BDD3B0 /* VerifyTag.swift in Sources */,

@@ -11,6 +11,8 @@ import FirebaseStorage
 
 struct PostCell: View {
     var post: Post
+    var users: [UserProfile]
+    var allPosts: [Post]
     @State private var liked: Bool = false
     @State private var saved: Bool = false
     // could include "placeholder" eventually using .redacted, for when it is loading
@@ -21,14 +23,16 @@ struct PostCell: View {
             // HStack for profile username
             HStack (spacing: 10) {
                 // this is the username of post creator
-                NavigationLink(destination: {
-                    profileView()
-                }, label: {
-                    Text(post.postCreator)
-                        .font(.headline)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.black)
-                })
+                // if conditional that tests for an index where the post creator will equal the user.
+                // If it matches, tapping the username will bring the user to profileView with the selected users information
+                if let index = users.firstIndex(where: {$0.username == post.postCreator}) {
+                    NavigationLink(destination: profileView(user: users[index], posts: allPosts), label: {
+                        Text(post.postCreator)
+                            .font(.headline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.black)
+                    })
+                }
                 Spacer()
             }
             .padding(.horizontal, 8)
@@ -101,9 +105,7 @@ struct PostCell: View {
             }
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
-                    NavigationLink(destination: {
-                        profileView()
-                    }, label: {
+                    NavigationLink(destination: profileView(user: users[0], posts: allPosts), label: {
                         Text(post.postCreator)
                             .font(.headline)
                             .fontWeight(.semibold)
