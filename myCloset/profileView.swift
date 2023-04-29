@@ -108,8 +108,7 @@ struct postGrid: View {
                 if Post.postCreator == currentUser.username {
                     Image(uiImage: Post.postImage)
                         .resizable()
-                        .scaledToFill()
-                        .border(Color.white)
+                        .scaledToFit()
                         .clipped()
                 }
             }
