@@ -14,6 +14,7 @@ struct ProfileHeader: View {
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     var user: UserProfile
     var posts: [Post]
+    @State private var postsOrSaved: Bool = true
     // Variable for if sidemenu is showing or not
     @State private var toggleMenu: Bool = false
     // Variables for which view will be switched to next (from sidemenu)
@@ -23,98 +24,61 @@ struct ProfileHeader: View {
     @State private var willMoveToProfile: Bool = false
     // Variable to hide feedview
     @State private var isHidden: Bool = false
-    @State private var username = "" // default username
-
     var body: some View {
         ZStack {
             ScrollView {
-                VStack {
-                    HStack {
+                Spacer()
+                VStack{
+                    Spacer()
+                    Spacer()
+                    Spacer()
+                        .padding(.bottom, 150)
+                    Text(user.username).font(.system(size: 20).bold()).foregroundColor(.white)
+                        .padding(.bottom, 25)
+                    Spacer()
+                    Text(user.bio ?? "").font(.caption)
+                        .foregroundColor(.white)
+                        .padding(.bottom, 25)
+                    HStack{
                         Spacer()
-                        VStack{
-                            Image(systemName: "photo.fill")
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 150, height: 150)
-                                .clipShape(Circle())
-                                .clipped()
-                                .foregroundColor(Color.white)
-                                .padding(.top, 55)
-                            Spacer()
-                            Text(user.username).font(.system(size: 20).bold()).foregroundColor(.white)
-                            Spacer()
-                            Text(user.bio ?? "").font(.caption)
+                        if postsOrSaved {
+                            Image(systemName: "squareshape.split.3x3")
                                 .foregroundColor(.white)
-                            HStack{
-                                Spacer()
+                                .padding(.top, 5)
+                                .font(.title2)
+                        } else {
+                            Button(action: {
+                                postsOrSaved.toggle()
+                            }, label: {
                                 Image(systemName: "squareshape.split.3x3")
                                     .foregroundColor(.white)
                                     .padding(.top, 5)
                                     .font(.title2)
-                                Spacer()
-                                Image(systemName: "square.and.arrow.down")
+                            })
+                        }
+                        Spacer()
+                        if postsOrSaved {
+                            Button(action: {
+                                postsOrSaved.toggle()
+                            }, label: {
+                                Image(systemName: "bookmark.fill")
                                     .foregroundColor(.white)
-                                    .multilineTextAlignment(.center)
-                                    .onTapGesture {
-                                    // do something when the user taps the username
-                                        TextField("enter username", text: $username)
-                                            .multilineTextAlignment(.center)
-                                    }
-                                    .onSubmit {
-                                        // add 's to the username
-                                        username += "'s"
-                                    }
-//                                HStack {
-//                                    VStack {
-//                                        Text("321") //Need to add the user profile following count
-//                                            .font(.subheadline)
-//                                            .fontWeight(.semibold)
-//                                            .foregroundColor(.white)
-//                                        Text("Following")
-//                                            .font(.caption)
-//                                            .foregroundColor(.white)
-//                                    }
-//                                    VStack {
-//                                        Text("500") //Need to add the user profile followers count
-//                                            .font(.subheadline)
-//                                            .fontWeight(.semibold)
-//                                            .foregroundColor(.white)
-//                                        Text("Followers")
-//                                            .font(.caption)
-//                                            .foregroundColor(.white)
-//                                    }
-//                                }
-//                                HStack{
-//                                    Spacer()
-//                                    Image(systemName: "squareshape.split.3x3")
-//                                        .foregroundColor(.white)
-//                                        .padding(.top, 5)
-//                                        .font(.title2)
-//                                    Spacer()
-//                                    Image(systemName: "square.and.arrow.down")
-//                                        .foregroundColor(.white)
-//                                        .padding(.top, 5)
-//                                        .font(.title2)
-//                                    Spacer()
-//                                }
-                                Spacer()
-                            }
-                            Spacer()
-                            Text("User Posts")
+                            })
+                        } else {
+                            Image(systemName: "bookmark.fill")
                                 .foregroundColor(.white)
-                                .font(.title2)
-                            postGrid(posts: posts, currentUser: user)
-                            Spacer()
-//                            Text("Saved Posts")
-//                                .foregroundColor(.white)
-//                                .font(.title2)
-//                            savedGrid()
+                                .multilineTextAlignment(.center)
                         }
                         Spacer()
                     }
+                    .multilineTextAlignment(.center)
                     Spacer()
+                    if postsOrSaved {
+                        postGrid(posts: posts, currentUser: user)
+                    } else {
+                        savedGrid(posts: posts, currentUser: user)
+                    }
                 }
-            
             }
             MenuView(isOpen: $toggleMenu, feedSelected: $willMoveToFeed, searchSelected: $willMoveToSearch, closetSelected: $willMoveToCloset, profileSelected: $willMoveToProfile, hideFeed: $isHidden)
                 .fullScreenCover(isPresented: $willMoveToFeed) {
@@ -160,22 +124,25 @@ struct postGrid: View {
     }
 }
 
-//struct savedGrid: View {
-//    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
-//    var body: some View {
-//        LazyVGrid(columns: columns, spacing:0) {
-//            ForEach(0 ..< 15, id: \.self) {
-//                index in Image(systemName: "photo")
-//                    .resizable()
-//                    .scaledToFill()
-//                    .border(Color.white)
-//                    .clipped()
-//
-//            }
-//            .padding(.top, 5)
-//        }
-//    }
-//}
+struct savedGrid: View {
+    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+    var posts: [Post]
+    var currentUser: UserProfile
+    var body: some View {
+        LazyVGrid(columns: columns, spacing:0) {
+            ForEach(posts) { Post in
+                if Post.postSaves.contains(currentUser.username) {
+                    Image(uiImage: Post.postImage)
+                        .resizable()
+                        .scaledToFit()
+                        .clipped()
+                }
+            }
+            .padding(.top, 5)
+        }
+    }
+}
+
 struct profileView: View {
     let gradient = Gradient(colors: [.pink, .white])
     var user: UserProfile
@@ -189,18 +156,8 @@ struct profileView: View {
     }
 }
 
-
-// need function - getUser
-// this will access database and find user to load profileview with
-// need to change profileview so it needs a UserProfile to load
-
-
-
-
-//
-//
-//struct profileView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        profileView(user: UserProfile(username: "joe", bio: "bloe"))
-//    }
-//}
+struct profileView_Previews: PreviewProvider {
+    static var previews: some View {
+        profileView(user: UserProfile(username: "joe", bio: "blah"), posts: [Post(id: UUID(), postTime: currentdate, postCreator: "bob", postDescription: "My favorite outfit", postLikes: ["mary", "bob"], postSaves: ["steve", "joe"], postTags: ["cardigan", "comfort"], postImage: UIImage(systemName: "person.circle.crop.fill")!, linkedOutfit: "blah")])
+    }
+}
