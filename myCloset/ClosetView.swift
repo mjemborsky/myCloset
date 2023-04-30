@@ -97,11 +97,11 @@ struct ClosetView: View {
                 .fullScreenCover(isPresented: $willMoveToFeed) {
                     FeedView()
                 }
-                .fullScreenCover(isPresented: $willMoveToSearch) {
-                    SearchView()
-                }
+//                .fullScreenCover(isPresented: $willMoveToSearch) {
+//                    SearchView()
+//                }
                 .fullScreenCover(isPresented: $willMoveToProfile) {
-                    profileView(user: UserProfile(username: "joe"), posts: [Post(id: UUID(), postTime: currentdate, postCreator: "bob", postDescription: "My favorite outfit", postLikes: ["mary", "bob"], postSaves: ["steve", "joe"], postTags: ["cardigan", "comfort"], postImage: UIImage(systemName: "person.circle.crop.fill")!, linkedOutfit: "blah")])
+                    profileView(user: UserProfile(username: "joe", email: "jimmy@gmail.com"), posts: [Post(id: UUID(), postTime: currentdate, postCreator: "bob", postDescription: "My favorite outfit", postLikes: ["mary", "bob"], postSaves: ["steve", "joe"], postTags: ["cardigan", "comfort"], postImage: UIImage(systemName: "person.circle.crop.fill")!, linkedOutfit: "blah")])
                 }
                 .onAppear {
                     returnToView()

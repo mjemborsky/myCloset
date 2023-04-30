@@ -2,18 +2,21 @@
 //  profileView.swift
 //  myCloset
 //
-//  Created by Taylor  on 4/3/23.
-//
+//  Created by Taylor on 4/3/23.
+//  Edited by Michael
+//  To preview: Move to it via another view
 import SwiftUI
 import FirebaseFirestore
 import FirebaseStorage
 import Firebase
 
-
 struct ProfileHeader: View {
+    // Columns for Grid view of user or saved posts.
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+    // Variables for userProfile used and list of all post to pull from
     var user: UserProfile
     var posts: [Post]
+    // Variable for user interaction between posts and saved
     @State private var postsOrSaved: Bool = true
     // Variable for if sidemenu is showing or not
     @State private var toggleMenu: Bool = false
@@ -84,9 +87,9 @@ struct ProfileHeader: View {
                 .fullScreenCover(isPresented: $willMoveToFeed) {
                     FeedView()
                 }
-                .fullScreenCover(isPresented: $willMoveToSearch) {
-                    SearchView()
-                }
+//                .fullScreenCover(isPresented: $willMoveToSearch) {
+//                    SearchView()
+//                }
                 .fullScreenCover(isPresented: $willMoveToCloset) {
                     ClosetView()
                         .environmentObject(ClothingItemManager())
@@ -104,7 +107,6 @@ struct ProfileHeader: View {
     }
 }
     
-//
 struct postGrid: View {
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     var posts: [Post]
@@ -153,11 +155,5 @@ struct profileView: View {
         }
         .background(LinearGradient(gradient: gradient, startPoint: .top, endPoint: .bottom))
         .edgesIgnoringSafeArea(.all)
-    }
-}
-
-struct profileView_Previews: PreviewProvider {
-    static var previews: some View {
-        profileView(user: UserProfile(username: "joe", bio: "blah"), posts: [Post(id: UUID(), postTime: currentdate, postCreator: "bob", postDescription: "My favorite outfit", postLikes: ["mary", "bob"], postSaves: ["steve", "joe"], postTags: ["cardigan", "comfort"], postImage: UIImage(systemName: "person.circle.crop.fill")!, linkedOutfit: "blah")])
     }
 }

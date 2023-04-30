@@ -10,23 +10,21 @@ import SwiftUI
 
 struct UserProfile {
     var username: String
+    var email: String
     var bio: String?
     var profileImage: UIImage?
     
-    init(username: String, bio: String?=nil, profileImage: UIImage?=nil) {
+    init(username: String, email: String, bio: String?=nil, profileImage: UIImage?=nil) {
         self.username = username
+        self.email = email
         self.bio = bio
         self.profileImage = profileImage
     }
 }
 
 let SAMPLE_PROFILE:[UserProfile] = [
-    UserProfile(username: "Bob01" , bio: "Love movies and cooking"),
-    UserProfile(username: "Alice_Woods", bio: "UNCW '23"),
-    UserProfile(username: "ClaireM", bio: "Wilmington, NC")
+    UserProfile(username: "Bob01" , email: "joe@gmail.com", bio: "Love movies and cooking"),
+    UserProfile(username: "Alice_Woods", email: "joe@gmail.com", bio: "UNCW '23"),
+    UserProfile(username: "ClaireM", email: "joe@gmail.com", bio: "Wilmington, NC")
 ]
 
-// simple getter function to pass in a profile and recieve back username as a string
-func getUsername(UserProfile: UserProfile) -> String {
-    return UserProfile.username
-}
