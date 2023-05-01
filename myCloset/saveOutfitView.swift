@@ -24,6 +24,7 @@ struct saveOutfitView: View {
     var userEmail: String
     var allUsers: [UserProfile]
     var allPosts: [Post]
+    @State var createdImageString = [String]()
     @State var title: String = ""
     @State var titles: [String] = []
     @State var tag: String = ""
@@ -73,8 +74,8 @@ struct saveOutfitView: View {
                     .cornerRadius(10)
                     .padding(.bottom, 10)
                 Button(action: {
-                    createPost(postCreator: "username", postDescription: "My favorite outfit", postTags: ["trendy", "purple", "sweater"], postImage: "", linkedOutfit: outfitid)
                     screenshotSelectedItemsView(captureRect: CGRect(x: 0, y: 550, width: 1500, height: 1000))
+                    createPost(postCreator: "username", postDescription: "My favorite outfit", postTags: ["trendy", "purple", "sweater"], postImage: createdImageString[0], linkedOutfit: outfitid)
                     self.showFeedView = true
                 }, label: {
                     Text("Post").padding()
@@ -116,7 +117,7 @@ struct saveOutfitView: View {
         guard let imageData = croppedScreenshot.pngData() else { return }
 
         let imageName = UUID().uuidString + ".png"
-        let imageRef = storage.child("Screenshotted selected outfits/\(imageName)")
+        let imageRef = storage.child("images/\(imageName)")
 
         let metadata = StorageMetadata()
         metadata.contentType = "image/png"
@@ -126,7 +127,11 @@ struct saveOutfitView: View {
                 print("Error uploading image: \(error!)")
                 return
             }
+            
             print("Image uploaded successfully!")
+            DispatchQueue.main.async {
+                createdImageString.append(imageName)
+            }
             
             // Save the image to camera roll
             UIImageWriteToSavedPhotosAlbum(croppedScreenshot, nil, nil, nil)
