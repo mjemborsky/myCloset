@@ -62,7 +62,7 @@ func getDateinString(Date: Date) -> String {
 }
 
 
-func createPost(postCreator: String, postDescription: String, postTags: [String], postImage: String, linkedOutfit: String) {
+func createPost(postCreator: String, postDescription: String, postTags: [String], postImage: String) {
     let db = Firestore.firestore()
     let id = UUID().uuidString
     let date = Date()
@@ -70,7 +70,7 @@ func createPost(postCreator: String, postDescription: String, postTags: [String]
     let postLikes = [String]()
     let postSaves = [String]()
     let ref = db.collection("Posts").document(id)
-    ref.setData(["ID": id, "postTime": timestamp, "postCreator": postCreator, "postDescription": postDescription, "postLikes": postLikes, "postSaves": postSaves, "postTags": postTags, "postImage": postImage, "linkedOutfit": linkedOutfit ]) {error in
+    ref.setData(["ID": id, "postTime": timestamp, "postCreator": postCreator, "postDescription": postDescription, "postLikes": postLikes, "postSaves": postSaves, "postTags": postTags, "postImage": postImage]) {error in
         if let error = error {
             print(error.localizedDescription)
         }

@@ -76,7 +76,7 @@ struct saveOutfitView: View {
                 Button(action: {
                     screenshotSelectedItemsView(captureRect: CGRect(x: 0, y: 550, width: 1500, height: 1000))
                     if let index = allUsers.firstIndex(where: {$0.email == userEmail}) {
-                        createPost(postCreator: allUsers[index].username, postDescription: title, postTags: tags, postImage: createdImageString[0], linkedOutfit: outfitid)
+                        createPost(postCreator: allUsers[index].username, postDescription: title, postTags: tags, postImage: createdImageString[0])
                     }
                     self.showFeedView = true
                 }, label: {
