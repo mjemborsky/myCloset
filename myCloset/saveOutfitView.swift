@@ -116,13 +116,13 @@ struct saveOutfitView: View {
 
         let croppedScreenshot = screenshot.crop(to: captureRect)
 
-        guard let imageData = croppedScreenshot.pngData() else { return }
+        guard let imageData = croppedScreenshot.jpegData(compressionQuality: 0.9) else { return }
 
-        let imageName = UUID().uuidString + ".png"
+        let imageName = UUID().uuidString + ".jpg"
         let imageRef = storage.child("images/\(imageName)")
         createdImageString.append("images/\(imageName)")
         let metadata = StorageMetadata()
-        metadata.contentType = "image/png"
+        metadata.contentType = "image/jpg"
 
         _ = imageRef.putData(imageData, metadata: metadata) { metadata, error in
             guard metadata != nil else {
