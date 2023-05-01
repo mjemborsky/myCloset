@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseFirestore
 import FirebaseStorage
+import FirebaseAuth
 
 struct FeedView: View {
     ///SideMenu Variables
@@ -23,6 +24,7 @@ struct FeedView: View {
     // List to store posts with getAllPosts()
     @State private var postsInProgress = [Post]()
     @State private var usersInProgress = [UserProfile]()
+    var userEmail: String
     // View
     var body: some View {
         ZStack {
@@ -33,8 +35,10 @@ struct FeedView: View {
                     // Displaying Posts - Iterates through list of posts pulled from
                     // database and displays each in PostCell format
                     ForEach(postsInProgress) { Post in
-                        PostCell(post: Post, users: usersInProgress, allPosts: postsInProgress)
+                        PostCell(post: Post, userEmail: userEmail, users: usersInProgress, allPosts: postsInProgress)
                     }
+                    Divider()
+                        .foregroundColor(.gray)
                     Spacer()
                 }
                 // Calling to retrieve posts
@@ -51,15 +55,19 @@ struct FeedView: View {
             .navigationBarTitleDisplayMode(.inline)
             // SideMenu View and Conditionals to switch to other views
             MenuView(isOpen: $toggleMenu, feedSelected: $willMoveToFeed, searchSelected: $willMoveToSearch, closetSelected: $willMoveToCloset, profileSelected: $willMoveToProfile, hideFeed: $isHidden)
-                .fullScreenCover(isPresented: $willMoveToSearch) {
-                    SearchView()
-                }
+//                .fullScreenCover(isPresented: $willMoveToSearch) {
+//                    SearchView()
+//                }
                 .fullScreenCover(isPresented: $willMoveToCloset) {
-                    ClosetView()
+                    ClosetView(userEmail: userEmail, users: usersInProgress, posts: postsInProgress)
                         .environmentObject(ClothingItemManager())
                 }
                 .fullScreenCover(isPresented: $willMoveToProfile) {
-                    profileView(user: usersInProgress[0], posts: postsInProgress)
+//                    profileView(user: usersInProgress[0], posts: postsInProgress)
+                    if let index = usersInProgress.firstIndex(where: {$0.email == userEmail}) {
+                        profileView(user: usersInProgress[index], allUsers: usersInProgress, posts: postsInProgress, userEmail: userEmail)
+                    }
+                    // This else loop is for if we are running it in previews --- take out when done
                 }
                 .onAppear {
                     returnToView()
@@ -124,7 +132,8 @@ struct FeedView: View {
                     let data = document.data()
                     let username = data["username"] as! String
                     let bio = data["bio"] as? String ?? ""
-                    let user = UserProfile(username: username, bio: bio)
+                    let email = data["email"] as! String
+                    let user = UserProfile(username: username, email: email, bio: bio)
                     DispatchQueue.main.async {
                         usersInProgress.append(user)
                     }
@@ -145,9 +154,8 @@ struct FeedView: View {
     }
 }
 
-
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedView()
+        FeedView(userEmail: "michaelemborsky@gmail.com")
     }
 }

@@ -21,6 +21,9 @@ extension UIImage {
 }
 
 struct saveOutfitView: View {
+    var userEmail: String
+    var allUsers: [UserProfile]
+    var allPosts: [Post]
     @State var title: String = ""
     @State var titles: [String] = []
     @State var tag: String = ""
@@ -56,7 +59,7 @@ struct saveOutfitView: View {
                         }
                     }
                     .fullScreenCover(isPresented: $backtocloset) {
-                        ClosetView()
+                        ClosetView(userEmail: userEmail, users: allUsers, posts: allPosts)
                     }
                 Spacer()
                 TextField("Enter Outfit Title", text: $title)
@@ -79,7 +82,7 @@ struct saveOutfitView: View {
             }
         }
         .fullScreenCover(isPresented: $showFeedView) {
-            FeedView()
+            FeedView(userEmail: userEmail)
         }
     }
     
@@ -133,9 +136,3 @@ struct saveOutfitView: View {
     
 }
 
-
-struct saveOutfitView_Previews: PreviewProvider {
-    static var previews: some View {
-        saveOutfitView()
-    }
-}

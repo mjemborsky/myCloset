@@ -145,7 +145,7 @@ struct MenuView: View {
                 .offset(x: isOpen ? -4 : 8)
                 .foregroundColor(Color("wb"))
         }
-        .offset(x: sideBarWidth / 2, y: 50)
+        .offset(x: sideBarWidth / 2, y: 100)
         .animation(.default, value: isOpen)
     }
 }

@@ -7,9 +7,12 @@
 
 import SwiftUI
 import Firebase
+import FirebaseFirestore
 
 struct SignUpPage: View {
     @State private var email: String = ""
+    @State private var username: String = ""
+    @State private var usernameTaken: Bool = false
     @State private var password: String = ""
     @State private var confirmPassword: String = ""
     @State private var errorMessage: String? = nil
@@ -20,10 +23,17 @@ struct SignUpPage: View {
             Spacer()
             
             Text("Create Account")
-                .padding(80)
+                .padding(40)
                 .font(.system(size: 30))
             
             TextField("Email", text: $email )
+                .padding()
+                .background(Color.gray.opacity(0.05))
+                .cornerRadius(10)
+                .padding(.bottom, 10)
+                .textInputAutocapitalization(.never)
+            
+            TextField("Username", text: $username )
                 .padding()
                 .background(Color.gray.opacity(0.05))
                 .cornerRadius(10)
@@ -57,12 +67,12 @@ struct SignUpPage: View {
             }
             
             Button(action: {
-                if password != confirmPassword {
+                if password != confirmPassword  {
                     errorMessage = "Passwords do not match!"
                 }
-                
                 else {
                     signup()
+                    addUser(username: username, email: email)
                     successfulSignIn = "Account created succesfully!"
                 }
                 
@@ -88,6 +98,19 @@ struct SignUpPage: View {
                 print(error!.localizedDescription)
             }
             
+        }
+    }
+    func addUser(username: String, email: String) {
+        let db = Firestore.firestore()
+        var ref: DocumentReference? = nil
+        ref = db.collection("Users").addDocument(data: [
+            "username": username,
+            "email": email,
+            "bio": ""
+        ]) { err in
+            if let err = err {
+                print("Error adding document: \(err)")
+            }
         }
     }
 }

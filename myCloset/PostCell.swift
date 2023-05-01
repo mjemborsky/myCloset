@@ -11,6 +11,7 @@ import FirebaseStorage
 
 struct PostCell: View {
     var post: Post
+    var userEmail: String
     var users: [UserProfile]
     var allPosts: [Post]
     @State private var liked: Bool = false
@@ -26,7 +27,7 @@ struct PostCell: View {
                 // if conditional that tests for an index where the post creator will equal the user.
                 // If it matches, tapping the username will bring the user to profileView with the selected users information
                 if let index = users.firstIndex(where: {$0.username == post.postCreator}) {
-                    NavigationLink(destination: profileView(user: users[index], posts: allPosts), label: {
+                    NavigationLink(destination: profileView(user: users[index], allUsers: users, posts: allPosts, userEmail: userEmail), label: {
                         Text(post.postCreator)
                             .font(.headline)
                             .fontWeight(.semibold)
@@ -105,12 +106,14 @@ struct PostCell: View {
             }
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
-                    NavigationLink(destination: profileView(user: users[0], posts: allPosts), label: {
-                        Text(post.postCreator)
-                            .font(.headline)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.black)
-                    })
+                    if let index = users.firstIndex(where: {$0.username == post.postCreator}) {
+                        NavigationLink(destination: profileView(user: users[index], allUsers: users, posts: allPosts, userEmail: userEmail), label: {
+                            Text(post.postCreator)
+                                .font(.headline)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.black)
+                        })
+                    }
                     Text(" " + post.postDescription)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -121,6 +124,7 @@ struct PostCell: View {
             .padding(.horizontal)
             Spacer()
             Spacer()
+            Divider()
         }
     }
     /**
@@ -201,52 +205,4 @@ struct PostCell: View {
             "postSaves": FieldValue.arrayRemove(["username2"])
         ])
     }
-    //  FUNCTIONS NEEDED
-    //  need interactions when clicking on userProfile
-    
-    
-    
-    
-    
-    // OPTIONAL USER PROFILE IMAGE
-    
-//    func getUserInfo(username: String) -> UserProfile {
-//        let db = Firestore.firestore()
-//        let storageRef = Storage.storage().reference()
-//        var userProfile: UserProfile?
-//
-//        db.collection("Users").getDocuments { snapshot, error in
-//            guard error == nil else {
-//                print(error!.localizedDescription)
-//                return
-//            }
-//            if let snapshot = snapshot {
-//                for document in snapshot.documents {
-//                    let data = document.data()
-//                    let usernameTwo = data["username"] as! String
-//                    if (username == usernameTwo) {
-//                        let bio = data["bio"] as? String ?? ""
-//                        let profileImageLink = data["profileImage"] as? String ?? ""
-//                        if profileImageLink == "" {
-//                            let user = UserProfile(username: usernameTwo, bio: bio)
-//                            userProfile = user
-//                        } else {
-//                            let fileRef = storageRef.child(profileImageLink)
-//                            fileRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
-//                                if error == nil && data != nil {
-//                                    let image = UIImage(data: data!)
-//                                    let user = UserProfile(username: usernameTwo, bio: bio, profileImage: image)
-//                                    userProfile = user
-//                                }
-//                            }
-//                        }
-//                    }
-//                    else {
-//                        break
-//                    }
-//                }
-//            }
-//        }
-//        return userProfile!
-//    }
 }
