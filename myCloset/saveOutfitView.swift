@@ -24,7 +24,7 @@ struct saveOutfitView: View {
     var userEmail: String
     var allUsers: [UserProfile]
     var allPosts: [Post]
-    @State var createdImageString = [String]()
+    @State private var createdImageString = [String]()
     @State var title: String = ""
     @State var titles: [String] = []
     @State var tag: String = ""
@@ -129,12 +129,12 @@ struct saveOutfitView: View {
             }
             
             print("Image uploaded successfully!")
-            DispatchQueue.main.async {
-                createdImageString.append(imageName)
-            }
             
             // Save the image to camera roll
             UIImageWriteToSavedPhotosAlbum(croppedScreenshot, nil, nil, nil)
+            DispatchQueue.main.async {
+                createdImageString.append(imageName)
+            }
         }
     }
     
