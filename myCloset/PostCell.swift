@@ -106,12 +106,14 @@ struct PostCell: View {
             }
             VStack(alignment: .leading, spacing: 4) {
                 HStack {
-                    NavigationLink(destination: profileView(user: users[0], allUsers: users, posts: allPosts, userEmail: userEmail), label: {
-                        Text(post.postCreator)
-                            .font(.headline)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.black)
-                    })
+                    if let index = users.firstIndex(where: {$0.username == post.postCreator}) {
+                        NavigationLink(destination: profileView(user: users[index], allUsers: users, posts: allPosts, userEmail: userEmail), label: {
+                            Text(post.postCreator)
+                                .font(.headline)
+                                .fontWeight(.semibold)
+                                .foregroundColor(.black)
+                        })
+                    }
                     Text(" " + post.postDescription)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)

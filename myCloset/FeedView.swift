@@ -37,6 +37,8 @@ struct FeedView: View {
                     ForEach(postsInProgress) { Post in
                         PostCell(post: Post, userEmail: userEmail, users: usersInProgress, allPosts: postsInProgress)
                     }
+                    Divider()
+                        .foregroundColor(.gray)
                     Spacer()
                 }
                 // Calling to retrieve posts

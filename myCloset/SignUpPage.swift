@@ -105,7 +105,8 @@ struct SignUpPage: View {
         var ref: DocumentReference? = nil
         ref = db.collection("Users").addDocument(data: [
             "username": username,
-            "email": email
+            "email": email,
+            "bio": ""
         ]) { err in
             if let err = err {
                 print("Error adding document: \(err)")

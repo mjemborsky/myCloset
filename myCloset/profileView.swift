@@ -29,6 +29,8 @@ struct ProfileHeader: View {
     @State private var willMoveToProfile: Bool = false
     // Variable to hide feedview
     @State private var isHidden: Bool = false
+    @State private var editBio: Bool = false
+    @State private var newBio: String = ""
     var body: some View {
         ZStack {
             ScrollView {
@@ -41,9 +43,57 @@ struct ProfileHeader: View {
                     Text(user.username).font(.system(size: 20).bold()).foregroundColor(.white)
                         .padding(.bottom, 25)
                     Spacer()
-                    Text(user.bio ?? "").font(.caption)
-                        .foregroundColor(.white)
-                        .padding(.bottom, 25)
+                    if userEmail == user.email {
+                        if user.bio == "" {
+                            HStack {
+                                if editBio {
+                                    TextField("Begin typing", text: $newBio)
+                                        .foregroundColor(.white)
+                                    Button(action: {
+                                        // add bio to database
+                                        editBio.toggle()
+                                    }, label: {
+                                        Image(systemName: "checkmark.circle.fill")
+                                            .foregroundColor(.white)
+                                    })
+                                } else {
+                                    Text("Click to add bio").font(.caption)
+                                        .foregroundColor(.white)
+                                        .padding(.bottom, 25)
+                                    Button(action: {
+                                        editBio.toggle()
+                                    }, label: {
+                                        Image(systemName: "pencil")
+                                            .foregroundColor(.white)
+                                    })
+                                }
+                            }
+                            .multilineTextAlignment(.center)
+                        } else {
+                            HStack {
+                                if editBio {
+                                    TextField("Begin typing", text: $newBio)
+                                        .foregroundColor(.white)
+                                    Button(action: {
+                                        // add bio to database
+                                        editBio.toggle()
+                                    }, label: {
+                                        Image(systemName: "checkmark.circle.fill")
+                                    })
+                                } else {
+                                    Text(user.bio!).font(.caption)
+                                        .foregroundColor(.white)
+                                        .padding(.bottom, 25)
+                                    Button(action: {
+                                        editBio.toggle()
+                                    }, label: {
+                                        Image(systemName: "pencil")
+                                    })
+                                }
+                            }
+                            .multilineTextAlignment(.center)
+                        }
+                    }
                     HStack{
                         Spacer()
                         if postsOrSaved {
