@@ -9,6 +9,7 @@ import SwiftUI
 import Firebase
 import FirebaseFirestore
 import FirebaseStorage
+import Photos
 
 extension UIImage {
     func crop(to rect: CGRect) -> UIImage {
@@ -41,7 +42,7 @@ struct saveOutfitView: View {
                         ToolbarItem(placement: .navigationBarTrailing) {
                             Button(action: {
                                 saveOutfit()
-                                screenshotSelectedItemsView(captureRect: CGRect(x: 0, y: 550, width: 1500, height: 100))
+//                                screenshotSelectedItemsView(captureRect: CGRect(x: 0, y: 550, width: 1500, height: 1000))
                             }) {
                                 Text("Save")
                             }
@@ -123,11 +124,15 @@ struct saveOutfitView: View {
                 return
             }
             print("Image uploaded successfully!")
+            
+            // Save the image to camera roll
+            UIImageWriteToSavedPhotosAlbum(croppedScreenshot, nil, nil, nil)
         }
     }
     
     
 }
+
 
 struct saveOutfitView_Previews: PreviewProvider {
     static var previews: some View {
