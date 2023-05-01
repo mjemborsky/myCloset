@@ -15,7 +15,9 @@ struct ProfileHeader: View {
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     // Variables for userProfile used and list of all post to pull from
     var user: UserProfile
+    var allUsers: [UserProfile]
     var posts: [Post]
+    var userEmail: String
     // Variable for user interaction between posts and saved
     @State private var postsOrSaved: Bool = true
     // Variable for if sidemenu is showing or not
@@ -85,13 +87,13 @@ struct ProfileHeader: View {
             }
             MenuView(isOpen: $toggleMenu, feedSelected: $willMoveToFeed, searchSelected: $willMoveToSearch, closetSelected: $willMoveToCloset, profileSelected: $willMoveToProfile, hideFeed: $isHidden)
                 .fullScreenCover(isPresented: $willMoveToFeed) {
-                    FeedView()
+                    FeedView(userEmail: userEmail)
                 }
 //                .fullScreenCover(isPresented: $willMoveToSearch) {
 //                    SearchView()
 //                }
                 .fullScreenCover(isPresented: $willMoveToCloset) {
-                    ClosetView()
+                    ClosetView(userEmail: userEmail, users: allUsers, posts: posts)
                         .environmentObject(ClothingItemManager())
                 }
                 .onAppear {
@@ -148,10 +150,12 @@ struct savedGrid: View {
 struct profileView: View {
     let gradient = Gradient(colors: [.pink, .white])
     var user: UserProfile
+    var allUsers: [UserProfile]
     var posts: [Post]
+    var userEmail: String
     var body: some View {
         VStack {
-            ProfileHeader(user: user, posts: posts)
+            ProfileHeader(user: user, allUsers: allUsers, posts: posts, userEmail: userEmail)
         }
         .background(LinearGradient(gradient: gradient, startPoint: .top, endPoint: .bottom))
         .edgesIgnoringSafeArea(.all)

@@ -24,7 +24,7 @@ struct FeedView: View {
     // List to store posts with getAllPosts()
     @State private var postsInProgress = [Post]()
     @State private var usersInProgress = [UserProfile]()
-    @State private var userEmail = [String]()
+    var userEmail: String
     // View
     var body: some View {
         ZStack {
@@ -35,13 +35,12 @@ struct FeedView: View {
                     // Displaying Posts - Iterates through list of posts pulled from
                     // database and displays each in PostCell format
                     ForEach(postsInProgress) { Post in
-                        PostCell(post: Post, users: usersInProgress, allPosts: postsInProgress)
+                        PostCell(post: Post, userEmail: userEmail, users: usersInProgress, allPosts: postsInProgress)
                     }
                     Spacer()
                 }
                 // Calling to retrieve posts
                 .onAppear {
-                    getCurrentUser()
                     getAllPost()
                     getUsers()
                 }
@@ -58,13 +57,13 @@ struct FeedView: View {
 //                    SearchView()
 //                }
                 .fullScreenCover(isPresented: $willMoveToCloset) {
-                    ClosetView()
+                    ClosetView(userEmail: userEmail, users: usersInProgress, posts: postsInProgress)
                         .environmentObject(ClothingItemManager())
                 }
                 .fullScreenCover(isPresented: $willMoveToProfile) {
 //                    profileView(user: usersInProgress[0], posts: postsInProgress)
-                    if let index = usersInProgress.firstIndex(where: {$0.email == userEmail[0]}) {
-                        profileView(user: usersInProgress[index], posts: postsInProgress)
+                    if let index = usersInProgress.firstIndex(where: {$0.email == userEmail}) {
+                        profileView(user: usersInProgress[index], allUsers: usersInProgress, posts: postsInProgress, userEmail: userEmail)
                     }
                     // This else loop is for if we are running it in previews --- take out when done
                 }
@@ -146,15 +145,6 @@ struct FeedView: View {
      Parameters: None
      Returns: None
      */
-    func getCurrentUser() {
-        let user = Auth.auth().currentUser
-        if let user = user {
-            let email = user.email!
-            DispatchQueue.main.async {
-                userEmail.append(email)
-            }
-        }
-    }
     func returnToView() {
         if willMoveToFeed {
             toggleMenu.toggle()
@@ -164,6 +154,6 @@ struct FeedView: View {
 
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
-        FeedView()
+        FeedView(userEmail: "michaelemborsky@gmail.com")
     }
 }

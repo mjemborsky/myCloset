@@ -9,7 +9,9 @@ import FirebaseFirestore
 
 struct ClosetView: View {
 
-    
+    var userEmail: String
+    var users: [UserProfile]
+    var posts: [Post]
     
     @State private var showPopup = false
     @State private var isEditing = false
@@ -95,13 +97,15 @@ struct ClosetView: View {
             }
             MenuView(isOpen: $toggleMenu, feedSelected: $willMoveToFeed, searchSelected: $willMoveToSearch, closetSelected: $willMoveToCloset, profileSelected: $willMoveToProfile, hideFeed: $isHidden)
                 .fullScreenCover(isPresented: $willMoveToFeed) {
-                    FeedView()
+                    FeedView(userEmail: userEmail)
                 }
 //                .fullScreenCover(isPresented: $willMoveToSearch) {
 //                    SearchView()
 //                }
                 .fullScreenCover(isPresented: $willMoveToProfile) {
-                    profileView(user: UserProfile(username: "joe", email: "jimmy@gmail.com"), posts: [Post(id: UUID(), postTime: currentdate, postCreator: "bob", postDescription: "My favorite outfit", postLikes: ["mary", "bob"], postSaves: ["steve", "joe"], postTags: ["cardigan", "comfort"], postImage: UIImage(systemName: "person.circle.crop.fill")!, linkedOutfit: "blah")])
+                    if let index = users.firstIndex(where: {$0.email == userEmail}) {
+                        profileView(user: users[index], allUsers: users, posts: posts, userEmail: userEmail)
+                    }
                 }
                 .onAppear {
                     returnToView()
@@ -121,7 +125,7 @@ struct ClosetView: View {
             })
         }
         .fullScreenCover(isPresented: $willMoveToSelectedItemsView){
-            saveOutfitView()
+            saveOutfitView(userEmail: userEmail, allUsers: users, allPosts: posts)
             
         }
     }
@@ -175,20 +179,18 @@ struct CheckboxRow: View {
 struct ContentofClosetView: View {
     @StateObject var clothingItemManager = ClothingItemManager()
     @StateObject var selectedItemsManager = SelectedItemsManager()
-
+    var listOfUsers: [UserProfile]
+    var listOfPosts: [Post]
+    var userEmail: String
     var body: some View {
-        ClosetView()
+        ClosetView(userEmail: userEmail, users: listOfUsers, posts: listOfPosts)
             .environmentObject(clothingItemManager)
             .environmentObject(selectedItemsManager)
     }
 }
-
-struct ContentofCloset_Previews: PreviewProvider {
-
-    static var previews: some View {
-
-        ContentofClosetView()
-
-    }
-
-}
+//
+//struct ContentofCloset_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ContentofClosetView(userEmail: "michaelemborsky@gmail.com")
+//    }
+//}

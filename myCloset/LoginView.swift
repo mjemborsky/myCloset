@@ -87,7 +87,7 @@ struct LoginView: View {
         }
         
         .fullScreenCover(isPresented: $showFeedView) {
-            FeedView()
+            FeedView(userEmail: email)
         }
         
         .padding()
