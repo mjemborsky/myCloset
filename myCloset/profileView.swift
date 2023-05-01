@@ -43,57 +43,6 @@ struct ProfileHeader: View {
                     Text(user.username).font(.system(size: 20).bold()).foregroundColor(.white)
                         .padding(.bottom, 25)
                     Spacer()
-                    if userEmail == user.email {
-                        if user.bio == "" {
-                            HStack {
-                                if editBio {
-                                    TextField("Begin typing", text: $newBio)
-                                        .foregroundColor(.white)
-                                    Button(action: {
-                                        // add bio to database
-                                        editBio.toggle()
-                                    }, label: {
-                                        Image(systemName: "checkmark.circle.fill")
-                                            .foregroundColor(.white)
-                                    })
-                                } else {
-                                    Text("Click to add bio").font(.caption)
-                                        .foregroundColor(.white)
-                                        .padding(.bottom, 25)
-                                    Button(action: {
-                                        editBio.toggle()
-                                    }, label: {
-                                        Image(systemName: "pencil")
-                                            .foregroundColor(.white)
-                                    })
-                                }
-                            }
-                            .multilineTextAlignment(.center)
-                        } else {
-                            HStack {
-                                if editBio {
-                                    TextField("Begin typing", text: $newBio)
-                                        .foregroundColor(.white)
-                                    Button(action: {
-                                        // add bio to database
-                                        editBio.toggle()
-                                    }, label: {
-                                        Image(systemName: "checkmark.circle.fill")
-                                    })
-                                } else {
-                                    Text(user.bio!).font(.caption)
-                                        .foregroundColor(.white)
-                                        .padding(.bottom, 25)
-                                    Button(action: {
-                                        editBio.toggle()
-                                    }, label: {
-                                        Image(systemName: "pencil")
-                                    })
-                                }
-                            }
-                            .multilineTextAlignment(.center)
-                        }
-                    }
                     HStack{
                         Spacer()
                         if postsOrSaved {
@@ -198,7 +147,7 @@ struct savedGrid: View {
 }
 
 struct profileView: View {
-    let gradient = Gradient(colors: [.pink, .white])
+    let gradient = Gradient(colors: [Color(red: 0.09, green: 0.68, blue: 0.78), Color(red: 0.03, green: 0.85, blue: 0.73)])
     var user: UserProfile
     var allUsers: [UserProfile]
     var posts: [Post]

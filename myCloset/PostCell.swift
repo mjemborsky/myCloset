@@ -124,6 +124,7 @@ struct PostCell: View {
             .padding(.horizontal)
             Spacer()
             Spacer()
+            Divider()
         }
     }
     /**
