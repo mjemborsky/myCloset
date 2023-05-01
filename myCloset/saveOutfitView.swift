@@ -75,7 +75,9 @@ struct saveOutfitView: View {
                     .padding(.bottom, 10)
                 Button(action: {
                     screenshotSelectedItemsView(captureRect: CGRect(x: 0, y: 550, width: 1500, height: 1000))
-                    createPost(postCreator: "username", postDescription: "My favorite outfit", postTags: ["trendy", "purple", "sweater"], postImage: createdImageString[0], linkedOutfit: outfitid)
+                    if let index = allUsers.firstIndex(where: {$0.email == userEmail}) {
+                        createPost(postCreator: allUsers[index].username, postDescription: title, postTags: tags, postImage: createdImageString[0], linkedOutfit: outfitid)
+                    }
                     self.showFeedView = true
                 }, label: {
                     Text("Post").padding()
@@ -118,7 +120,7 @@ struct saveOutfitView: View {
 
         let imageName = UUID().uuidString + ".png"
         let imageRef = storage.child("images/\(imageName)")
-
+        createdImageString.append("images/\(imageName)")
         let metadata = StorageMetadata()
         metadata.contentType = "image/png"
 
@@ -132,9 +134,6 @@ struct saveOutfitView: View {
             
             // Save the image to camera roll
             UIImageWriteToSavedPhotosAlbum(croppedScreenshot, nil, nil, nil)
-            DispatchQueue.main.async {
-                createdImageString.append(imageName)
-            }
         }
     }
     
