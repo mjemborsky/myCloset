@@ -34,3 +34,7 @@ TESTING:
 
 #11 -  US: As a user, I want to be able to categorize and tag my uploaded items, so that they are organized in my closet. 
 - Tested by: Clicking the plus sign on the closet page. A pop-up screen comes up with an “select a photo” button and a text box. When I click “select a photo’, I am able to chose an item from my camera roll to import into my closet. I can then add a tag to the photo, that will be stored in firebase, by typing one in the text field. When click “upload photo” the photo appears in my closet. 
+
+#60 - US: As a user, I want to be able to export my finished collage so that an image saved to my photos.
+- Tested by: Selecting 4 items and creating a collage. Click the “Post” button. A message pops up informing the user that the image is saved to their cameral roll and posted to their feed. The image then appears in the cameral roll. 
+- Tested by: Selecting 4 items, creating a collage. Click “post”. The collage image is not saved to the camera roll because the user has not allowed the app to access their camera roll in their privacy settings. 
