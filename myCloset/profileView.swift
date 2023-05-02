@@ -2,14 +2,24 @@
 //  profileView.swift
 //  myCloset
 //
-//  Created by Taylor  on 4/3/23.
-//
+//  Created by Taylor on 4/3/23.
+//  Edited by Michael
+//  To preview: Move to it via another view
 import SwiftUI
-
+import FirebaseFirestore
+import FirebaseStorage
+import Firebase
 
 struct ProfileHeader: View {
-    let post: Post
+    // Columns for Grid view of user or saved posts.
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+    // Variables for userProfile used and list of all post to pull from
+    var user: UserProfile
+    var allUsers: [UserProfile]
+    var posts: [Post]
+    var userEmail: String
+    // Variable for user interaction between posts and saved
+    @State private var postsOrSaved: Bool = true
     // Variable for if sidemenu is showing or not
     @State private var toggleMenu: Bool = false
     // Variables for which view will be switched to next (from sidemenu)
@@ -19,81 +29,70 @@ struct ProfileHeader: View {
     @State private var willMoveToProfile: Bool = false
     // Variable to hide feedview
     @State private var isHidden: Bool = false
-    
+    @State private var editBio: Bool = false
+    @State private var newBio: String = ""
     var body: some View {
         ZStack {
             ScrollView {
-                VStack {
-                    HStack {
+                Spacer()
+                VStack{
+                    Spacer()
+                    Spacer()
+                    Spacer()
+                        .padding(.bottom, 150)
+                    Text(user.username).font(.system(size: 20).bold()).foregroundColor(.white)
+                        .padding(.bottom, 25)
+                    Spacer()
+                    HStack{
                         Spacer()
-                        VStack{
-                            Image(systemName: "photo.fill")
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 200, height: 200)
-                                .clipShape(Circle())
-                                .clipped()
-                                .foregroundColor(Color.white)
-                                .padding(.top, 55)
-                            VStack {
-                                Text("username").font(.system(size: 20).bold()).foregroundColor(.white)
-                                HStack {
-                                    VStack {
-                                        Text("321") //Need to add the user profile following count
-                                            .font(.subheadline)
-                                            .fontWeight(.semibold)
-                                            .foregroundColor(.white)
-                                        Text("Following")
-                                            .font(.caption)
-                                            .foregroundColor(.white)
-                                    }
-                                    VStack {
-                                        Text("500") //Need to add the user profile followers count
-                                            .font(.subheadline)
-                                            .fontWeight(.semibold)
-                                            .foregroundColor(.white)
-                                        Text("Followers")
-                                            .font(.caption)
-                                            .foregroundColor(.white)
-                                    }
-                                }
-                                HStack{
-                                    Spacer()
-                                    Image(systemName: "squareshape.split.3x3")
-                                        .foregroundColor(.white)
-                                        .padding(.top, 5)
-                                        .font(.title2)
-                                    Spacer()
-                                    Image(systemName: "square.and.arrow.down")
-                                        .foregroundColor(.white)
-                                        .padding(.top, 5)
-                                        .font(.title2)
-                                    Spacer()
-                                }
-                                Spacer()
-                            }
-                            postGrid()
-                            Spacer()
-                            Text("Saved Outfits")
+                        if postsOrSaved {
+                            Image(systemName: "squareshape.split.3x3")
                                 .foregroundColor(.white)
+                                .padding(.top, 5)
                                 .font(.title2)
-                            savedGrid()
+                        } else {
+                            Button(action: {
+                                postsOrSaved.toggle()
+                            }, label: {
+                                Image(systemName: "squareshape.split.3x3")
+                                    .foregroundColor(.white)
+                                    .padding(.top, 5)
+                                    .font(.title2)
+                            })
+                        }
+                        Spacer()
+                        if postsOrSaved {
+                            Button(action: {
+                                postsOrSaved.toggle()
+                            }, label: {
+                                Image(systemName: "bookmark.fill")
+                                    .foregroundColor(.white)
+                            })
+                        } else {
+                            Image(systemName: "bookmark.fill")
+                                .foregroundColor(.white)
+                                .multilineTextAlignment(.center)
                         }
                         Spacer()
                     }
+                    .multilineTextAlignment(.center)
                     Spacer()
+                    if postsOrSaved {
+                        postGrid(posts: posts, currentUser: user)
+                    } else {
+                        savedGrid(posts: posts, currentUser: user)
+                    }
                 }
-            
             }
             MenuView(isOpen: $toggleMenu, feedSelected: $willMoveToFeed, searchSelected: $willMoveToSearch, closetSelected: $willMoveToCloset, profileSelected: $willMoveToProfile, hideFeed: $isHidden)
                 .fullScreenCover(isPresented: $willMoveToFeed) {
-                    FeedView()
+                    FeedView(userEmail: userEmail)
                 }
-                .fullScreenCover(isPresented: $willMoveToSearch) {
-                    SearchView()
-                }
+//                .fullScreenCover(isPresented: $willMoveToSearch) {
+//                    SearchView()
+//                }
                 .fullScreenCover(isPresented: $willMoveToCloset) {
-                    ClosetView()
+                    ClosetView(userEmail: userEmail, users: allUsers, posts: posts)
                         .environmentObject(ClothingItemManager())
                 }
                 .onAppear {
@@ -109,54 +108,55 @@ struct ProfileHeader: View {
     }
 }
     
-    
 struct postGrid: View {
     let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+    var posts: [Post]
+    var currentUser: UserProfile
     var body: some View {
         LazyVGrid(columns: columns, spacing:0) {
-            ForEach(0 ..< 15, id: \.self) {
-                index in Image(systemName: "photo")
-                    .resizable()
-                    .scaledToFill()
-                    .border(Color.white)
-                    .clipped()
-                
+            ForEach(posts) { Post in
+                if Post.postCreator == currentUser.username {
+                    Image(uiImage: Post.postImage)
+                        .resizable()
+                        .scaledToFit()
+                        .clipped()
+                }
             }
             .padding(.top, 5)
         }
     }
-}
-struct savedGrid: View {
-    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
-    var body: some View {
-        LazyVGrid(columns: columns, spacing:0) {
-            ForEach(0 ..< 15, id: \.self) {
-                index in Image(systemName: "photo")
-                    .resizable()
-                    .scaledToFill()
-                    .border(Color.white)
-                    .clipped()
-                
-            }
-            .padding(.top, 5)
-        }
-    }
-}
-struct profileView: View {
-    let gradient = Gradient(colors: [.pink, .white])
-    var body: some View {
-        VStack {
-            ProfileHeader(post: SAMPLE_POST)
-        }
-        .background(LinearGradient(gradient: gradient, startPoint: .top, endPoint: .bottom))
-                        .edgesIgnoringSafeArea(.all)
-    }
-    
-    
 }
 
-struct profileView_Previews: PreviewProvider {
-    static var previews: some View {
-        profileView()
+struct savedGrid: View {
+    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+    var posts: [Post]
+    var currentUser: UserProfile
+    var body: some View {
+        LazyVGrid(columns: columns, spacing:0) {
+            ForEach(posts) { Post in
+                if Post.postSaves.contains(currentUser.username) {
+                    Image(uiImage: Post.postImage)
+                        .resizable()
+                        .scaledToFit()
+                        .clipped()
+                }
+            }
+            .padding(.top, 5)
+        }
+    }
+}
+
+struct profileView: View {
+    let gradient = Gradient(colors: [Color(red: 0.09, green: 0.68, blue: 0.78), Color(red: 0.03, green: 0.85, blue: 0.73)])
+    var user: UserProfile
+    var allUsers: [UserProfile]
+    var posts: [Post]
+    var userEmail: String
+    var body: some View {
+        VStack {
+            ProfileHeader(user: user, allUsers: allUsers, posts: posts, userEmail: userEmail)
+        }
+        .background(LinearGradient(gradient: gradient, startPoint: .top, endPoint: .bottom))
+        .edgesIgnoringSafeArea(.all)
     }
 }

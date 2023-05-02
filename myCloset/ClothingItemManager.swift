@@ -14,6 +14,8 @@ import FirebaseStorage
 class ClothingItemManager: ObservableObject {
 
     @Published var clothingItems: [ClothingItem] = []
+    @State var clothingImages: [UIImage] = []
+ 
 
     
 
@@ -30,47 +32,39 @@ class ClothingItemManager: ObservableObject {
         clothingItems.removeAll()
 
         let db = Firestore.firestore()
-
-        let ref = db.collection("images")
+        let storageRef = Storage.storage().reference()
+        let ref = db.collection("images").order(by: "timestamp", descending: true)
 
         ref.getDocuments { snapshot, error in
 
             guard error == nil else {
-
                 print(error!.localizedDescription)
-
                 return
-
             }
-
-            
 
             if let snapshot = snapshot {
-
                 for document in snapshot.documents {
-
                     let data = document.data()
-
-                    
-
-                    let ItemTag = data["newClothingItem"] as? String ?? ""
-
-                    let ImageURL = data["url"] as? String ?? ""
-
-                    
-
-                    let clothingItem = ClothingItem(ItemTag: ItemTag, ImageURL: ImageURL)
-
-                    self.clothingItems.append(clothingItem)
-
+                    let itemTag = data["newClothingItem"] as? String ?? ""
+                    let imageURL = data["url"] as? String ?? ""
+                    let fileRef = storageRef.child(imageURL)
+                    fileRef.getData(maxSize: 5 * 1024 * 1024) { data, error in
+                        if error == nil && data != nil {
+                            if let image = UIImage(data: data!) {
+                                let clothingItem = ClothingItem(ItemTag: itemTag, ImageURL: image)
+                                DispatchQueue.main.async {
+                                    self.clothingImages.append(image)
+                                    self.clothingItems.append(clothingItem)
+                                }
+                            }
+                        }
+                    }
                 }
-
             }
-
         }
-
     }
 
+    
     func addClothingItem(newItemTag: String, newItemPhoto: String){
 
         let clothingPath = UUID().uuidString

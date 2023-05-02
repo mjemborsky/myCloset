@@ -12,6 +12,7 @@ import Firebase
 @main
 struct myClosetApp: App {
     @StateObject var clothingItemManager = ClothingItemManager()
+    @StateObject var selectedItemsManager = SelectedItemsManager()
     
     init() {
         FirebaseApp.configure()
@@ -19,7 +20,9 @@ struct myClosetApp: App {
     
     var body: some Scene {
         WindowGroup {
-        LoginView()
+            LoginView()
+                .environmentObject(clothingItemManager)
+                .environmentObject(selectedItemsManager)
         }
     }
 }

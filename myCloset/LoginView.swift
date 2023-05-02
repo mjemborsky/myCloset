@@ -21,9 +21,9 @@ struct LoginView: View {
             
             Spacer()
             
-            Image("my closet")
+            Image("logo")
                 .resizable()
-                .frame(width:250, height: 100)
+                .frame(width:250, height: 200)
                 .padding()
             
             TextField("Email", text: $email )
@@ -87,7 +87,7 @@ struct LoginView: View {
         }
         
         .fullScreenCover(isPresented: $showFeedView) {
-            FeedView()
+            FeedView(userEmail: email)
         }
         
         .padding()
@@ -110,6 +110,7 @@ struct LoginView: View {
             }
             
         }
+        // needs to also create user document in "Users" with 2 fields: username (whatever they enter) and the linkedEmail
     }
 }
 
