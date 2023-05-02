@@ -17,7 +17,7 @@ struct ClosetView: View {
     @State private var isEditing = false
     @State private var showDoneAlert = false
     @State private var willMoveToSelectedItemsView = false
-
+    
     
     // Variable for if sidemenu is showing or not
     @State private var toggleMenu: Bool = false
@@ -43,6 +43,8 @@ struct ClosetView: View {
         ZStack {
             NavigationView {
                 ScrollView(.vertical) {
+                    Image("bluecloset-title")
+                        .resizable()
                     LazyVGrid(columns: columns, content: {
                         ForEach(clothingItemManager.clothingItems, id: \.ImageURL) { clothingItem in
                             if isEditing {
@@ -62,8 +64,10 @@ struct ClosetView: View {
                     })
                 }
                 
+                
+                
     
-                .navigationTitle("Closet")
+        
                 .navigationBarItems(leading: Button(action: {
                         isEditing.toggle()
                 }, label: {
@@ -179,6 +183,7 @@ struct CheckboxRow: View {
 struct ContentofClosetView: View {
     @StateObject var clothingItemManager = ClothingItemManager()
     @StateObject var selectedItemsManager = SelectedItemsManager()
+    let gradient = Gradient(colors: [Color(red: 0.09, green: 0.68, blue: 0.78), Color(red: 0.03, green: 0.85, blue: 0.73)])
     var listOfUsers: [UserProfile]
     var listOfPosts: [Post]
     var userEmail: String
@@ -186,6 +191,8 @@ struct ContentofClosetView: View {
         ClosetView(userEmail: userEmail, users: listOfUsers, posts: listOfPosts)
             .environmentObject(clothingItemManager)
             .environmentObject(selectedItemsManager)
+            
+
     }
 }
 //
