@@ -38,3 +38,8 @@ TESTING:
 #60 - US: As a user, I want to be able to export my finished collage so that an image saved to my photos.
 - Tested by: Selecting 4 items and creating a collage. Click the “Post” button. A message pops up informing the user that the image is saved to their cameral roll and posted to their feed. The image then appears in the cameral roll. 
 - Tested by: Selecting 4 items, creating a collage. Click “post”. The collage image is not saved to the camera roll because the user has not allowed the app to access their camera roll in their privacy settings. 
+
+#28 - US: As a user, If I forget my password, I woould like to recieve an email with a possible solution.
+- Tested by: Entering a user email that is already registered with myCloset. (An email with password reset instructions are sent to that email address).
+- Tested by: Entering a user email that is not registered with myCloset. (An email is not sent to the inputted email address).
+
