@@ -23,7 +23,7 @@ struct SelectedItemsView: View {
                 }
             })
         }
-        .navigationTitle("Selected Items")
+        .navigationTitle("Your Outfit")
     }
 }
 
