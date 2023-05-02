@@ -24,6 +24,7 @@ struct saveOutfitView: View {
     var userEmail: String
     var allUsers: [UserProfile]
     var allPosts: [Post]
+    @State private var createdImageString = [String]()
     @State var title: String = ""
     @State var titles: [String] = []
     @State var tag: String = ""
@@ -73,8 +74,10 @@ struct saveOutfitView: View {
                     .cornerRadius(10)
                     .padding(.bottom, 10)
                 Button(action: {
-                    createPost(postCreator: "username", postDescription: "My favorite outfit", postTags: ["trendy", "purple", "sweater"], postImage: "", linkedOutfit: outfitid)
                     screenshotSelectedItemsView(captureRect: CGRect(x: 0, y: 550, width: 1500, height: 1000))
+                    if let index = allUsers.firstIndex(where: {$0.email == userEmail}) {
+                        createPost(postCreator: allUsers[index].username, postDescription: title, postTags: tags, postImage: createdImageString[0])
+                    }
                     self.showFeedView = true
                 }, label: {
                     Text("Post").padding()
@@ -113,19 +116,20 @@ struct saveOutfitView: View {
 
         let croppedScreenshot = screenshot.crop(to: captureRect)
 
-        guard let imageData = croppedScreenshot.pngData() else { return }
+        guard let imageData = croppedScreenshot.jpegData(compressionQuality: 0.9) else { return }
 
-        let imageName = UUID().uuidString + ".png"
-        let imageRef = storage.child("Screenshotted selected outfits/\(imageName)")
-
+        let imageName = UUID().uuidString + ".jpg"
+        let imageRef = storage.child("images/\(imageName)")
+        createdImageString.append("images/\(imageName)")
         let metadata = StorageMetadata()
-        metadata.contentType = "image/png"
+        metadata.contentType = "image/jpg"
 
         _ = imageRef.putData(imageData, metadata: metadata) { metadata, error in
             guard metadata != nil else {
                 print("Error uploading image: \(error!)")
                 return
             }
+            
             print("Image uploaded successfully!")
             
             // Save the image to camera roll

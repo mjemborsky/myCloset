@@ -86,7 +86,8 @@ struct FeedView: View {
     func getAllPost() {
         let db = Firestore.firestore()
         let storageRef = Storage.storage().reference()
-        db.collection("Posts").getDocuments { snapshot, error in
+        let ref = db.collection("Posts").order(by: "postTime", descending: true)
+        ref.getDocuments { snapshot, error in
             guard error == nil else {
                 print(error!.localizedDescription)
                 return
