@@ -34,6 +34,7 @@ struct saveOutfitView: View {
     let storage = Storage.storage().reference()
     let outfitid = UUID().uuidString
     @State private var backtocloset = false
+    @State private var showingAlert = false
     
     
     var body: some View {
@@ -43,14 +44,14 @@ struct saveOutfitView: View {
                 SelectedItemsView()
                     .navigationTitle("Save Post")
                     .toolbar {
-                        ToolbarItem(placement: .navigationBarTrailing) {
-                            Button(action: {
-                                saveOutfit()
-//                                screenshotSelectedItemsView(captureRect: CGRect(x: 0, y: 550, width: 1500, height: 1000))
-                            }) {
-                                Text("Save")
-                            }
-                        }
+//                        ToolbarItem(placement: .navigationBarTrailing) {
+//                            Button(action: {
+//                                saveOutfit()
+////                                screenshotSelectedItemsView(captureRect: CGRect(x: 0, y: 550, width: 1500, height: 1000))
+//                            }) {
+//                                Text("Save")
+//                            }
+//                        }
                         ToolbarItem(placement: .navigationBarLeading) {
                             Button(action: {
                                 backtocloset = true
@@ -78,9 +79,16 @@ struct saveOutfitView: View {
                     if let index = allUsers.firstIndex(where: {$0.email == userEmail}) {
                         createPost(postCreator: allUsers[index].username, postDescription: title, postTags: tags, postImage: createdImageString[0])
                     }
-                    self.showFeedView = true
+                    showingAlert = true
+//                    self.showFeedView = true
                 }, label: {
                     Text("Post").padding()
+                })
+            }
+            .alert("fabulous choice! your outfit is now visible on the home feed and in your camera roll!", isPresented: $showingAlert) {
+                Button("stay", action: {})
+                Button("go to feed", action: {
+                    self.showFeedView = true
                 })
             }
         }
