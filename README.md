@@ -43,3 +43,20 @@ TESTING:
 - Tested by: Entering a user email that is already registered with myCloset. (An email with password reset instructions are sent to that email address).
 - Tested by: Entering a user email that is not registered with myCloset. (An email is not sent to the inputted email address).
 
+#61 - US: As a user, I want to be able to post may outfits to my profile page where I can view them later and so they can be seen by other users.
+- Tested by: Creating a collage by selecting four items, and clicking “yes” to build outfit. Clicked “post” on the saveOutfitView page. A message appears saying the collage was saved to the user’s camera roll. The user is taken to the feed view. Once there, the user clicks on the side pull menu, and clicks “profile”. The user is taken to the profile view, where their saved collage will appear.
+- Tested by: Create a collage by selecting four items, and clicking “yes” to build outfit. Click “post” on the Your Outfit collage page. An error message appears with the appropriate error as to why the photo could not be posted. The image is not posted to the feed, saved to the camera roll or saved to the user’s profile. 
+
+# 7 - US: As a user, I want to see and scroll through a list of posts on my home feed so that I can view other user's posts.
+Tested by: User opens the app, and logs in. The user is then taken to the feed view where they can scroll through other user’s collage outfit posts.
+Tested by: The user opens the app and logs in. The user is shown a blank screen indicating the feed view is not drawing from the database correctly, or there are no user posts to see. 
+
+#42 - US: As a user, I want to be able to be able to like and save other user's posts so I can interact with their completed outfits.
+- Tested by: The user opens their app to the feed view. The user then scrolls until they find a post they want to like. The user hits the “like” button. The post is then saved as liked. The number of likes on the post will increase by 1. The like is added to the database, and upon refresh, the like count of the post will be incremented by one.
+- Tested by: The user created an outfit collage. The user clicks “post”. Their outfit collage is posted to the feed. Other users like their post by clicking “like” button.
+- Tested by: The user opens their app to the feed view. The user then scrolls until they find a post they want to save. The user hits the “save” icon. The post is then marked as saved. The saved indicator will marked as saved. The save is added to the database, and upon refresh, the post will continue to be displayed as saved.
+
+#59 - US: As a user, I want to be able to navigate through the app using the tap bar and by scrolling, so that I may view and access all app functions.
+- Tested by: The user will open up the app, and be taken to the feed view. To build an outfit, the user will pull out the sidebar and go to the closet page. The user can then pull out the sidebar to return to the feed page.
+- Tested by: The user will open up the app, and be taken to the feed view. To view their profile, the user will pull out the sidebar and go to the profile page. The user can then pull out the sidebar to return to the feed page.
+- Tested by: The user opens the app to the feed page. The user then decides to go to the closet to build outfit. The user pulls out the side bar and clicks on their closet page. The app displays all clothing items that the user has uploaded.
