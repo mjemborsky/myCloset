@@ -47,7 +47,7 @@ TESTING:
 - Tested by: Creating a collage by selecting four items, and clicking “yes” to build outfit. Clicked “post” on the saveOutfitView page. A message appears saying the collage was saved to the user’s camera roll. The user is taken to the feed view. Once there, the user clicks on the side pull menu, and clicks “profile”. The user is taken to the profile view, where their saved collage will appear.
 - Tested by: Create a collage by selecting four items, and clicking “yes” to build outfit. Click “post” on the Your Outfit collage page. An error message appears with the appropriate error as to why the photo could not be posted. The image is not posted to the feed, saved to the camera roll or saved to the user’s profile. 
 
-# 7 - US: As a user, I want to see and scroll through a list of posts on my home feed so that I can view other user's posts.
+#7 - US: As a user, I want to see and scroll through a list of posts on my home feed so that I can view other user's posts.
 Tested by: User opens the app, and logs in. The user is then taken to the feed view where they can scroll through other user’s collage outfit posts.
 Tested by: The user opens the app and logs in. The user is shown a blank screen indicating the feed view is not drawing from the database correctly, or there are no user posts to see. 
 
