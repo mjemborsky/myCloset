@@ -105,12 +105,11 @@ struct FeedView: View {
                     let postSaves = data["postSaves"] as? [String] ?? []
                     let postTags = data["postTags"] as? [String] ?? []
                     let postImage = data["postImage"] as? String ?? ""
-                    let linkedOutfit = data["linkedOutfit"] as? String ?? ""
                     let fileRef = storageRef.child(postImage)
                     fileRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
                         if error == nil && data != nil {
                             if let image = UIImage(data: data!) {
-                                let post = Post(id: idUUID ?? UUID(), postTime: postDate, postCreator: postCreator, postDescription: postDescription, postLikes: postLikes, postSaves: postSaves, postTags: postTags, postImage: image, linkedOutfit: linkedOutfit)
+                                let post = Post(id: idUUID ?? UUID(), postTime: postDate, postCreator: postCreator, postDescription: postDescription, postLikes: postLikes, postSaves: postSaves, postTags: postTags, postImage: image)
                                 DispatchQueue.main.async {
                                     postsInProgress.append(post)
                                 }
